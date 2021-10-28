@@ -24,8 +24,7 @@ namespace AlchemistNPC.Projectiles
 		public override void SetDefaults()
 		{
 			Projectile.CloneDefaults(ProjectileID.LaserMachinegunLaser);
-			// Unknown Damage Type
-			//Projectile.magic = false;			Projectile.DamageType = DamageClass.Melee;
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.width = 98;
 			Projectile.height = 98;
 			Projectile.penetrate = 40;

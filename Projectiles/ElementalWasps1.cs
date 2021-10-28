@@ -21,8 +21,6 @@ namespace AlchemistNPC.Projectiles
 			Projectile.CloneDefaults(189);
 			Projectile.netImportant = true;
 			Projectile.netUpdate = true;
-			// Unknown Damage Type
-			//Projectile.magic = false;
 			Projectile.DamageType = DamageClass.Throwing;
 			Projectile.aiStyle = 36;
 			AIType = 189;
