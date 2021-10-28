@@ -13,32 +13,31 @@ namespace AlchemistNPC.Projectiles
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("PF422");
-			Main.projFrames[projectile.type] = 4;
+			Main.projFrames[Projectile.type] = 4;
 		}
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(190);
-			projectile.ranged = false;
-			projectile.thrown = true;
-			projectile.aiStyle = 39;
-			aiType = 190;
+			Projectile.CloneDefaults(190);
+			Projectile.DamageType = DamageClass.Throwing;
+			Projectile.aiStyle = 39;
+			AIType = 190;
 		}
 		
 		public override void AI()
 		{
-			projectile.velocity *= 1.2f;
-			projectile.velocity *= 1.02f;
-			if (projectile.rotation >= 10f)
+			Projectile.velocity *= 1.2f;
+			Projectile.velocity *= 1.02f;
+			if (Projectile.rotation >= 10f)
 			{
-				projectile.rotation = 1f;
+				Projectile.rotation = 1f;
 			}
 		}
 		
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-		target.immune[projectile.owner] = 2;
-		projectile.rotation++;
+		target.immune[Projectile.owner] = 2;
+		Projectile.rotation++;
 		}
 	}
 }

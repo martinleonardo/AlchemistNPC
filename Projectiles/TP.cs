@@ -18,17 +18,17 @@ namespace AlchemistNPC.Projectiles
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(ProjectileID.NebulaBlaze1);
-			Main.projFrames[projectile.type] = 4;
-			aiType = ProjectileID.NebulaBlaze1;
-			projectile.tileCollide = false;
-			projectile.penetrate = 2;
-			projectile.timeLeft = 450;
+			Projectile.CloneDefaults(ProjectileID.NebulaBlaze1);
+			Main.projFrames[Projectile.type] = 4;
+			AIType = ProjectileID.NebulaBlaze1;
+			Projectile.tileCollide = false;
+			Projectile.penetrate = 2;
+			Projectile.timeLeft = 450;
 		}
 		
 		public override bool PreKill(int timeLeft)
 		{
-			projectile.type = ProjectileID.NebulaBlaze1;
+			Projectile.type = ProjectileID.NebulaBlaze1;
 			return true;
 		}
 		
@@ -42,8 +42,8 @@ namespace AlchemistNPC.Projectiles
 		
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			target.AddBuff(mod.BuffType("Twilight"), 600);
-			target.immune[projectile.owner] = 1;
+			target.AddBuff(ModContent.BuffType<Buffs.Twilight>(), 600);
+			target.immune[Projectile.owner] = 1;
 		}
 	}
 }

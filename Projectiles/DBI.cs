@@ -18,23 +18,22 @@ namespace AlchemistNPC.Projectiles
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(ProjectileID.Bullet);
-			projectile.ranged = false;
-			projectile.magic = true;
-			projectile.width = 34;
-			projectile.height = 34;
-			projectile.penetrate = 1;
-			projectile.timeLeft = 300;
-			aiType = ProjectileID.Bullet;
+			Projectile.CloneDefaults(ProjectileID.Bullet);
+			Projectile.DamageType = DamageClass.Magic;
+			Projectile.width = 34;
+			Projectile.height = 34;
+			Projectile.penetrate = 1;
+			Projectile.timeLeft = 300;
+			AIType = ProjectileID.Bullet;
 		}
 		
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			target.AddBuff(mod.BuffType("Twilight"), 240);
-			projectile.penetrate--;
-			if (projectile.penetrate <= 0)
+			target.AddBuff(ModContent.BuffType<Buffs.Twilight>(), 240);
+			Projectile.penetrate--;
+			if (Projectile.penetrate <= 0)
 			{
-				projectile.Kill();
+				Projectile.Kill();
 			}
 		}
 	

@@ -16,17 +16,17 @@ namespace AlchemistNPC.Buffs
 {
 	public class Blurring : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Blurring");
 			Description.SetDefault("Enemies can barely see you (Shadow Dodge for 10 sec with 30 sec CD)");
 			Main.debuff[Type] = false;
-			canBeCleared = true;
-			DisplayName.AddTranslation(GameCulture.Russian, "Размытие");
-			Description.AddTranslation(GameCulture.Russian, "Враги едва могут видеть вас (Теневое уклонение с 30-ти секундным откатом)");
+			CanBeCleared = true;
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Размытие");
+			Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Враги едва могут видеть вас (Теневое уклонение с 30-ти секундным откатом)");
 
-            DisplayName.AddTranslation(GameCulture.Chinese, "模糊");
-            Description.AddTranslation(GameCulture.Chinese, "敌人并看不清你 (持续10秒暗影躲避,CD时间30秒)");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "模糊");
+            Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "敌人并看不清你 (持续10秒暗影躲避,CD时间30秒)");
         }
 		
 		public override void Update(Player player, ref int buffIndex)

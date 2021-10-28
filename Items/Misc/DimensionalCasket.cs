@@ -19,26 +19,26 @@ namespace AlchemistNPC.Items.Misc
 			+"\nAllows to trade with any NPC from any distance"
 			+"\nClick to open UI"
 			+"\nPress ESC to stop dialing");
-			DisplayName.AddTranslation(GameCulture.Russian, "Телепортирующая Шкатулка");
-            Tooltip.AddTranslation(GameCulture.Russian, "Модифицированная межизмеренческая шкатулка\nПозволяет торговать с любым NPC с любого расстояния\nКлик для открытия интерфейса\nНажмите ESC для прекращения связи");
-			DisplayName.AddTranslation(GameCulture.Chinese, "次元匣");
-			Tooltip.AddTranslation(GameCulture.Chinese, "修好的次元匣\n允许无视距离与NPC交易\n点击打开UI\n按ESC键关闭");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Телепортирующая Шкатулка");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Модифицированная межизмеренческая шкатулка\nПозволяет торговать с любым NPC с любого расстояния\nКлик для открытия интерфейса\nНажмите ESC для прекращения связи");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "次元匣");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "修好的次元匣\n允许无视距离与NPC交易\n点击打开UI\n按ESC键关闭");
         }
 
 		public override void SetDefaults()
 		{
-			item.width = 32;
-			item.height = 32;
-			item.value = 5000000;
-			item.rare = 10;
-			item.useStyle = 1;
-            item.useAnimation = 15;
-            item.useTime = 15;
-            item.consumable = false;
-			item.expert = true;
+			Item.width = 32;
+			Item.height = 32;
+			Item.value = 5000000;
+			Item.rare = 10;
+			Item.useStyle = 1;
+            Item.useAnimation = 15;
+            Item.useTime = 15;
+            Item.consumable = false;
+			Item.expert = true;
 		}
 		
-		public override bool UseItem(Player player)
+		public override bool? UseItem(Player player)
 		{
 			if (Main.myPlayer == player.whoAmI)
 			{
@@ -67,14 +67,13 @@ namespace AlchemistNPC.Items.Misc
 		
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(mod.ItemType("BrokenDimensionalCasket"));
-			recipe.AddIngredient(mod.ItemType("DivineLava"), 15);
-			recipe.AddRecipeGroup("AlchemistNPC:Tier3Bar", 10);
-			recipe.AddIngredient(ItemID.MechanicalBatteryPiece);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe()
+				.AddIngredient(ModContent.ItemType<Items.Materials.BrokenDimensionalCasket>())
+				.AddIngredient(ModContent.ItemType<Items.Materials.DivineLava>(), 15)
+				.AddRecipeGroup("AlchemistNPC:Tier3Bar", 10)
+				.AddIngredient(ItemID.MechanicalBatteryPiece)
+				.AddTile(TileID.MythrilAnvil)
+				.Register();
 		}
 	}
 }

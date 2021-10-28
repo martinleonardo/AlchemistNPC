@@ -29,11 +29,11 @@ namespace AlchemistNPC.Projectiles
 
 		public override void SetDefaults(Projectile projectile)
 		{
-			if (AlchemistNPC.BastScroll == true && projectile.thrown == true)
+			if (AlchemistNPC.BastScroll == true && projectile.DamageType == DamageClass.Throwing)
 			{
 				projectile.tileCollide = false;
 			}
-			if (projectile.type == 358)
+			if (projectile.type == ProjectileID.WaterGun)
 			{
 				projectile.damage = 1;
 				projectile.friendly = true;
@@ -87,11 +87,12 @@ namespace AlchemistNPC.Projectiles
 			vel = vel.RotatedBy(rand);
 			vel *= 5f;
 			Projectile.NewProjectile(
+				projectile.GetProjectileSource_FromThis(),
 				player.position.X,
 				player.position.Y,
 				vel.X,
 				vel.Y,
-				mod.ProjectileType("Bees"),
+				ProjectileType<Projectiles.Bees>(),
 				projectile.damage / 2,
 				0,
 				projectile.owner
@@ -101,11 +102,12 @@ namespace AlchemistNPC.Projectiles
 		public void createNAG(Projectile projectile)
 		{
 			Projectile.NewProjectile(
+				projectile.GetProjectileSource_FromThis(),
 				projectile.Center.X,
 				projectile.Center.Y,
 				projectile.velocity.X,
 				projectile.velocity.Y,
-				mod.ProjectileType("NyctosythiaArrowGhost"),
+				ProjectileType<Projectiles.NyctosythiaArrowGhost>(),
 				projectile.damage,
 				0,
 				Main.myPlayer
@@ -115,11 +117,12 @@ namespace AlchemistNPC.Projectiles
 		public void createNBG(Projectile projectile)
 		{
 			Projectile.NewProjectile(
+				projectile.GetProjectileSource_FromThis(),
 				projectile.Center.X,
 				projectile.Center.Y,
 				projectile.velocity.X,
 				projectile.velocity.Y,
-				mod.ProjectileType("NyctosythiaBulletGhost"),
+				ProjectileType<Projectiles.NyctosythiaBulletGhost>(),
 				projectile.damage,
 				0,
 				Main.myPlayer
@@ -131,11 +134,11 @@ namespace AlchemistNPC.Projectiles
 			if(projectile.whoAmI >= 0 || projectile.whoAmI < Main.maxProjectiles)
 			{
 				var owner = npcOwner[projectile.whoAmI];
-				if (owner > -1 && Main.npc[owner].HasBuff(mod.BuffType("CurseOfLight")) && Main.rand.Next(4) == 0)
+				if (owner > -1 && Main.npc[owner].HasBuff(ModContent.BuffType<Buffs.CurseOfLight>()) && Main.rand.Next(4) == 0)
 				{
 					damage /= 2;
 				}
-				if (owner > -1 && Main.npc[owner].HasBuff(mod.BuffType("SymbolOfPain")))
+				if (owner > -1 && Main.npc[owner].HasBuff(ModContent.BuffType<Buffs.SymbolOfPain>()))
 				{
 					damage -= damage/4;
 				}
@@ -149,7 +152,7 @@ namespace AlchemistNPC.Projectiles
 				Player player = Main.player[k];
 				if (player.active)
 				{
-					if (player.HasBuff(mod.BuffType("GreaterDangersense")))
+					if (player.HasBuff(ModContent.BuffType<Buffs.GreaterDangersense>()))
 					{
 						if (projectile.hostile && !projectile.friendly)
 						{
@@ -166,13 +169,13 @@ namespace AlchemistNPC.Projectiles
 		{
 			Player player = Main.player[projectile.owner];
 			
-			if (projectile.aiStyle == 99 && ((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).MasterYoyoBag)
+			if (projectile.aiStyle == 99 && ((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).MasterYoyoBag)
 			{
 				float num1 = ProjectileID.Sets.YoyosMaximumRange[projectile.type];
 				num1 += num1 * 0.25f + 100f;
 			}
 			
-			if (firstTime && !projectile.hostile && projectile.magic && (((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).LilithEmblem == true) && projectile.type != mod.ProjectileType("Bees"))
+			if (firstTime && !projectile.hostile && projectile.DamageType == DamageClass.Magic && (((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).LilithEmblem == true) && projectile.type != ModContent.ProjectileType<Projectiles.Bees>())
 			{
 				for (int g = 0; g < 2; g++)
 				{
@@ -181,19 +184,19 @@ namespace AlchemistNPC.Projectiles
 				firstTime = false;
 			}
 
-			if (firstTime && !projectile.hostile && projectile.type == mod.ProjectileType("NyctosythiaArrow"))
+			if (firstTime && !projectile.hostile && projectile.type == ModContent.ProjectileType<Projectiles.NyctosythiaArrow>())
 			{
 				createNAG(projectile);
 				firstTime = false;
 			}
 
-			if (firstTime && !projectile.hostile && projectile.type == mod.ProjectileType("NyctosythiaBullet"))
+			if (firstTime && !projectile.hostile && projectile.type == ModContent.ProjectileType<Projectiles.NyctosythiaBullet>())
 			{
 				createNBG(projectile);
 				firstTime = false;
 			}
 
-			if (projectile.type == mod.ProjectileType("DTH"))
+			if (projectile.type == ModContent.ProjectileType<Projectiles.DTH>())
 			{
 				if (Main.rand.Next(45) == 0)
 				{
@@ -204,11 +207,12 @@ namespace AlchemistNPC.Projectiles
 						vel = vel.RotatedBy(rand);
 						vel *= 3f;
 						Projectile.NewProjectile(
+						projectile.GetProjectileSource_FromThis(),
 						projectile.Center.X,
 						projectile.Center.Y,
 						vel.X,
 						vel.Y,
-						mod.ProjectileType("DTHL"),
+						ProjectileType<Projectiles.DTHL>(),
 						projectile.damage,
 						0,
 						Main.myPlayer
@@ -220,16 +224,16 @@ namespace AlchemistNPC.Projectiles
 			{
 				projectile.hostile = false;
 				projectile.friendly = true;
-				projectile.melee = true;
+				projectile.DamageType = DamageClass.Melee;
 				projectile.penetrate = -1;
 				if ((projectile.knockBack >= .45f && projectile.knockBack < .5f) && projectile.oldVelocity != projectile.velocity && Main.rand.Next(0, 4) == 0)
 				{
 					projectile.knockBack -= .0125f;
 					Vector2 vector83 = projectile.velocity.RotatedByRandom(.1f);
-					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, vector83.X, vector83.Y, projectile.type, projectile.damage, projectile.knockBack - .025f, projectile.owner, projectile.velocity.ToRotation(), projectile.ai[1]);
+					Projectile.NewProjectile(projectile.GetProjectileSource_FromThis(), projectile.Center.X, projectile.Center.Y, vector83.X, vector83.Y, projectile.type, projectile.damage, projectile.knockBack - .025f, projectile.owner, projectile.velocity.ToRotation(), projectile.ai[1]);
 				}
 			}
-			if (((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).TS == true && projectile.type == ProjectileID.NebulaArcanum)
+			if (((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).TS == true && projectile.type == ProjectileID.NebulaArcanum)
 			{
 				projectile.penetrate = 1;
 			}
@@ -238,11 +242,11 @@ namespace AlchemistNPC.Projectiles
 		public override void ModifyHitNPC(Projectile projectile, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
 			Player player = Main.player[projectile.owner];
-			if (((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).SFU == true && projectile.minion && Main.rand.Next(10) == 0)
+			if (((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).SFU == true && projectile.minion && Main.rand.Next(10) == 0)
 			{
 				crit = true;
 			}
-			if (projectile.type == 358)
+			if (projectile.type == ProjectileID.WaterGun)
 			{
 				damage = 1;
 			}
@@ -251,25 +255,25 @@ namespace AlchemistNPC.Projectiles
 		public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit)
 		{
 			Player player = Main.player[projectile.owner];
-			if (projectile.minion && ((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).SF == true && target.immune[projectile.owner] > 2)
+			if (projectile.minion && ((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).SF == true && target.immune[projectile.owner] > 2)
 			{
 				target.immune[projectile.owner] = 2;
 			}
-			if (projectile.type == 435 && !target.friendly)
+			if (projectile.type == ProjectileID.MartianTurretBolt && !target.friendly)
 			{
 				target.immune[projectile.owner] = 1;
-				target.AddBuff(mod.BuffType("Electrocute"), 300);
+				target.AddBuff(ModContent.BuffType<Buffs.Electrocute>(), 300);
 			}
-			if ((projectile.type == 340) && ((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).Pandora == true)
+			if ((projectile.type == ProjectileID.RocketSnowmanIII) && ((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).Pandora == true)
 			{
 				target.immune[projectile.owner] = 1;
 			}
-			if ((projectile.type == 443) && ((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).XtraT == true)
+			if ((projectile.type == ProjectileID.Electrosphere) && ((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).XtraT == true)
 			{
-				target.AddBuff(mod.BuffType("Electrocute"), 300);
+				target.AddBuff(ModContent.BuffType<Buffs.Electrocute>(), 300);
 				target.immune[projectile.owner] = 2;
 			}
-			if ((projectile.type == 98) && ((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).Traps == true)
+			if ((projectile.type == ProjectileID.PoisonDart) && ((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).Traps == true)
 			{
 				if (Main.expertMode)
 				{
@@ -281,7 +285,7 @@ namespace AlchemistNPC.Projectiles
 				}
 				target.immune[projectile.owner] = 1;
 			}
-			if ((projectile.type == 184) && ((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).Traps == true)
+			if ((projectile.type == ProjectileID.PoisonDartTrap) && ((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).Traps == true)
 			{
 				if (Main.expertMode)
 				{
@@ -293,7 +297,7 @@ namespace AlchemistNPC.Projectiles
 				}
 				target.immune[projectile.owner] = 1;
 			}
-			if ((projectile.type == 185) && ((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).Traps == true)
+			if ((projectile.type == ProjectileID.SpikyBallTrap) && ((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).Traps == true)
 			{
 				if (Main.expertMode)
 				{
@@ -305,7 +309,7 @@ namespace AlchemistNPC.Projectiles
 				}
 				target.immune[projectile.owner] = 3;
 			}
-			if ((projectile.type == 186) && ((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).Traps == true)
+			if ((projectile.type == ProjectileID.SpearTrap) && ((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).Traps == true)
 			{
 				if (Main.expertMode)
 				{
@@ -317,7 +321,7 @@ namespace AlchemistNPC.Projectiles
 				}
 				target.immune[projectile.owner] = 1;
 			}
-			if ((projectile.type == 187) && ((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).Traps == true)
+			if ((projectile.type == ProjectileID.FlamethrowerTrap) && ((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).Traps == true)
 			{
 				if (Main.expertMode)
 				{
@@ -329,7 +333,7 @@ namespace AlchemistNPC.Projectiles
 				}
 				target.immune[projectile.owner] = 2;
 			}
-			if ((projectile.type == 188) && ((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).Traps == true)
+			if ((projectile.type == ProjectileID.FlamesTrap) && ((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).Traps == true)
 			{
 				if (Main.expertMode)
 				{
@@ -341,7 +345,7 @@ namespace AlchemistNPC.Projectiles
 				}
 				target.immune[projectile.owner] = 2;
 			}
-			if ((projectile.type == 654) && ((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).Traps == true)
+			if ((projectile.type == ProjectileID.GeyserTrap) && ((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).Traps == true)
 			{
 				if (Main.expertMode)
 				{
@@ -359,7 +363,7 @@ namespace AlchemistNPC.Projectiles
 				target.immune[projectile.owner] = 3;
 			}
 			
-			if (player.HeldItem.type == mod.ItemType("TerrarianW") && projectile.type == 88)
+			if (player.HeldItem.type == ModContent.ItemType<Items.Weapons.TerrarianW>() && projectile.type == ProjectileID.PurpleLaser)
 			{
 				target.immune[projectile.owner] = 1;
 			}

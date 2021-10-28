@@ -20,18 +20,17 @@ namespace AlchemistNPC.Projectiles
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(510);
-			projectile.magic = false;
-			projectile.thrown = true;
-			projectile.aiStyle = 2;
+			Projectile.CloneDefaults(510);
+			Projectile.DamageType = DamageClass.Throwing;
+			Projectile.aiStyle = 2;
 		}
 		
 		public override void Kill(int timeLeft)
 		{
-			Main.PlaySound(2, (int)projectile.position.X, (int)projectile.position.Y, 107);
-			Gore.NewGore(projectile.Center, projectile.oldVelocity * 0.2f, 704, 1f);
-			Gore.NewGore(projectile.Center, projectile.oldVelocity * 0.2f, 705, 1f);
-			if (projectile.owner == Main.myPlayer)
+			Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.position.X, (int)Projectile.position.Y, 107);
+			Gore.NewGore(Projectile.Center, Projectile.oldVelocity * 0.2f, 704, 1f);
+			Gore.NewGore(Projectile.Center, Projectile.oldVelocity * 0.2f, 705, 1f);
+			if (Projectile.owner == Main.myPlayer)
 			{
 				int num2 = Main.rand.Next(10, 15);
 				for (int index = 0; index < num2; ++index)
@@ -39,14 +38,14 @@ namespace AlchemistNPC.Projectiles
 					Vector2 vector2 = new Vector2(Main.rand.Next(-100, 101), Main.rand.Next(-100, 101));
 					vector2.Normalize();
 					vector2 *= Main.rand.Next(10, 201) * 0.01f;
-					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, vector2.X*4f, vector2.Y*4f, 253, projectile.damage, 1f, projectile.owner, 0.0f, Main.rand.Next(-45, 1));
+					Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, vector2.X*4f, vector2.Y*4f, 253, Projectile.damage, 1f, Projectile.owner, 0.0f, Main.rand.Next(-45, 1));
 				}
 			}
 		}
 		
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			target.immune[projectile.owner] = 1;
+			target.immune[Projectile.owner] = 1;
 		}
 	}
 }

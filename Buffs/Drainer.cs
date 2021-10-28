@@ -10,17 +10,17 @@ namespace AlchemistNPC.Buffs
 {
 	public class Drainer : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Drain");
 			Description.SetDefault("Removes most of the defense and endurance while held");
 			Main.debuff[Type] = true;
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
-			DisplayName.AddTranslation(GameCulture.Russian, "Иссушение");
-			Description.AddTranslation(GameCulture.Russian, "Значительно снижает защиту и поглощение урона пока удерживается Поглотитель");
-            DisplayName.AddTranslation(GameCulture.Chinese, "抽血");
-            Description.AddTranslation(GameCulture.Chinese, "极大降低防御力和耐力");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Иссушение");
+			Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Значительно снижает защиту и поглощение урона пока удерживается Поглотитель");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "抽血");
+            Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "极大降低防御力和耐力");
         }
 
         public override void Update(Player player, ref int buffIndex)

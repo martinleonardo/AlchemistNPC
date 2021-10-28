@@ -18,37 +18,36 @@ namespace AlchemistNPC.Items.Equippable
 			Tooltip.SetDefault("''No one can stop me now!''"
 				+ "\nIncreases all damages by 15%"
 				+ "\nReduces damage reduction by 10%");
-				DisplayName.AddTranslation(GameCulture.Russian, "Душа Мощи");
-            Tooltip.AddTranslation(GameCulture.Russian, "''Никто меня теперь не остановит!''\nУвеличивает урон всех типов на 15%\nСнижает сопротивление к урону на 10%");
-            DisplayName.AddTranslation(GameCulture.Chinese, "伟力之魂");
-            Tooltip.AddTranslation(GameCulture.Chinese, "''我无人可挡!''\n增加15%所有伤害");
+				DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Душа Мощи");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "''Никто меня теперь не остановит!''\nУвеличивает урон всех типов на 15%\nСнижает сопротивление к урону на 10%");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "伟力之魂");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "''我无人可挡!''\n增加15%所有伤害");
         }
 	
 		public override void SetDefaults()
 		{
-			item.stack = 1;
-			item.width = 27;
-			item.height = 28;
-			item.value = 100000;
-			item.rare = 5;
-			item.accessory = true;
+			Item.stack = 1;
+			Item.width = 27;
+			Item.height = 28;
+			Item.value = 100000;
+			Item.rare = 5;
+			Item.accessory = true;
 		}
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			player.endurance -= 0.1f;
-			player.allDamage += 0.15f;
+			player.GetDamage(DamageClass.Generic) += 0.15f;
 		}
 		
 		
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.SoulofMight, 99);
-			recipe.AddIngredient(ItemID.SoulofNight, 30);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe()
+				.AddIngredient(ItemID.SoulofMight, 99)
+				.AddIngredient(ItemID.SoulofNight, 30)
+				.AddTile(TileID.MythrilAnvil)
+				.Register();
 		}
 	}
 }

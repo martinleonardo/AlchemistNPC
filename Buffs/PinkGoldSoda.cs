@@ -16,16 +16,16 @@ namespace AlchemistNPC.Buffs
 {
 	public class PinkGoldSoda : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Pink Gold Soda");
 			Description.SetDefault("Removes most debuffs");
 			Main.debuff[Type] = false;
-			canBeCleared = true;
-			DisplayName.AddTranslation(GameCulture.Russian, "Розово-золотая Сода");
-			Description.AddTranslation(GameCulture.Russian, "Убирает большинство дебаффов");
-            DisplayName.AddTranslation(GameCulture.Chinese, "桃金苏打加持");
-            Description.AddTranslation(GameCulture.Chinese, "移除大部分Debuff");
+			CanBeCleared = true;
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Розово-золотая Сода");
+			Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Убирает большинство дебаффов");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "桃金苏打加持");
+            Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "移除大部分Debuff");
         }
 		
 		public override void Update(Player player, ref int buffIndex)

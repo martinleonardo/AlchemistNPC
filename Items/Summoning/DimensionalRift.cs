@@ -11,21 +11,21 @@ namespace AlchemistNPC.Items.Summoning
 	{
 		public override void SetDefaults()
 		{
-			item.width = 64;
-			item.noUseGraphic = true;
-			item.maxStack = 1;
-			item.consumable = false;
-			item.height = 64;
-			item.useTime = 20;
-			item.useAnimation = 20;
-			item.shoot = mod.ProjectileType("DimensionalRift");
-			item.shootSpeed = 10f;
-			item.useStyle = 1;
-			item.knockBack = 8;
-			item.value = 1000000;
-			item.rare = 11;
-			item.UseSound = SoundID.Item1;
-			item.autoReuse = true;
+			Item.width = 64;
+			Item.noUseGraphic = true;
+			Item.maxStack = 1;
+			Item.consumable = false;
+			Item.height = 64;
+			Item.useTime = 20;
+			Item.useAnimation = 20;
+			Item.shoot = ProjectileType<Projectiles.DimensionalRift>();
+			Item.shootSpeed = 10f;
+			Item.useStyle = 1;
+			Item.knockBack = 8;
+			Item.value = 1000000;
+			Item.rare = 11;
+			Item.UseSound = SoundID.Item1;
+			Item.autoReuse = true;
 		}
 		
 		public override void SetStaticDefaults()
@@ -34,27 +34,26 @@ namespace AlchemistNPC.Items.Summoning
 			Tooltip.SetDefault(@"Glass globe containing the rift between dimensions
 Don't break it!!!");
 			
-			DisplayName.AddTranslation(GameCulture.Russian, "Разрыв между измерениями");
-			Tooltip.AddTranslation(GameCulture.Russian, @"Стеклянный шар, хранящий разрыв между измерениями внутри
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Разрыв между измерениями");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), @"Стеклянный шар, хранящий разрыв между измерениями внутри
 Не разбей его!!!");
-			DisplayName.AddTranslation(GameCulture.Chinese, "次元裂隙");
-			Tooltip.AddTranslation(GameCulture.Chinese, @"含有次元之间裂缝的玻璃球
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "次元裂隙");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), @"含有次元之间裂缝的玻璃球
 别打破了!!!");
         }
 		
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(mod.ItemType("StrangeTopHat"));
-			recipe.AddIngredient(170, 10);
-			recipe.AddIngredient(ItemID.FragmentNebula, 15);
-            recipe.AddIngredient(ItemID.FragmentSolar, 15);
-			recipe.AddIngredient(ItemID.FragmentVortex, 15);
-			recipe.AddIngredient(ItemID.FragmentStardust, 15);
-			recipe.AddIngredient(ItemID.LunarBar, 10);
-			recipe.AddTile(TileID.LunarCraftingStation);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe()
+				.AddIngredient(ModContent.ItemType<Items.Armor.StrangeTopHat>())
+				.AddIngredient(170, 10)
+				.AddIngredient(ItemID.FragmentNebula, 15)
+            	.AddIngredient(ItemID.FragmentSolar, 15)
+				.AddIngredient(ItemID.FragmentVortex, 15)
+				.AddIngredient(ItemID.FragmentStardust, 15)
+				.AddIngredient(ItemID.LunarBar, 10)
+				.AddTile(TileID.LunarCraftingStation)
+				.Register();
 		}
 	}
 }

@@ -13,16 +13,15 @@ namespace AlchemistNPC.Projectiles
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Demonic Explosion");     //The English name of the projectile
-			Main.projFrames[projectile.type] = 5;
+			Main.projFrames[Projectile.type] = 5;
 		}
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(612);
-			projectile.melee = false;
-			projectile.ranged = true;
-			projectile.aiStyle = 117;
-			aiType = 612;
+			Projectile.CloneDefaults(612);
+			Projectile.DamageType = DamageClass.Ranged;
+			Projectile.aiStyle = 117;
+			AIType = 612;
 		}
 	}
 }

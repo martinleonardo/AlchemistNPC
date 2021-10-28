@@ -8,8 +8,8 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using Terraria.ModLoader.IO;
 using Terraria.Localization;
-using Terraria.World.Generation;
 using AlchemistNPC;
+using Terraria.DataStructures;
 
 namespace AlchemistNPC.Items.Weapons
 {
@@ -20,53 +20,52 @@ namespace AlchemistNPC.Items.Weapons
 			DisplayName.SetDefault("Laoskadyn");
 			Tooltip.SetDefault("Rains exploding homing needles from the sky on swing"
 			+"\nNeedles release damaging flames");
-			DisplayName.AddTranslation(GameCulture.Russian, "Лаоскадин");
-            Tooltip.AddTranslation(GameCulture.Russian, "Сбрасывает взрывающиеся самонаводящиеся иглы с небес\nИглы испускают наносящие урон огни");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Лаоскадин");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Сбрасывает взрывающиеся самонаводящиеся иглы с небес\nИглы испускают наносящие урон огни");
 
-            DisplayName.AddTranslation(GameCulture.Chinese, "劳斯卡丁");
-            Tooltip.AddTranslation(GameCulture.Chinese, "挥舞时从天上降下自动追踪敌人的针\n针会释放出有伤害的火焰");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "劳斯卡丁");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "挥舞时从天上降下自动追踪敌人的针\n针会释放出有伤害的火焰");
         }
 
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.Starfury);
-			item.melee = true;
-			item.damage = 88;
-			item.width = 78;
-			item.height = 106;
-			item.useTime = 15;
-			item.useAnimation = 15;
-			item.useStyle = 1;
-			item.value = 1000000;
-			item.rare = 11;
-            item.knockBack = 6;
-            item.autoReuse = true;
-			item.UseSound = SoundID.Item1;
-			item.scale = 1f;
+			Item.CloneDefaults(ItemID.Starfury);
+			Item.DamageType = DamageClass.Melee;
+			Item.damage = 88;
+			Item.width = 78;
+			Item.height = 106;
+			Item.useTime = 15;
+			Item.useAnimation = 15;
+			Item.useStyle = 1;
+			Item.value = 1000000;
+			Item.rare = 11;
+            Item.knockBack = 6;
+            Item.autoReuse = true;
+			Item.UseSound = SoundID.Item1;
+			Item.scale = 1f;
 		}
 		
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+		public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			type = mod.ProjectileType("SharpNeedle");
-			Projectile.NewProjectile(position.X+Main.rand.Next(-25,25), position.Y+Main.rand.Next(-25,25), speedX, speedY, type, damage, knockBack, player.whoAmI);
-			Projectile.NewProjectile(position.X+Main.rand.Next(-50,50), position.Y+Main.rand.Next(-50,50), speedX, speedY, type, damage, knockBack, player.whoAmI);
-			return base.Shoot(player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
+			type = ProjectileType<Projectiles.SharpNeedle>();
+			Projectile.NewProjectile(source, position.X+Main.rand.Next(-25,25), position.Y+Main.rand.Next(-25,25), velocity.X, velocity.Y, type, damage, knockback, player.whoAmI);
+			Projectile.NewProjectile(source, position.X+Main.rand.Next(-50,50), position.Y+Main.rand.Next(-50,50), velocity.X, velocity.Y, type, damage, knockback, player.whoAmI);
+			return base.Shoot(player, source, position, velocity, type, damage, knockback);
 		}
 		
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.TerraBlade);
-			recipe.AddIngredient(ItemID.StarWrath);
-			recipe.AddIngredient(ItemID.MartianConduitPlating, 50);
-			recipe.AddIngredient(ItemID.FragmentSolar, 5);
-			recipe.AddIngredient(ItemID.FragmentNebula, 5);
-			recipe.AddIngredient(ItemID.FragmentVortex, 5);
-			recipe.AddIngredient(ItemID.FragmentStardust, 5);
-			recipe.AddIngredient(null, "EmagledFragmentation", 100);
-			recipe.AddTile(null, "MateriaTransmutator");
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe()
+				.AddIngredient(ItemID.TerraBlade)
+				.AddIngredient(ItemID.StarWrath)
+				.AddIngredient(ItemID.MartianConduitPlating, 50)
+				.AddIngredient(ItemID.FragmentSolar, 5)
+				.AddIngredient(ItemID.FragmentNebula, 5)
+				.AddIngredient(ItemID.FragmentVortex, 5)
+				.AddIngredient(ItemID.FragmentStardust, 5)
+				.AddIngredient(null, "EmagledFragmentation", 100)
+				.AddTile(null, "MateriaTransmutator")
+				.Register();
 		}
 	}
 }

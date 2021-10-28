@@ -27,7 +27,6 @@ using Terraria.UI;
 using Terraria.UI.Chat;
 using Terraria.UI.Gamepad;
 using Terraria.Utilities;
-using Terraria.World.Generation;
 using Terraria;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -43,29 +42,29 @@ namespace AlchemistNPC.Items.Weapons
 			Tooltip.SetDefault("Forged to fight the most powerful beings in the universe. Wield it wisely."
 			+"\nRight click in inventory to change damage type");
 			
-			DisplayName.AddTranslation(GameCulture.Russian, "Громобой");
-			Tooltip.AddTranslation(GameCulture.Russian, "Выкован для противодействия самым мощным существам во вселенной. Используй его мудро.\nПравый клик в инвентаре меняет тип урона");
-			DisplayName.AddTranslation(GameCulture.Chinese, "风暴战锤");
-			Tooltip.AddTranslation(GameCulture.Chinese, "为了与宇宙中最强大的存在战斗而打造. 请明智地使用它."
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Громобой");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Выкован для противодействия самым мощным существам во вселенной. Используй его мудро.\nПравый клик в инвентаре меняет тип урона");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "风暴战锤");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "为了与宇宙中最强大的存在战斗而打造. 请明智地使用它."
 			+"\n在物品栏中右键切换伤害类型");
         }
 
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(3858);
-			item.melee = true;
-			item.damage = 110;
-			item.crit = 21;
-			item.width = 50;
-			item.height = 40;
-			item.hammer = 600;
-			item.axe = 120;
-			item.value = 10000000;
-			item.rare = 11;
-            item.knockBack = 10;
-			item.expert = true;
-			item.scale = 1.5f;
-			item.shoot = mod.ProjectileType("StormbreakerSwing");
+			Item.CloneDefaults(3858);
+			Item.DamageType = DamageClass.Melee;
+			Item.damage = 110;
+			Item.crit = 21;
+			Item.width = 50;
+			Item.height = 40;
+			Item.hammer = 600;
+			Item.axe = 120;
+			Item.value = 10000000;
+			Item.rare = 11;
+            Item.knockBack = 10;
+			Item.expert = true;
+			Item.scale = 1.5f;
+			Item.shoot = ProjectileType<Projectiles.StormbreakerSwing>();
 		}
 
 		public override bool AltFunctionUse(Player player)
@@ -77,17 +76,17 @@ namespace AlchemistNPC.Items.Weapons
 		{
 			if (player.altFunctionUse != 2)
 			{
-				item.shoot = mod.ProjectileType("StormbreakerSwing");
+				Item.shoot = ProjectileType<Projectiles.StormbreakerSwing>();
 			}
 			if (player.altFunctionUse == 2)
 			{
-				item.useTime = 15;
-				item.useAnimation = 15;
-				item.damage = 150;
-				item.shootSpeed = 24f;
-				item.shoot = mod.ProjectileType("Stormbreaker");
-				item.noMelee = true;
-				item.noUseGraphic = true;
+				Item.useTime = 15;
+				Item.useAnimation = 15;
+				Item.damage = 150;
+				Item.shootSpeed = 24f;
+				Item.shoot = ProjectileType<Projectiles.Stormbreaker>();
+				Item.noMelee = true;
+				Item.noUseGraphic = true;
 			}
 			
 			return base.CanUseItem(player);
@@ -100,8 +99,8 @@ namespace AlchemistNPC.Items.Weapons
 
         public override void RightClick(Player player)
         {
-			item.consumable = true;
-            Item.NewItem((int)player.position.X, (int)player.position.Y, player.width, player.height, mod.ItemType("StormbreakerThrown"), 1, false, 82);
+			Item.consumable = true;
+            Item.NewItem((int)player.position.X, (int)player.position.Y, player.width, player.height, ModContent.ItemType<Items.Weapons.StormbreakerThrown>(), 1, false, 82);
         }
 		
 		public override int ChoosePrefix (UnifiedRandom rand)
@@ -111,15 +110,14 @@ namespace AlchemistNPC.Items.Weapons
 		
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.NimbusRod);
-			recipe.AddRecipeGroup("AlchemistNPC:AnyLunarHamaxe");
-			recipe.AddIngredient(ItemID.MoltenHamaxe);
-			recipe.AddIngredient(ItemID.MeteorHamaxe);
-			recipe.AddIngredient(ItemID.LivingWoodWand);
-			recipe.AddTile(null, "MateriaTransmutator");
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe()
+				.AddIngredient(ItemID.NimbusRod)
+				.AddRecipeGroup("AlchemistNPC:AnyLunarHamaxe")
+				.AddIngredient(ItemID.MoltenHamaxe)
+				.AddIngredient(ItemID.MeteorHamaxe)
+				.AddIngredient(ItemID.LivingWoodWand)
+				.AddTile(null, "MateriaTransmutator")
+				.Register();
 		}
 	}
 }

@@ -12,22 +12,22 @@ namespace AlchemistNPC.Projectiles.Minions
 		public int counter = 0;
         public override void SetDefaults()
         {
-            projectile.width = 46;
-            projectile.height = 48;
-            projectile.timeLeft = Projectile.SentryLifeTime;
-            projectile.ignoreWater = true;
-            projectile.sentry = true;
-            ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
+            Projectile.width = 46;
+            Projectile.height = 48;
+            Projectile.timeLeft = Projectile.SentryLifeTime;
+            Projectile.ignoreWater = true;
+            Projectile.sentry = true;
+            ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
         }
 
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("GLaDOS turret");
-			Main.projFrames[projectile.type] = 2;
+			Main.projFrames[Projectile.type] = 2;
 
         }
 		
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
 		{
 			fallThrough = false;
 			return true;
@@ -35,47 +35,47 @@ namespace AlchemistNPC.Projectiles.Minions
 		
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			projectile.width = 32;
-			projectile.velocity.Y = 0f;
+			Projectile.width = 32;
+			Projectile.velocity.Y = 0f;
 			return false;
 		}
 		
         public override void AI()
         {
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			AlchemistNPCPlayer modPlayer = player.GetModPlayer<AlchemistNPCPlayer>();
-			if (player.dead || !player.HasBuff(mod.BuffType("Turret")))
+			if (player.dead || !player.HasBuff(ModContent.BuffType<Buffs.Turret>()))
 			{
 				modPlayer.turret = false;
 			}
 			if (modPlayer.turret)
 			{
-				projectile.timeLeft = 2;
+				Projectile.timeLeft = 2;
 			}
-            if (projectile.localAI[0] == 0f)
+            if (Projectile.localAI[0] == 0f)
             {
-                projectile.localAI[1] = 1f;
-                projectile.localAI[0] = 1f;
-                projectile.ai[0] = 120f;
-                Main.PlaySound(SoundID.Item11, projectile.position);
+                Projectile.localAI[1] = 1f;
+                Projectile.localAI[0] = 1f;
+                Projectile.ai[0] = 120f;
+                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item11, Projectile.position);
             }
-            projectile.velocity.X = 0f;
-            projectile.velocity.Y = projectile.velocity.Y + 0.2f;
-            if (projectile.velocity.Y > 16f)
+            Projectile.velocity.X = 0f;
+            Projectile.velocity.Y = Projectile.velocity.Y + 0.2f;
+            if (Projectile.velocity.Y > 16f)
             {
-                projectile.velocity.Y = 16f;
+                Projectile.velocity.Y = 16f;
             }
             bool flag18 = false;
-            float num506 = projectile.Center.X;
-            float num507 = projectile.Center.Y;
+            float num506 = Projectile.Center.X;
+            float num507 = Projectile.Center.Y;
             float num508 = 1000f;
-            NPC ownerMinionAttackTargetNPC = projectile.OwnerMinionAttackTargetNPC;
+            NPC ownerMinionAttackTargetNPC = Projectile.OwnerMinionAttackTargetNPC;
             if (ownerMinionAttackTargetNPC != null && ownerMinionAttackTargetNPC.CanBeChasedBy(this, false))
             {
                 float num509 = ownerMinionAttackTargetNPC.position.X + ownerMinionAttackTargetNPC.width / 2;
                 float num510 = ownerMinionAttackTargetNPC.position.Y + ownerMinionAttackTargetNPC.height / 2;
-                float num511 = Math.Abs(projectile.position.X + projectile.width / 2 - num509) + Math.Abs(projectile.position.Y + projectile.height / 2 - num510);
-                if (num511 < num508 && Collision.CanHit(projectile.position, projectile.width, projectile.height, ownerMinionAttackTargetNPC.position, ownerMinionAttackTargetNPC.width, ownerMinionAttackTargetNPC.height))
+                float num511 = Math.Abs(Projectile.position.X + Projectile.width / 2 - num509) + Math.Abs(Projectile.position.Y + Projectile.height / 2 - num510);
+                if (num511 < num508 && Collision.CanHit(Projectile.position, Projectile.width, Projectile.height, ownerMinionAttackTargetNPC.position, ownerMinionAttackTargetNPC.width, ownerMinionAttackTargetNPC.height))
                 {
                     num508 = num511;
                     num506 = num509;
@@ -91,8 +91,8 @@ namespace AlchemistNPC.Projectiles.Minions
                     {
                         float num513 = Main.npc[num512].position.X + Main.npc[num512].width / 2;
                         float num514 = Main.npc[num512].position.Y + Main.npc[num512].height / 2;
-                        float num515 = Math.Abs(projectile.position.X + projectile.width / 2 - num513) + Math.Abs(projectile.position.Y + projectile.height / 2 - num514);
-                        if (num515 < num508 && Collision.CanHit(projectile.position, projectile.width, projectile.height, Main.npc[num512].position, Main.npc[num512].width, Main.npc[num512].height))
+                        float num515 = Math.Abs(Projectile.position.X + Projectile.width / 2 - num513) + Math.Abs(Projectile.position.Y + Projectile.height / 2 - num514);
+                        if (num515 < num508 && Collision.CanHit(Projectile.position, Projectile.width, Projectile.height, Main.npc[num512].position, Main.npc[num512].width, Main.npc[num512].height))
                         {
                             num508 = num515;
                             num506 = num513;
@@ -101,13 +101,14 @@ namespace AlchemistNPC.Projectiles.Minions
                         }
                     }
                 }
-				projectile.frame = 1;
+				Projectile.frame = 1;
             }
             if (flag18)
             {
 				if (counter == 60)
 				{
-					Main.PlaySound(2, -1, -1, mod.GetSoundSlot(SoundType.Item, "Sounds/Item/ThereYouAre"));
+                    // Reimplement when custom sounds are fixed
+					//Terraria.Audio.SoundEngine.PlaySound(2, -1, -1, SoundLoader.GetSoundSlot(Mod, "Sounds/Item/ThereYouAre"));    
 				}
 				counter++;
 				if (counter == 1200)
@@ -116,23 +117,23 @@ namespace AlchemistNPC.Projectiles.Minions
 				}
                 float num516 = num506;
                 float num517 = num507;
-                num506 -= projectile.Center.X;
-                num507 -= projectile.Center.Y;
+                num506 -= Projectile.Center.X;
+                num507 -= Projectile.Center.Y;
 				int num518 = 0;
-                if (projectile.frameCounter > 0)
+                if (Projectile.frameCounter > 0)
                 {
-                    projectile.frameCounter--;
+                    Projectile.frameCounter--;
                 }
-                if (projectile.frameCounter <= 0)
+                if (Projectile.frameCounter <= 0)
                 {
-                    int num519 = projectile.spriteDirection;
+                    int num519 = Projectile.spriteDirection;
                     if (num506 < 0f)
                     {
-                        projectile.spriteDirection = -1;
+                        Projectile.spriteDirection = -1;
                     }
                     else
                     {
-                        projectile.spriteDirection = 1;
+                        Projectile.spriteDirection = 1;
                     }
                     if (num507 > 0f)
                     {
@@ -158,43 +159,43 @@ namespace AlchemistNPC.Projectiles.Minions
                     {
                         num518 = 2;
                     }
-                    projectile.frame = 1;
-                    projectile.frameCounter = 8;
-					if (projectile.ai[0] <= 0f)
+                    Projectile.frame = 1;
+                    Projectile.frameCounter = 8;
+					if (Projectile.ai[0] <= 0f)
 					{
-						projectile.frameCounter = 4;
+						Projectile.frameCounter = 4;
 					}
                 }
-                if (projectile.ai[0] <= 0f)
+                if (Projectile.ai[0] <= 0f)
                 {
-                    projectile.localAI[1] = 0f;
-                    projectile.ai[0] = 3f;
-                    if (Main.myPlayer == projectile.owner)
+                    Projectile.localAI[1] = 0f;
+                    Projectile.ai[0] = 3f;
+                    if (Main.myPlayer == Projectile.owner)
                     {
                         float num521 = 6f;
                         int num522 = 242;
-                        Vector2 vector37 = new Vector2(projectile.position.X + projectile.width * 0.5f, projectile.position.Y + projectile.height * 0.5f);
+                        Vector2 vector37 = new Vector2(Projectile.position.X + Projectile.width * 0.5f, Projectile.position.Y + Projectile.height * 0.5f);
                         if (num518 == 0)
                         {
-                            vector37.X += 24 * projectile.spriteDirection;
+                            vector37.X += 24 * Projectile.spriteDirection;
                         }
                         else if (num518 == 1)
                         {
-                            vector37.X += 24 * projectile.spriteDirection;
+                            vector37.X += 24 * Projectile.spriteDirection;
                         }
                         else if (num518 == 2)
                         {
-                            vector37.X += 24 * projectile.spriteDirection;
+                            vector37.X += 24 * Projectile.spriteDirection;
                         }
                         else if (num518 == 3)
                         {
-                            vector37.X += 14 * projectile.spriteDirection;
+                            vector37.X += 14 * Projectile.spriteDirection;
                         }
                         else if (num518 == 4)
                         {
-                            vector37.X += 2 * projectile.spriteDirection;
+                            vector37.X += 2 * Projectile.spriteDirection;
                         }
-                        if (projectile.spriteDirection < 0)
+                        if (Projectile.spriteDirection < 0)
                         {
                             vector37.X += 10f;
                         }
@@ -204,18 +205,18 @@ namespace AlchemistNPC.Projectiles.Minions
                         num525 = num521 / num525;
                         num523 *= num525;
                         num524 *= num525;
-                        int num526 = projectile.damage;
-                        Projectile.NewProjectile(vector37.X, vector37.Y, num523, num524, num522, num526, projectile.knockBack, Main.myPlayer, 0f, 0f);
+                        int num526 = Projectile.damage;
+                        Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), vector37.X, vector37.Y, num523, num524, num522, num526, Projectile.knockBack, Main.myPlayer, 0f, 0f);
                     }
                 }
             }
-            else if (projectile.ai[0] <= 60f && (projectile.frame == 1 || projectile.frame == 3 || projectile.frame == 5 || projectile.frame == 7 || projectile.frame == 9))
+            else if (Projectile.ai[0] <= 60f && (Projectile.frame == 1 || Projectile.frame == 3 || Projectile.frame == 5 || Projectile.frame == 7 || Projectile.frame == 9))
             {
-                projectile.frame = 0;
+                Projectile.frame = 0;
             }
-            if (projectile.ai[0] > 0f)
+            if (Projectile.ai[0] > 0f)
             {
-                projectile.ai[0] -= 1f;
+                Projectile.ai[0] -= 1f;
                 return;
             }
         }

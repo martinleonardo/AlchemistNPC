@@ -19,19 +19,19 @@ namespace AlchemistNPC.Items.Equippable
 			Tooltip.SetDefault("Follows any attack with some energy shots"
 			+"\nDeals 1/4 of current weapon's damage"
 			+"\nDoes not require any ammo");
-			DisplayName.AddTranslation(GameCulture.Russian, "Броневой модуль ''Шквал''");
-            Tooltip.AddTranslation(GameCulture.Russian, "Сопровождает любую атаку кратким залпом энегетическими снарядами\nНаносит 1/4 от урона оружия в руках\nНе требует боеприпасов");
-			DisplayName.AddTranslation(GameCulture.Chinese, "护甲模块 “弹幕网”");
-            Tooltip.AddTranslation(GameCulture.Chinese, "任何攻击后附着能量弹\n产生当前武器1/4的伤害\n无需消耗任何弹药");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Броневой модуль ''Шквал''");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Сопровождает любую атаку кратким залпом энегетическими снарядами\nНаносит 1/4 от урона оружия в руках\nНе требует боеприпасов");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "护甲模块 “弹幕网”");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "任何攻击后附着能量弹\n产生当前武器1/4的伤害\n无需消耗任何弹药");
 		}
 	
 		public override void SetDefaults()
 		{
-			item.width = 32;
-			item.height = 32;
-			item.value = 100000;
-			item.rare = 10;
-			item.accessory = true;
+			Item.width = 32;
+			Item.height = 32;
+			Item.value = 100000;
+			Item.rare = 10;
+			Item.accessory = true;
 		}
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
@@ -41,14 +41,13 @@ namespace AlchemistNPC.Items.Equippable
 		
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddRecipeGroup("AlchemistNPC:Tier3Bar", 15);
-			recipe.AddIngredient(mod.ItemType("DivineLava"), 99);
-			recipe.AddIngredient(2882);
-			recipe.AddIngredient(ItemID.Nanites, 99);
-			recipe.AddTile(mod.TileType("MateriaTransmutator"));
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe()
+				.AddRecipeGroup("AlchemistNPC:Tier3Bar", 15)
+				.AddIngredient(ModContent.ItemType<Items.Materials.DivineLava>(), 99)
+				.AddIngredient(2882)
+				.AddIngredient(ItemID.Nanites, 99)
+				.AddTile(TileType<Tiles.MateriaTransmutator>())
+				.Register();
 		}
 	}
 }

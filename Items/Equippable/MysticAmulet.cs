@@ -16,19 +16,19 @@ namespace AlchemistNPC.Items.Equippable
 			DisplayName.SetDefault("Mystic Amulet");
 			Tooltip.SetDefault("Grants Telekinesis ability to its wielder"
 				+ "\nCan be used for flying");
-			DisplayName.AddTranslation(GameCulture.Russian, "Мистический Амулет");
-            Tooltip.AddTranslation(GameCulture.Russian, "Даёт носителю способность к Телекинезу\nПозволяет летать");
-            DisplayName.AddTranslation(GameCulture.Chinese, "神秘护符");
-            Tooltip.AddTranslation(GameCulture.Chinese, "使使用者获得心灵促动的能力\n可用来飞行");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Мистический Амулет");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Даёт носителю способность к Телекинезу\nПозволяет летать");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "神秘护符");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "使使用者获得心灵促动的能力\n可用来飞行");
         }    
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.BlessedApple);
-			item.width = 32;
-			item.height = 30;
-			item.value = 5000000;
-			item.rare = 11;
-			item.mountType = mod.MountType("MysticAmulet");
+			Item.CloneDefaults(ItemID.BlessedApple);
+			Item.width = 32;
+			Item.height = 30;
+			Item.value = 5000000;
+			Item.rare = 11;
+			Item.mountType = MountType<Mounts.MysticAmulet>();
 		}
 	}
 }

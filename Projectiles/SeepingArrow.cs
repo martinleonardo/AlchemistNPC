@@ -15,13 +15,13 @@ namespace AlchemistNPC.Projectiles
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(ProjectileID.IchorArrow);
-			aiType = ProjectileID.IchorArrow;
+			Projectile.CloneDefaults(ProjectileID.IchorArrow);
+			AIType = ProjectileID.IchorArrow;
 		}
 
 		public override bool PreKill(int timeLeft)
 		{
-			projectile.type = ProjectileID.IchorArrow;
+			Projectile.type = ProjectileID.IchorArrow;
 			return true;
 		}
 		
@@ -29,16 +29,16 @@ namespace AlchemistNPC.Projectiles
 		{
 			if (Main.rand.Next(3) == 0)
 				{
-					Dust dust = Dust.NewDustDirect(projectile.position, projectile.height, projectile.width, mod.DustType("SA"),
-						projectile.velocity.X * .2f, projectile.velocity.Y * .2f, 200, Scale: 1.2f);
-					dust.velocity += projectile.velocity * 0.3f;
+					Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.height, Projectile.width, ModContent.DustType<Dusts.SA>(),
+						Projectile.velocity.X * .2f, Projectile.velocity.Y * .2f, 200, Scale: 1.2f);
+					dust.velocity += Projectile.velocity * 0.3f;
 					dust.velocity *= 0.2f;
 				}
 				if (Main.rand.Next(4) == 0)
 				{
-					Dust dust = Dust.NewDustDirect(projectile.position, projectile.height, projectile.width, mod.DustType("SA"),
+					Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.height, Projectile.width, ModContent.DustType<Dusts.SA>(),
 						0, 0, 254, Scale: 0.3f);
-					dust.velocity += projectile.velocity * 0.5f;
+					dust.velocity += Projectile.velocity * 0.5f;
 					dust.velocity *= 0.5f;
 				}
 		}

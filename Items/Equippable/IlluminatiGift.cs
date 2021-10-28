@@ -26,37 +26,38 @@ namespace AlchemistNPC.Items.Equippable
 				+ "\nIf damage taken would have killed you, you will survive"
 				+ "\nWould only work if cooldown is not active"
 				+ "\nAllows to inflict Midas Touch debuff by any attack");
-				DisplayName.AddTranslation(GameCulture.Russian, "Дар Иллюминатов");
-            Tooltip.AddTranslation(GameCulture.Russian, "Даёт все эффекты Кольца Жадности\nУвеличивает радиус подбора предметов, если акссесуар виден\nПри получении урона все враги на экране будут парализованы\nЕсли ХП опускается ниже 10%, то включается специальная регенерация\nСпособность имеет двухминутный откат\nУдар не убьёт вас, пока не активен откат\nЛюбые атаки накладывают Касание Мидаса на противников");
-            DisplayName.AddTranslation(GameCulture.Chinese, "光照会礼物");
-            Tooltip.AddTranslation(GameCulture.Chinese, "增加物品拾取范围, 增加钱币掉落\n上述效果在饰品为可见时启用\n大部分商人都会打折\n被攻击后麻痹屏幕内所有敌人\n生命值低于10%时, 开启特殊回复\n该能力有两分钟冷却时间\n避免致死伤害\n只有在非冷却时启用\n所有攻击造成点金术效果");
+				DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Дар Иллюминатов");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Даёт все эффекты Кольца Жадности\nУвеличивает радиус подбора предметов, если акссесуар виден\nПри получении урона все враги на экране будут парализованы\nЕсли ХП опускается ниже 10%, то включается специальная регенерация\nСпособность имеет двухминутный откат\nУдар не убьёт вас, пока не активен откат\nЛюбые атаки накладывают Касание Мидаса на противников");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "光照会礼物");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "增加物品拾取范围, 增加钱币掉落\n上述效果在饰品为可见时启用\n大部分商人都会打折\n被攻击后麻痹屏幕内所有敌人\n生命值低于10%时, 开启特殊回复\n该能力有两分钟冷却时间\n避免致死伤害\n只有在非冷却时启用\n所有攻击造成点金术效果");
         }
 	
 		public override void SetDefaults()
 		{
-			item.stack = 1;
-			item.width = 34;
-			item.height = 34;
-			item.value = 1000000;
-			item.rare = 11;
-			item.accessory = true;
-			item.defense = 4;
-			item.expert = true;
+			Item.stack = 1;
+			Item.width = 34;
+			Item.height = 34;
+			Item.value = 1000000;
+			Item.rare = 11;
+			Item.accessory = true;
+			Item.defense = 4;
+			Item.expert = true;
 		}
 		
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).Illuminati = true;
+			((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).Illuminati = true;
 			if (!hideVisual)
 			{
 				player.goldRing = true;
-				player.coins = true;
+				player.hasLuckyCoin = true;
 				for (int number = 0; number < 400; ++number)
 				{
 					if (Main.item[number].active && Main.item[number].noGrabDelay == 0)
 					{
 						int num1 = Player.defaultItemGrabRange*10;
-						if (new Microsoft.Xna.Framework.Rectangle((int)player.position.X - num1, (int)player.position.Y - num1, player.width + num1 * 2, player.height + num1 * 2).Intersects(new Microsoft.Xna.Framework.Rectangle((int)Main.item[number].position.X, (int)Main.item[number].position.Y, Main.item[number].width, Main.item[number].height)) && player.ItemSpace(Main.item[number]))
+						//TEST
+						if (new Microsoft.Xna.Framework.Rectangle((int)player.position.X - num1, (int)player.position.Y - num1, player.width + num1 * 2, player.height + num1 * 2).Intersects(new Microsoft.Xna.Framework.Rectangle((int)Main.item[number].position.X, (int)Main.item[number].position.Y, Main.item[number].width, Main.item[number].height)) && player.CanPullItem(Main.item[number], player.ItemSpace(Main.item[number])))
 						{
 							Main.item[number].beingGrabbed = true;
 							float num2 = 12f;
@@ -75,18 +76,24 @@ namespace AlchemistNPC.Items.Equippable
 				}
 			}
 			player.discount = true;
-			if (player.statLife <= player.statLifeMax2/10 && !player.HasBuff(mod.BuffType("IlluminatiHeal")) && !player.HasBuff(mod.BuffType("IlluminatiCooldown")))
+			if (player.statLife <= player.statLifeMax2/10 && !player.HasBuff(ModContent.BuffType<Buffs.IlluminatiHeal>()) && !player.HasBuff(ModContent.BuffType<Buffs.IlluminatiCooldown>()))
 			{
+				// IMPLEMENT WHEN WEAKREFERENCES FIXED
+				/*
 				if (ModLoader.GetMod("CalamityMod") != null)
 				{
-					player.AddBuff(mod.BuffType("IlluminatiHeal"), 3600);
-					player.AddBuff(mod.BuffType("IlluminatiCooldown"), 7200);
+					player.AddBuff(ModContent.BuffType<Buffs.IlluminatiHeal>(), 3600);
+					player.AddBuff(ModContent.BuffType<Buffs.IlluminatiCooldown>(), 7200);
 				}
 				if (ModLoader.GetMod("CalamityMod") == null)
 				{
-					player.AddBuff(mod.BuffType("IlluminatiHeal"), 3600);
-					player.AddBuff(mod.BuffType("IlluminatiCooldown"), 7200);
+					player.AddBuff(ModContent.BuffType<Buffs.IlluminatiHeal>(), 3600);
+					player.AddBuff(ModContent.BuffType<Buffs.IlluminatiCooldown>(), 7200);
 				}
+				*/
+				// Delete next 2 lines when commented code is implemented
+				player.AddBuff(ModContent.BuffType<Buffs.IlluminatiHeal>(), 3600);
+				player.AddBuff(ModContent.BuffType<Buffs.IlluminatiCooldown>(), 7200);
 			}
 		}
 	}

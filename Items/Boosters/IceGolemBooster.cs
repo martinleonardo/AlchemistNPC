@@ -14,20 +14,20 @@ namespace AlchemistNPC.Items.Boosters
 		{
 			DisplayName.SetDefault("Ice Golem Booster");
 			Tooltip.SetDefault("Provides immunity to Chilled, Frozen and Frostburn debuffs");
-			DisplayName.AddTranslation(GameCulture.Russian, "Усилитель Ледяного Голема");
-			Tooltip.AddTranslation(GameCulture.Russian, "Даёт невосприимчивость к Охлаждению, Заморозке и Морозному Ожогу");
-			DisplayName.AddTranslation(GameCulture.Chinese, "冰巨人增益容器");
-			Tooltip.AddTranslation(GameCulture.Chinese, "免疫寒冷，冻结和霜火");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Усилитель Ледяного Голема");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Даёт невосприимчивость к Охлаждению, Заморозке и Морозному Ожогу");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "冰巨人增益容器");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "免疫寒冷，冻结和霜火");
         }
 
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.LifeFruit);
-			item.consumable = false;
-			item.value = 100000;
+			Item.CloneDefaults(ItemID.LifeFruit);
+			Item.consumable = false;
+			Item.value = 100000;
 		}
 
-		public override bool UseItem(Player player)
+		public override bool? UseItem(Player player)
         {
 			if (player.GetModPlayer<AlchemistNPCPlayer>().IceGolemBooster == 0)
 			{

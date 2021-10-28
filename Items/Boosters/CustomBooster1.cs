@@ -14,20 +14,20 @@ namespace AlchemistNPC.Items.Boosters
 		{
 			DisplayName.SetDefault("Custom Booster 1");
 			Tooltip.SetDefault("Gives Shine and Nightvision effects");
-			DisplayName.AddTranslation(GameCulture.Russian, "Выборочный усилитель 1");
-			Tooltip.AddTranslation(GameCulture.Russian, "Даёт эффекты Свечения и Ночного Зрения");
-			DisplayName.AddTranslation(GameCulture.Chinese, "普通增益容器1号");
-			Tooltip.AddTranslation(GameCulture.Chinese, "给予发光和夜视效果");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Выборочный усилитель 1");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Даёт эффекты Свечения и Ночного Зрения");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "普通增益容器1号");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "给予发光和夜视效果");
         }
 
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.LifeFruit);
-			item.consumable = false;
-			item.value = 100000;
+			Item.CloneDefaults(ItemID.LifeFruit);
+			Item.consumable = false;
+			Item.value = 100000;
 		}
 
-		public override bool UseItem(Player player)
+		public override bool? UseItem(Player player)
         {
 			if (player.GetModPlayer<AlchemistNPCPlayer>().CustomBooster1 == 0)
 			{
@@ -44,14 +44,13 @@ namespace AlchemistNPC.Items.Boosters
 		
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(mod.ItemType("BrokenBooster1"), 1);
-			recipe.AddIngredient(ItemID.ShinePotion, 30);
-			recipe.AddIngredient(ItemID.NightOwlPotion, 30);
-			recipe.AddRecipeGroup("IronBar", 10);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe()
+				.AddIngredient(ModContent.ItemType<Items.Boosters.BrokenBooster1>(), 1)
+				.AddIngredient(ItemID.ShinePotion, 30)
+				.AddIngredient(ItemID.NightOwlPotion, 30)
+				.AddRecipeGroup("IronBar", 10)
+				.AddTile(TileID.Anvils)
+				.Register();
 		}
 	}
 }

@@ -18,22 +18,22 @@ namespace AlchemistNPC.Items.Misc
 			Tooltip.SetDefault("Exclusive product, designed by Angela"
 			+"\nLeft click to change between day and night time"
 			+"\nRight click to enable or disable rain (sandstorm in desert)");
-			DisplayName.AddTranslation(GameCulture.Russian, "Устройства контроля симуляции");
-            Tooltip.AddTranslation(GameCulture.Russian, "Эксклюзивное творение Анджелы\nЛевый клик для смены времени суток\nПравый клик для включения или выключения дождя (песчаной бури в пустыне)");
-			DisplayName.AddTranslation(GameCulture.Chinese, "模拟控制单元");
-			Tooltip.AddTranslation(GameCulture.Chinese, "独家产品，安吉拉设计\n左键昼夜交换\n右键控制下雨（沙漠中控制沙尘暴）");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Устройства контроля симуляции");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Эксклюзивное творение Анджелы\nЛевый клик для смены времени суток\nПравый клик для включения или выключения дождя (песчаной бури в пустыне)");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "模拟控制单元");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "独家产品，安吉拉设计\n左键昼夜交换\n右键控制下雨（沙漠中控制沙尘暴）");
 		}
 
 		public override void SetDefaults()
 		{
-			item.width = 32;
-			item.height = 32;
-			item.rare = 5;
-			item.useAnimation = 15;
-            item.useTime = 15;
-            item.useStyle = 4;
-			item.UseSound = SoundID.Item4;
-			item.consumable = false;
+			Item.width = 32;
+			Item.height = 32;
+			Item.rare = 5;
+			Item.useAnimation = 15;
+            Item.useTime = 15;
+            Item.useStyle = 4;
+			Item.UseSound = SoundID.Item4;
+			Item.consumable = false;
 		}
 		
 		public override bool CanRightClick()
@@ -48,10 +48,10 @@ namespace AlchemistNPC.Items.Misc
 
         public override void RightClick(Player player)
         {
-			Projectile.NewProjectile(player.Center, Vector2.Zero, mod.ProjectileType("Sandrain"), 0, 0, Main.myPlayer);
+			Projectile.NewProjectile(player.GetProjectileSource_Item(Item), player.Center, Vector2.Zero, ProjectileType<Projectiles.Sandrain>(), 0, 0, Main.myPlayer);
 		}
 		
-		public override bool UseItem(Player player)
+		public override bool? UseItem(Player player)
         {
 			if (Main.dayTime)
 			{

@@ -20,10 +20,10 @@ namespace AlchemistNPC.Items.Misc
 			+"\nAlchemist, Brewer and Young Brewer are providing 50% discount"
 			+"\nMakes potions non-consumable if Supreme Calamitas is defeated"
 			+"\nBuffs duration is 50% longer");
-			DisplayName.AddTranslation(GameCulture.Russian, "Талисман Алхимика Четвертого Уровня");
-            Tooltip.AddTranslation(GameCulture.Russian, "Если находится в инвентаре, вы имеет очень большой шанс не потратить зелье\nПозволяет использовать зелья из Свиньи-Копилки с помощью клавиши Быстрого Баффа\nАлхимик, Зельеварщица и Юный Зельевар предоставляют скидку в 50%\nЗелья не будут тратиться, если побеждена Supreme Calamitas\nДлительность баффов увеличена на 50%");
-			DisplayName.AddTranslation(GameCulture.Chinese, "炼金师符咒 T-4");
-			Tooltip.AddTranslation(GameCulture.Chinese, "放置物品栏中时, 极大概率不消耗药剂"
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Талисман Алхимика Четвертого Уровня");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Если находится в инвентаре, вы имеет очень большой шанс не потратить зелье\nПозволяет использовать зелья из Свиньи-Копилки с помощью клавиши Быстрого Баффа\nАлхимик, Зельеварщица и Юный Зельевар предоставляют скидку в 50%\nЗелья не будут тратиться, если побеждена Supreme Calamitas\nДлительность баффов увеличена на 50%");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "炼金师符咒 T-4");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "放置物品栏中时, 极大概率不消耗药剂"
 			+"\n'快速增益'键能够使用猪猪储蓄罐中的药剂"
 			+"\n炼金师, 药剂师和年轻药剂师提供50%折扣"
 			+"如果至尊灾厄已被击败, 不消耗药剂"
@@ -32,30 +32,29 @@ namespace AlchemistNPC.Items.Misc
 
 		public override void SetDefaults()
 		{
-			item.width = 32;
-			item.height = 32;
-			item.value = 4000000;
-			item.rare = 9;
+			Item.width = 32;
+			Item.height = 32;
+			Item.value = 4000000;
+			Item.rare = 9;
 		}
 		
 		public override void UpdateInventory(Player player)
 		{
-		((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).AlchemistCharmTier4 = true;
-		((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).DistantPotionsUse = true;
+		((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).AlchemistCharmTier4 = true;
+		((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).DistantPotionsUse = true;
 		}
 		
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "AlchemistCharmTier3");
-			recipe.AddIngredient(ItemID.LunarBar, 10);
-			recipe.AddIngredient(ItemID.FragmentSolar, 5);
-			recipe.AddIngredient(ItemID.FragmentNebula, 5);
-			recipe.AddIngredient(ItemID.FragmentVortex, 5);
-			recipe.AddIngredient(ItemID.FragmentStardust, 5);
-			recipe.AddTile(TileID.LunarCraftingStation);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe()
+				.AddIngredient(null, "AlchemistCharmTier3")
+				.AddIngredient(ItemID.LunarBar, 10)
+				.AddIngredient(ItemID.FragmentSolar, 5)
+				.AddIngredient(ItemID.FragmentNebula, 5)
+				.AddIngredient(ItemID.FragmentVortex, 5)
+				.AddIngredient(ItemID.FragmentStardust, 5)
+				.AddTile(TileID.LunarCraftingStation)
+				.Register();
 		}
 	}
 }

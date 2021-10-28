@@ -18,28 +18,28 @@ namespace AlchemistNPC.Projectiles
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(ProjectileID.Bullet);
-			projectile.ranged = true;
-			projectile.width = 20;
-			projectile.height = 20;
-			projectile.penetrate = 1;
-			projectile.timeLeft = 300;
-			projectile.scale = 0.75f;
-			aiType = ProjectileID.Bullet;
+			Projectile.CloneDefaults(ProjectileID.Bullet);
+			Projectile.DamageType = DamageClass.Ranged;
+			Projectile.width = 20;
+			Projectile.height = 20;
+			Projectile.penetrate = 1;
+			Projectile.timeLeft = 300;
+			Projectile.scale = 0.75f;
+			AIType = ProjectileID.Bullet;
 		}
 		
 		public override bool PreKill(int timeLeft)
 		{
-			projectile.type = ProjectileID.RocketIII;
+			Projectile.type = ProjectileID.RocketIII;
 			return true;
 		}
 		
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			projectile.penetrate--;
-			if (projectile.penetrate <= 0)
+			Projectile.penetrate--;
+			if (Projectile.penetrate <= 0)
 			{
-				projectile.Kill();
+				Projectile.Kill();
 			}
 		}
 	

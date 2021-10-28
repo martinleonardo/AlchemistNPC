@@ -17,61 +17,60 @@ namespace AlchemistNPC.Items.Weapons
 			+ "\n[c/FF0000:EGO weapon]"
 			+ "\nIts attack goes through enemy invincibility frames"
 			+ "\nAfter certain amount of hits releases broken blades into enemies");
-			DisplayName.AddTranslation(GameCulture.Russian, "Дробильщик MK4 (T-05-41)");
-            Tooltip.AddTranslation(GameCulture.Russian, "Острые зубы этого дробильщика способны сделать чистый разрез сквозь врага.\n[c/FF0000:Оружие Э.П.О.С.]\nАтаки игнорируют период неуязвимости противника\nПри нанесении определённого количество ударов выпускает отработанные лезвия во врагов");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Дробильщик MK4 (T-05-41)");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Острые зубы этого дробильщика способны сделать чистый разрез сквозь врага.\n[c/FF0000:Оружие Э.П.О.С.]\nАтаки игнорируют период неуязвимости противника\nПри нанесении определённого количество ударов выпускает отработанные лезвия во врагов");
 
-            DisplayName.AddTranslation(GameCulture.Chinese, "粉碎机MK4 (T-05-41)");
-            Tooltip.AddTranslation(GameCulture.Chinese, "'锋利的刀刃能将它的目标干净利落地锯开.'\n[c/FF0000:EGO 武器]\n攻击无视无敌帧\n在命中一定次数之后将破碎的刀片释放入敌人体内");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "粉碎机MK4 (T-05-41)");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "'锋利的刀刃能将它的目标干净利落地锯开.'\n[c/FF0000:EGO 武器]\n攻击无视无敌帧\n在命中一定次数之后将破碎的刀片释放入敌人体内");
         }
 
 		public override void SetDefaults()
 		{
-			item.damage = 35;
-			item.useStyle = 5;
-			item.useAnimation = 24;
-			item.useTime = 30;
-			item.shootSpeed = 3.7f;
-			item.knockBack = 6;
-			item.width = 32;
-			item.height = 32;
-			item.scale = 1f;
-			item.rare = 6;
-			item.value = Item.sellPrice(gold: 50);
+			Item.damage = 35;
+			Item.useStyle = 5;
+			Item.useAnimation = 24;
+			Item.useTime = 30;
+			Item.shootSpeed = 3.7f;
+			Item.knockBack = 6;
+			Item.width = 32;
+			Item.height = 32;
+			Item.scale = 1f;
+			Item.rare = 6;
+			Item.value = Item.sellPrice(gold: 50);
 
-			item.melee = true;
-			item.noMelee = true; // Important because the spear is actually a projectile instead of an item. This prevents the melee hitbox of this item.
-			item.noUseGraphic = true; // Important, it's kind of wired if people see two spears at one time. This prevents the melee animation of this item.
-			item.autoReuse = true; // Most spears don't autoReuse, but it's possible when used in conjunction with CanUseItem()
+			Item.DamageType = DamageClass.Melee;
+			Item.noMelee = true; // Important because the spear is actually a projectile instead of an Item. This prevents the melee hitbox of this Item.
+			Item.noUseGraphic = true; // Important, it's kind of wired if people see two spears at one time. This prevents the melee animation of this Item.
+			Item.autoReuse = true; // Most spears don't autoReuse, but it's possible when used in conjunction with CanUseItem()
 
-			item.UseSound = SoundID.Item1;
-			item.shoot = mod.ProjectileType("GrinderMK4");
+			Item.UseSound = SoundID.Item1;
+			Item.shoot = ProjectileType<Projectiles.GrinderMK4>();
 		}
 
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.HallowedBar, 15);
-			recipe.AddIngredient(ItemID.SoulofLight, 10);
-			recipe.AddIngredient(ItemID.SoulofNight, 10);
-			recipe.AddIngredient(ItemID.SoulofSight, 10);
-			recipe.AddIngredient(ItemID.SoulofMight, 10);
-			recipe.AddIngredient(ItemID.SoulofFright, 10);
-			recipe.AddTile(null, "WingoftheWorld");
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe()
+				.AddIngredient(ItemID.HallowedBar, 15)
+				.AddIngredient(ItemID.SoulofLight, 10)
+				.AddIngredient(ItemID.SoulofNight, 10)
+				.AddIngredient(ItemID.SoulofSight, 10)
+				.AddIngredient(ItemID.SoulofMight, 10)
+				.AddIngredient(ItemID.SoulofFright, 10)
+				.AddTile(null, "WingoftheWorld")
+				.Register();
 		}
 		
 		public override bool CanUseItem(Player player)
 		{
-			if (((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).ParadiseLost == true)
+			if (((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).ParadiseLost == true)
 					{
-					item.damage = 200;
+					Item.damage = 200;
 					}
 					else
 					{
-					item.damage = 35;
+					Item.damage = 35;
 					}
-			return player.ownedProjectileCounts[item.shoot] < 1; 
+			return player.ownedProjectileCounts[Item.shoot] < 1; 
 		}
 	}
 }

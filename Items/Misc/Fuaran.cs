@@ -14,18 +14,18 @@ namespace AlchemistNPC.Items.Misc
 		{
 			DisplayName.SetDefault("Fuaran");
 			Tooltip.SetDefault("Permanently increases maximum mana by 100. Can only be used once.");
-			DisplayName.AddTranslation(GameCulture.Russian, "Фуаран");
-			Tooltip.AddTranslation(GameCulture.Russian, "Увеличивает максимальную ману на 100. Может быть использован только 1 раз.");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Фуаран");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Увеличивает максимальную ману на 100. Может быть использован только 1 раз.");
 
-            DisplayName.AddTranslation(GameCulture.Chinese, "魔泉书");
-            Tooltip.AddTranslation(GameCulture.Chinese, "永久增加100法力上限. 只能使用一次.");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "魔泉书");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "永久增加100法力上限. 只能使用一次.");
 
         }
 
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.LifeFruit);
-			item.value = 5000000;
+			Item.CloneDefaults(ItemID.LifeFruit);
+			Item.value = 5000000;
 		}
 
 		public override bool CanUseItem(Player player)
@@ -33,7 +33,7 @@ namespace AlchemistNPC.Items.Misc
 			return player.statManaMax >= 200 && player.GetModPlayer<AlchemistNPCPlayer>().Fuaran < 1;
 		}
 
-		public override bool UseItem(Player player)
+		public override bool? UseItem(Player player)
 		{
 			player.statManaMax2 += 100;
 			player.statMana += 100;

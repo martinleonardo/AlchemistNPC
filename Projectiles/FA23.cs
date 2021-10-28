@@ -17,11 +17,10 @@ namespace AlchemistNPC.Projectiles
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(513);
-			projectile.magic = false;
-			projectile.thrown = true;
-			projectile.aiStyle = 92;
-			aiType = 513;
+			Projectile.CloneDefaults(513);
+			Projectile.DamageType = DamageClass.Throwing;
+			Projectile.aiStyle = 92;
+			AIType = 513;
 		}
 		
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

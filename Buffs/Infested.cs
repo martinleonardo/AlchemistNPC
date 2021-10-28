@@ -8,26 +8,28 @@ using Terraria.Localization;
 
 namespace AlchemistNPC.Buffs
 {
-	public class Infested : ModBuff
-	{
-		public override void SetDefaults()
-		{
-			DisplayName.SetDefault("Infested");
-			Description.SetDefault("Slowed, spiders are ready to burst");
-			Main.debuff[Type] = true;
-			Main.pvpBuff[Type] = true;
-			Main.buffNoSave[Type] = false;
-			longerExpertDebuff = true;
-			DisplayName.AddTranslation(GameCulture.Russian, "Заражён");
-			Description.AddTranslation(GameCulture.Russian, "Замедлен, пауки готовы к выходу");
-			DisplayName.AddTranslation(GameCulture.Chinese, "蛛群滋生");
-			Description.AddTranslation(GameCulture.Chinese, "减速，蜘蛛种群暴涨");
+    public class Infested : ModBuff
+    {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Infested");
+            Description.SetDefault("Slowed, spiders are ready to burst");
+            Main.debuff[Type] = true;
+            Main.pvpBuff[Type] = true;
+            Main.buffNoSave[Type] = false;
+            LongerExpertDebuff = true;
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Заражён");
+            Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Замедлен, пауки готовы к выходу");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "蛛群滋生");
+            Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "减速，蜘蛛种群暴涨");
         }
 
         public override void Update(NPC npc, ref int buffIndex)
         {
-			if (!npc.boss)
-			{
+            if (!npc.boss)
+            {
+                // IMPLEMENT WHEN WEAKREFERENCES FIXED
+                /*
 				if (ModLoader.GetMod("CalamityMod") != null)
 				{
 					if (npc.type != 222 && npc.type != (ModLoader.GetMod("CalamityMod").NPCType("PlaguebringerGoliath")) && npc.type != (ModLoader.GetMod("CalamityMod").NPCType("PlaguebringerShade")) && npc.type != (ModLoader.GetMod("CalamityMod").NPCType("PlagueBeeLargeG")))
@@ -42,7 +44,13 @@ namespace AlchemistNPC.Buffs
 						npc.velocity *= 0.95f;
 					}
 				}
-			}
+				*/
+                // DELETE WHEN IMPLEMENTED
+                if (npc.type != 222)
+                {
+                    npc.velocity *= 0.95f;
+                }
+            }
         }
-	}
+    }
 }

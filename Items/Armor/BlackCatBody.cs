@@ -15,17 +15,17 @@ namespace AlchemistNPC.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Black Cat's dress");
-			DisplayName.AddTranslation(GameCulture.Russian, "Платье Чёрной Кошки");
-            DisplayName.AddTranslation(GameCulture.Chinese, "黑猫的裙子");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Платье Чёрной Кошки");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "黑猫的裙子");
         }
 
 		public override void SetDefaults()
 		{
-			item.width = 18;
-			item.height = 18;
-			item.value = 1650000;
-			item.rare = -11;
-			item.vanity = true;
+			Item.width = 18;
+			Item.height = 18;
+			Item.value = 1650000;
+			Item.rare = -11;
+			Item.vanity = true;
 		}
 	}
 }

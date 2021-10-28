@@ -11,16 +11,16 @@ namespace AlchemistNPC.Buffs
 {
 	public class GreaterDangersense : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Greater Dangersense");
 			Description.SetDefault("Lights up enemy projectiles");
 			Main.debuff[Type] = false;
-			canBeCleared = true;
-			DisplayName.AddTranslation(GameCulture.Russian, "Зелье Великого Чувства Опасности");
-			Description.AddTranslation(GameCulture.Russian, "Подсвечивает снаряды противника");
-            DisplayName.AddTranslation(GameCulture.Chinese, "强效危险感知");
-            Description.AddTranslation(GameCulture.Chinese, "高亮敌人的抛射物");
+			CanBeCleared = true;
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Зелье Великого Чувства Опасности");
+			Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Подсвечивает снаряды противника");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "强效危险感知");
+            Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "高亮敌人的抛射物");
         }
 	}
 }

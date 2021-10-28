@@ -5,6 +5,7 @@ using static Terraria.ModLoader.ModContent;
 using Terraria.ID;
 using Terraria.Localization;
 using System.Linq;
+using Terraria.DataStructures;
 
 namespace AlchemistNPC.Items.Weapons
 {
@@ -15,49 +16,49 @@ namespace AlchemistNPC.Items.Weapons
 			DisplayName.SetDefault("Wrath of the Celestial");
 			Tooltip.SetDefault("Shoots cluster of exploding blue flames"
 			+"\nWay more powerful than it seems");
-			DisplayName.AddTranslation(GameCulture.Russian, "Гнев Целестиала");
-            Tooltip.AddTranslation(GameCulture.Russian, "Выстреливает веером взрывающихся голубых огней\nБолее могущественнен, чем кажется");
-			DisplayName.AddTranslation(GameCulture.Chinese, "天界之怒");
-			Tooltip.AddTranslation(GameCulture.Chinese, "发射一簇爆裂蓝焰"
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Гнев Целестиала");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Выстреливает веером взрывающихся голубых огней\nБолее могущественнен, чем кажется");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "天界之怒");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "发射一簇爆裂蓝焰"
 			+"\n比看上去更强大");
-			Item.staff[item.type] = true;
+			Item.staff[Item.type] = true;
         }
 
 		public override void SetDefaults()
 		{
-			item.damage = 369;
-			item.noMelee = true;
-			item.magic = true;
-			item.mana = 10;
-			item.rare = 11;
-			item.width = 40;
-			item.height = 40;
-			item.useTime = 10;
-			item.UseSound = SoundID.Item20;
-			item.useStyle = 5;
-			item.shootSpeed = 12f;
-			item.useAnimation = 15;   
-			item.knockBack = 4;
-			item.value = Item.sellPrice(1, 0, 0, 0);
-			item.autoReuse = true;
-			item.shoot = mod.ProjectileType("BlueFlame");
+			Item.damage = 369;
+			Item.noMelee = true;
+			Item.DamageType = DamageClass.Magic;
+			Item.mana = 10;
+			Item.rare = 11;
+			Item.width = 40;
+			Item.height = 40;
+			Item.useTime = 10;
+			Item.UseSound = SoundID.Item20;
+			Item.useStyle = 5;
+			Item.shootSpeed = 12f;
+			Item.useAnimation = 15;   
+			Item.knockBack = 4;
+			Item.value = Item.sellPrice(1, 0, 0, 0);
+			Item.autoReuse = true;
+			Item.shoot = ProjectileType<Projectiles.BlueFlame>();
 		}
 		
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+		public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			Vector2 perturbedSpeed1 = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(5));
-			Vector2 perturbedSpeed2 = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(5));
-			Vector2 perturbedSpeed3 = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(10));
-			Vector2 perturbedSpeed4 = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(10));
-			Vector2 perturbedSpeed5 = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(15));
-			Vector2 perturbedSpeed6 = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(15));
-			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage*4, knockBack, player.whoAmI);
-			Projectile.NewProjectile(position.X, position.Y, perturbedSpeed1.X, perturbedSpeed1.Y, type, damage*4, knockBack, player.whoAmI);
-			Projectile.NewProjectile(position.X, position.Y, perturbedSpeed2.X, perturbedSpeed2.Y, type, damage*4, knockBack, player.whoAmI);
-			Projectile.NewProjectile(position.X, position.Y, perturbedSpeed3.X, perturbedSpeed3.Y, type, damage*4, knockBack, player.whoAmI);
-			Projectile.NewProjectile(position.X, position.Y, perturbedSpeed4.X, perturbedSpeed4.Y, type, damage*4, knockBack, player.whoAmI);
-			Projectile.NewProjectile(position.X, position.Y, perturbedSpeed5.X, perturbedSpeed5.Y, type, damage*4, knockBack, player.whoAmI);
-			Projectile.NewProjectile(position.X, position.Y, perturbedSpeed6.X, perturbedSpeed6.Y, type, damage*4, knockBack, player.whoAmI);
+			Vector2 perturbedSpeed1 = velocity.RotatedByRandom(MathHelper.ToRadians(5));
+			Vector2 perturbedSpeed2 = velocity.RotatedByRandom(MathHelper.ToRadians(5));
+			Vector2 perturbedSpeed3 = velocity.RotatedByRandom(MathHelper.ToRadians(10));
+			Vector2 perturbedSpeed4 = velocity.RotatedByRandom(MathHelper.ToRadians(10));
+			Vector2 perturbedSpeed5 = velocity.RotatedByRandom(MathHelper.ToRadians(15));
+			Vector2 perturbedSpeed6 = velocity.RotatedByRandom(MathHelper.ToRadians(15));
+			Projectile.NewProjectile(source, position.X, position.Y, velocity.X, velocity.Y, type, damage*4, knockback, player.whoAmI);
+			Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed1.X, perturbedSpeed1.Y, type, damage*4, knockback, player.whoAmI);
+			Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed2.X, perturbedSpeed2.Y, type, damage*4, knockback, player.whoAmI);
+			Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed3.X, perturbedSpeed3.Y, type, damage*4, knockback, player.whoAmI);
+			Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed4.X, perturbedSpeed4.Y, type, damage*4, knockback, player.whoAmI);
+			Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed5.X, perturbedSpeed5.Y, type, damage*4, knockback, player.whoAmI);
+			Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed6.X, perturbedSpeed6.Y, type, damage*4, knockback, player.whoAmI);
 			return false;
 		}
 	}

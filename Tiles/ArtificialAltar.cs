@@ -13,7 +13,7 @@ namespace AlchemistNPC.Tiles
 {
 	public class ArtificialAltar : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileLighted[Type] = true;
 			Main.tileSolidTop[Type] = false;
@@ -27,11 +27,12 @@ namespace AlchemistNPC.Tiles
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Artificial Altar");
-			name.AddTranslation(GameCulture.Russian, "Искусственный Алтарь");
-            name.AddTranslation(GameCulture.Chinese, "人造祭坛");
+			name.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Искусственный Алтарь");
+            name.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "人造祭坛");
             AddMapEntry(new Color(200, 200, 200), name);
-			disableSmartCursor = true;
-			adjTiles = new int[]{ TileID.DemonAltar };
+			TileID.Sets.DisableSmartCursor[Type] = true;
+			//TileID.Sets.DisableSmartCursor[Type] = true;
+			AdjTiles = new int[]{ TileID.DemonAltar };
 		}
 
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
@@ -47,7 +48,7 @@ namespace AlchemistNPC.Tiles
 		
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 32, 16, mod.ItemType("ArtificialAltar"));
+			Item.NewItem(i * 16, j * 16, 32, 16, ModContent.ItemType<Items.Placeable.ArtificialAltar>());
 		}
 	}
 }

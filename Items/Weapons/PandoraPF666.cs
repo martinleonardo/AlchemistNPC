@@ -4,6 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using Terraria.Localization;
+using Terraria.DataStructures;
 
 namespace AlchemistNPC.Items.Weapons
 {
@@ -17,11 +18,11 @@ namespace AlchemistNPC.Items.Weapons
 			+"\nSpecial attack #2 (Energy Release)"
 			+"\nAttack depletes Disaster Gauge"
 			+"\nRight click to change special attack");
-			DisplayName.AddTranslation(GameCulture.Russian, "Пандора (Форма 666)");
-            Tooltip.AddTranslation(GameCulture.Russian, "'Оружие преисподней, имеющее 666 различных форм'\nВерсия с разблокированным потенциалом\nСпециальная Атака №2 (Высвобождение энергии)\nАтака опустошает шкалу Бедствия\nНажмите правую кнопку мыши для смены специальной атаки");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Пандора (Форма 666)");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "'Оружие преисподней, имеющее 666 различных форм'\nВерсия с разблокированным потенциалом\nСпециальная Атака №2 (Высвобождение энергии)\nАтака опустошает шкалу Бедствия\nНажмите правую кнопку мыши для смены специальной атаки");
 
-            DisplayName.AddTranslation(GameCulture.Chinese, "潘多拉 (PF666)");
-			Tooltip.AddTranslation(GameCulture.Chinese, "'来自地狱的武器, 有666种不同的形态'"
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "潘多拉 (PF666)");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "'来自地狱的武器, 有666种不同的形态'"
 			+"\n修复了的潘多拉, 解锁了破坏潜力"
 			+"\n特殊攻击 #2 (能量放出)"
 			+"\n攻击装填灾厄槽"
@@ -31,40 +32,40 @@ namespace AlchemistNPC.Items.Weapons
 		
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.SnowmanCannon);
-			item.ranged = false;
-			item.damage = 666;
-			item.crit = 100;
-			item.width = 56;
-			item.height = 30;
-			item.useTime = 40;
-			item.useAnimation = 40;
-			item.noMelee = true;
-			item.knockBack = 8;
-			item.rare = 12;
-			item.autoReuse = false;
-			item.shootSpeed = 32f;
-			item.shoot = mod.ProjectileType("PF666");
-			item.value = Item.sellPrice(1, 0, 0, 0);
-			item.UseSound = SoundID.Item5;
-			item.useAmmo = 0;
+			Item.CloneDefaults(ItemID.SnowmanCannon);
+			Item.DamageType = DamageClass.Generic;
+			Item.damage = 666;
+			Item.crit = 100;
+			Item.width = 56;
+			Item.height = 30;
+			Item.useTime = 40;
+			Item.useAnimation = 40;
+			Item.noMelee = true;
+			Item.knockBack = 8;
+			Item.rare = 11;
+			Item.autoReuse = false;
+			Item.shootSpeed = 32f;
+			Item.shoot = ProjectileType<Projectiles.PF666>();
+			Item.value = Item.sellPrice(1, 0, 0, 0);
+			Item.UseSound = SoundID.Item5;
+			Item.useAmmo = 0;
 		}
 
 		public override void HoldItem(Player player)
 		{
-			((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).PH = true;
-			((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).DisasterGauge = 500;
+			((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).PH = true;
+			((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).DisasterGauge = 500;
 		}
 
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+		public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
 			if (player.altFunctionUse != 2)
 			{
 			Vector2 vel1 = new Vector2(-0, 0);
 			vel1 *= 0f;
-			Projectile.NewProjectile(player.position.X, player.position.Y, vel1.X, vel1.Y, mod.ProjectileType("PF666"), item.damage, 0, Main.myPlayer);
-			((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).DisasterGauge = 0;
-			item.SetDefaults(mod.ItemType("Pandora"));
+			Projectile.NewProjectile(source, player.position.X, player.position.Y, vel1.X, vel1.Y, ProjectileType<Projectiles.PF666>(), Item.damage, 0, Main.myPlayer);
+			((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).DisasterGauge = 0;
+			Item.SetDefaults(ModContent.ItemType<Items.Weapons.Pandora>());
 			}
 			if (player.altFunctionUse == 2)
 			{
@@ -86,7 +87,7 @@ namespace AlchemistNPC.Items.Weapons
 			}
 			if (player.altFunctionUse == 2)
 			{
-				item.SetDefaults(mod.ItemType("PandoraPF594"));
+				Item.SetDefaults(ModContent.ItemType<Items.Weapons.PandoraPF594>());
 				return true;
 			}
 			return false;

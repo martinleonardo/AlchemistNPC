@@ -10,29 +10,28 @@ namespace AlchemistNPC.Projectiles
 	{
 		public override void SetDefaults()
 		{
-			projectile.extraUpdates = 0;
-			projectile.width = 16;
-			projectile.height = 16;
+			Projectile.extraUpdates = 0;
+			Projectile.width = 16;
+			Projectile.height = 16;
 			// aiStyle 99 is used for all yoyos, and is Extremely suggested, as yoyo are extremely difficult without them
-			projectile.aiStyle = 99;
-			projectile.friendly = true;
-			projectile.penetrate = -1;
-			projectile.melee = true;
-			projectile.scale = 1f;
+			Projectile.aiStyle = 99;
+			Projectile.friendly = true;
+			Projectile.penetrate = -1;			Projectile.DamageType = DamageClass.Melee;
+			Projectile.scale = 1f;
 		}
 
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Sasscade Yoyo");
-			ProjectileID.Sets.YoyosLifeTimeMultiplier[projectile.type] = -1f;
-			ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 400f;
-			ProjectileID.Sets.YoyosTopSpeed[projectile.type] = 12f;
+			ProjectileID.Sets.YoyosLifeTimeMultiplier[Projectile.type] = -1f;
+			ProjectileID.Sets.YoyosMaximumRange[Projectile.type] = 400f;
+			ProjectileID.Sets.YoyosTopSpeed[Projectile.type] = 12f;
 
 		}
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-		target.immune[projectile.owner] = 2;
+		target.immune[Projectile.owner] = 2;
 		}
 
 		public override void AI()
@@ -41,13 +40,13 @@ namespace AlchemistNPC.Projectiles
             {
                 NPC target = Main.npc[i];
  
-                float shootToX = target.position.X + target.width * 0.5f - projectile.Center.X;
-                float shootToY = target.position.Y + target.height * 0.5f - projectile.Center.Y;
+                float shootToX = target.position.X + target.width * 0.5f - Projectile.Center.X;
+                float shootToY = target.position.Y + target.height * 0.5f - Projectile.Center.Y;
                 float distance = (float)Math.Sqrt(shootToX * shootToX + shootToY * shootToY);
 
                 if (distance < 500f && !target.friendly && target.active)
                 {
-                    if (projectile.ai[0] > 60f) // Time in (60 = 1 second) 
+                    if (Projectile.ai[0] > 60f) // Time in (60 = 1 second) 
                     {
                         distance = 1.6f / distance;
 
@@ -55,15 +54,15 @@ namespace AlchemistNPC.Projectiles
                         shootToY *= distance * 3;
 						if (Main.rand.Next(20) == 0)
 						{
-                        Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, shootToX, shootToY, ProjectileID.NebulaArcanum, projectile.damage/3, 0, Main.myPlayer, 0f, 0f);
+                        Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, shootToX, shootToY, ProjectileID.NebulaArcanum, Projectile.damage/3, 0, Main.myPlayer, 0f, 0f);
 						}
-                        projectile.ai[0] = 0f;
+                        Projectile.ai[0] = 0f;
                     }
                 }
             }
 			if (Main.rand.NextBool())
 			{
-				Dust.NewDust(projectile.position + projectile.velocity, projectile.width, projectile.height, 187, projectile.velocity.X * 0.9f, projectile.velocity.Y * 0.9f);
+				Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, 187, Projectile.velocity.X * 0.9f, Projectile.velocity.Y * 0.9f);
 			}
 		}
 	}

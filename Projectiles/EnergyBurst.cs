@@ -13,30 +13,29 @@ namespace AlchemistNPC.Projectiles
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Energy Burst");     //The English name of the projectile
-			Main.projFrames[projectile.type] = 5;
+			Main.projFrames[Projectile.type] = 5;
 		}
 
 		public override void SetDefaults()
 		{
-			projectile.width = 52;
-			projectile.height = 52;
-			projectile.magic = false;
-			projectile.ranged = true;
-			projectile.tileCollide = false;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = -1;
-			projectile.penetrate = 100;
-			projectile.timeLeft = 20;
+			Projectile.width = 52;
+			Projectile.height = 52;
+			Projectile.DamageType = DamageClass.Ranged;
+			Projectile.tileCollide = false;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = -1;
+			Projectile.penetrate = 100;
+			Projectile.timeLeft = 20;
 		}
 		
 		public override void AI()
 		{
-			if (++projectile.frameCounter >= 4)
+			if (++Projectile.frameCounter >= 4)
             {
-                projectile.frameCounter = 0;
-                if (++projectile.frame >= 5)
+                Projectile.frameCounter = 0;
+                if (++Projectile.frame >= 5)
                 {
-                    projectile.Kill();
+                    Projectile.Kill();
                 }
             }
 		}

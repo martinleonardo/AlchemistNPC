@@ -17,12 +17,12 @@ namespace AlchemistNPC.Projectiles
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(100);
-			projectile.width = 6;
-			projectile.tileCollide = false;
-			projectile.aiStyle = 1;
-			projectile.timeLeft = 600;
-			aiType = 100;
+			Projectile.CloneDefaults(100);
+			Projectile.width = 6;
+			Projectile.tileCollide = false;
+			Projectile.aiStyle = 1;
+			Projectile.timeLeft = 600;
+			AIType = 100;
 		}
 		
 		public override void ModifyHitNPC (NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)

@@ -17,10 +17,10 @@ namespace AlchemistNPC.Projectiles
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(405);
-			projectile.tileCollide = false;
-			projectile.aiStyle = 70;
-			aiType = 405;           //Act exactly like default Bullet
+			Projectile.CloneDefaults(405);
+			Projectile.tileCollide = false;
+			Projectile.aiStyle = 70;
+			AIType = 405;           //Act exactly like default Bullet
 		}
 	}
 }

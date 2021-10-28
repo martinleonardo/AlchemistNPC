@@ -17,19 +17,19 @@ namespace AlchemistNPC.Items.Misc
             DisplayName.SetDefault("Enchanted Mirror");
             Tooltip.SetDefault("Left click returns you home"
             + "\nRight click teleports you back to recall point");
-            DisplayName.AddTranslation(GameCulture.Russian, "Зачарованное Зеркало");
-            Tooltip.AddTranslation(GameCulture.Russian, "Возвращает вас домой при использовании\nВозвращает вас на место предыдущей телепортации по нажатию правой кнопки мыши");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Зачарованное Зеркало");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Возвращает вас домой при использовании\nВозвращает вас на место предыдущей телепортации по нажатию правой кнопки мыши");
 
-            DisplayName.AddTranslation(GameCulture.Chinese, "魔镜");
-            Tooltip.AddTranslation(GameCulture.Chinese, "左键传送回家\n右键传送回上次使用此镜子的地点");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "魔镜");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "左键传送回家\n右键传送回上次使用此镜子的地点");
         }    
 		public override void SetDefaults()
         {
-            item.CloneDefaults(ItemID.MagicMirror);
-            item.maxStack = 1;
-			item.useAnimation = 15;
-            item.useTime = 15;
-            item.consumable = false;
+            Item.CloneDefaults(ItemID.MagicMirror);
+            Item.maxStack = 1;
+			Item.useAnimation = 15;
+            Item.useTime = 15;
+            Item.consumable = false;
             return;
         }
 		
@@ -38,13 +38,13 @@ namespace AlchemistNPC.Items.Misc
 			return true;
 		}
 		
-		public override bool UseItem(Player player)
+		public override bool? UseItem(Player player)
 		{
 			if (player.altFunctionUse == 0)
 			{
 			AlchemistNPC.ppx = player.position.X;
 			AlchemistNPC.ppy = player.position.Y;
-			player.Spawn();
+			player.Spawn(PlayerSpawnContext.RecallFromItem);
 			player.AddBuff(BuffID.ChaosState, 300);
 			}
 			if (player.altFunctionUse == 2)
@@ -114,16 +114,15 @@ namespace AlchemistNPC.Items.Misc
 		
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "Beacon");
-			recipe.AddIngredient(ItemID.MagicMirror);
-			recipe.AddIngredient(ItemID.RecallPotion, 30);
-			recipe.AddIngredient(ItemID.WormholePotion, 30);
-			recipe.AddIngredient(ItemID.SoulofLight, 15);
-			recipe.AddIngredient(ItemID.SoulofNight, 15);
-			recipe.AddTile(TileID.CrystalBall);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe()
+				.AddIngredient(null, "Beacon")
+				.AddIngredient(ItemID.MagicMirror)
+				.AddIngredient(ItemID.RecallPotion, 30)
+				.AddIngredient(ItemID.WormholePotion, 30)
+				.AddIngredient(ItemID.SoulofLight, 15)
+				.AddIngredient(ItemID.SoulofNight, 15)
+				.AddTile(TileID.CrystalBall)
+				.Register();
 		}
 		
     }

@@ -18,20 +18,20 @@ namespace AlchemistNPC.Buffs
 {
 	public class HoloprojectorHallowed : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Holoprojector ''Hallow''");
 			Description.SetDefault("Biome state is set to Hallow now");
 			Main.buffNoTimeDisplay[Type] = true;
-			DisplayName.AddTranslation(GameCulture.Russian, "Голографический Проектор ''Святой''");
-			Description.AddTranslation(GameCulture.Russian, "Изменяет текущий биом на Святой");
-            DisplayName.AddTranslation(GameCulture.Chinese, "全息投影仪 ''神圣''");
-            Description.AddTranslation(GameCulture.Chinese, "当前地形设置:神圣");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Голографический Проектор ''Святой''");
+			Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Изменяет текущий биом на Святой");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "全息投影仪 ''神圣''");
+            Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "当前地形设置:神圣");
         }
 		
 		public override void Update(Player player, ref int buffIndex)
 		{
-			player.ZoneHoly = true;
+			player.ZoneHallow = true;
 		}
 	}
 }

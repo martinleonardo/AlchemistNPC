@@ -14,27 +14,27 @@ namespace AlchemistNPC.Items.Summoning
         {
             DisplayName.SetDefault("Caught Unicorn");
             Tooltip.SetDefault("It is still hostile, better do not release him");
-			DisplayName.AddTranslation(GameCulture.Russian, "Пойманный единорог");
-			Tooltip.AddTranslation(GameCulture.Russian, "Он всё ещё агрессивен, лучше не выпускайте его");
-			DisplayName.AddTranslation(GameCulture.Chinese, "被捕获的独角兽");
-			Tooltip.AddTranslation(GameCulture.Chinese, "仍充满敌意, 最好别释放他");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Пойманный единорог");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Он всё ещё агрессивен, лучше не выпускайте его");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "被捕获的独角兽");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "仍充满敌意, 最好别释放他");
         }
 		
         public override void SetDefaults()
         {
-            item.width = 46;
-            item.height = 42;
-            item.maxStack = 1;
-            item.rare = 10;
-            item.useStyle = 1;
-            item.useAnimation = 15;
-            item.useTime = 15;
-            item.consumable = true;
-            item.noMelee = true;
-            item.noUseGraphic = true;
-            item.UseSound = SoundID.Item44;
-			item.makeNPC = NPCID.Unicorn;
-            Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(10, 16));
+            Item.width = 46;
+            Item.height = 42;
+            Item.maxStack = 1;
+            Item.rare = 10;
+            Item.useStyle = 1;
+            Item.useAnimation = 15;
+            Item.useTime = 15;
+            Item.consumable = true;
+            Item.noMelee = true;
+            Item.noUseGraphic = true;
+            Item.UseSound = SoundID.Item44;
+			Item.makeNPC = NPCID.Unicorn;
+            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(10, 16));
         }
 		
 		public override void HoldItem(Player player)
@@ -51,7 +51,7 @@ namespace AlchemistNPC.Items.Summoning
 		
         public override string Texture
 		{
-			get { return "Terraria/NPC_86"; }
+			get { return "Terraria/Images/NPC_" + NPCID.Unicorn; }
 		}
     }
 }

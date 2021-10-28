@@ -14,26 +14,26 @@ namespace AlchemistNPC.Projectiles
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("SB");
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 5;
-			ProjectileID.Sets.TrailingMode[projectile.type] = 0;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 		}
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(ProjectileID.Bullet);
-			projectile.width = 8;
-			projectile.height = 8;
-			projectile.timeLeft = 180;
-			aiType = ProjectileID.Bullet;
+			Projectile.CloneDefaults(ProjectileID.Bullet);
+			Projectile.width = 8;
+			Projectile.height = 8;
+			Projectile.timeLeft = 180;
+			AIType = ProjectileID.Bullet;
 		}
 		
 		public override void AI()
 		{
 			if (Main.rand.Next(3) == 0)
 				{
-					Dust dust = Dust.NewDustDirect(projectile.position, projectile.height, projectile.width, mod.DustType("RainbowDust"),
-						projectile.velocity.X * .2f, projectile.velocity.Y * .2f, 200, Scale: 1.2f);
-					dust.velocity += projectile.velocity * 0.3f;
+					Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.height, Projectile.width, ModContent.DustType<Dusts.RainbowDust>(),
+						Projectile.velocity.X * .2f, Projectile.velocity.Y * .2f, 200, Scale: 1.2f);
+					dust.velocity += Projectile.velocity * 0.3f;
 					dust.velocity *= 0.2f;
 					dust.noGravity = true;
 				}
@@ -41,13 +41,13 @@ namespace AlchemistNPC.Projectiles
 		
 		public override bool PreKill(int timeLeft)
 		{
-			projectile.type = ProjectileID.Bullet;
+			Projectile.type = ProjectileID.Bullet;
 			return true;
 		}
 		
 		public override void ModifyHitNPC (NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
-			Player player = Main.player[projectile.owner]; 
+			Player player = Main.player[Projectile.owner]; 
 			if (Main.rand.Next(5) == 0)
 			{
 			player.statLife += 1;

@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+using Terraria.GameContent;
 
 namespace AlchemistNPC.Projectiles
 {
@@ -12,33 +13,34 @@ namespace AlchemistNPC.Projectiles
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Energy Ball");     //The English name of the projectile
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 3;    //The length of old position to be recorded
-			ProjectileID.Sets.TrailingMode[projectile.type] = 0;        //The recording mode
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;    //The length of old position to be recorded
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;        //The recording mode
 		}
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(ProjectileID.Bullet);
-			projectile.timeLeft = 300;
-			projectile.ranged = false;
-			aiType = ProjectileID.Bullet;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = -1;
+			Projectile.CloneDefaults(ProjectileID.Bullet);
+			Projectile.timeLeft = 300;
+			// Unknown Damage Type
+			//Projectile.ranged = false;
+			AIType = ProjectileID.Bullet;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = -1;
 		}
 		
 		public override void Kill(int timeLeft)
         {
-			Main.PlaySound(SoundID.DD2_ExplosiveTrapExplode, projectile.position);
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0f, 0f, mod.ProjectileType("EnergyBurst"), projectile.damage/2, 0, Main.myPlayer);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, Projectile.position);
+			Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0f, 0f, ModContent.ProjectileType<Projectiles.EnergyBurst>(), Projectile.damage/2, 0, Main.myPlayer);
 		}
 		
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) {
+		public override bool PreDraw(ref Color lightColor) {
             
-            Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
-            for (int i = 0; i < projectile.oldPos.Length; i++) {
-                Vector2 drawPos = projectile.oldPos[i] - Main.screenPosition + drawOrigin + new Vector2(0f, projectile.gfxOffY);
-                Color color = projectile.GetAlpha(lightColor) * ((float)(projectile.oldPos.Length - i) / (float)projectile.oldPos.Length);
-                spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos, new Rectangle?(), color, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+            Vector2 drawOrigin = new Vector2(TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
+            for (int i = 0; i < Projectile.oldPos.Length; i++) {
+                Vector2 drawPos = Projectile.oldPos[i] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+                Color color = Projectile.GetAlpha(lightColor) * ((float)(Projectile.oldPos.Length - i) / (float)Projectile.oldPos.Length);
+                Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, drawPos, new Rectangle?(), color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             }
             return true;
         }

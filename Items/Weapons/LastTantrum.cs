@@ -16,30 +16,30 @@ namespace AlchemistNPC.Items.Weapons
 		{
 			DisplayName.SetDefault("Last Tantrum");
 			Tooltip.SetDefault("Shoots homing bullets that eradicate everything");
-			DisplayName.AddTranslation(GameCulture.Russian, "Последний Тантрум");
-			Tooltip.AddTranslation(GameCulture.Russian, "Выстреливает самонаводящиеся пули, уничтожающие всё");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Последний Тантрум");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Выстреливает самонаводящиеся пули, уничтожающие всё");
 
-            DisplayName.AddTranslation(GameCulture.Chinese, "最终之怒");
-            Tooltip.AddTranslation(GameCulture.Chinese, "发射自动追踪、全元素伤害的子弹");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "最终之怒");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "发射自动追踪、全元素伤害的子弹");
         }
 
 		public override void SetDefaults()
 		{
-			item.damage = 22222;
-			item.ranged = true;
-			item.width = 92;
-			item.height = 40;
-			item.useTime = 4;
-			item.useAnimation = 4;
-			item.useStyle = 5;
-			item.noMelee = true; //so the item's animation doesn't do damage
-			item.knockBack = 6;
-			item.value = 5000000;
-			item.rare = 11;
-			item.UseSound = SoundID.Item20;
-			item.autoReuse = true;
-			item.shoot = 10; //idk why but all the guns in the vanilla source have this
-			item.shootSpeed = 32f;
+			Item.damage = 22222;
+			Item.DamageType = DamageClass.Ranged;
+			Item.width = 92;
+			Item.height = 40;
+			Item.useTime = 4;
+			Item.useAnimation = 4;
+			Item.useStyle = 5;
+			Item.noMelee = true; //so the item's animation doesn't do damage
+			Item.knockBack = 6;
+			Item.value = 5000000;
+			Item.rare = 11;
+			Item.UseSound = SoundID.Item20;
+			Item.autoReuse = true;
+			Item.shoot = 10; //idk why but all the guns in the vanilla source have this
+			Item.shootSpeed = 32f;
 		}
 		
 		public override int ChoosePrefix (UnifiedRandom rand)
@@ -52,11 +52,11 @@ namespace AlchemistNPC.Items.Weapons
 			return new Vector2(-10, 0);
 		}
 		
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+		public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			type = mod.ProjectileType("LastTantrum");
-			Projectile.NewProjectile(position.X+Main.rand.Next(-10,10), position.Y+3+Main.rand.Next(-3,3), speedX, speedY, type, damage, knockBack, player.whoAmI);
-			Projectile.NewProjectile(position.X+Main.rand.Next(-10,10), position.Y-3+Main.rand.Next(-3,3), speedX, speedY, type, damage, knockBack, player.whoAmI);
+			type = ProjectileType<Projectiles.LastTantrum>();
+			Projectile.NewProjectile(source, position.X+Main.rand.Next(-10,10), position.Y+3+Main.rand.Next(-3,3), velocity.X, velocity.Y, type, damage, knockback, player.whoAmI);
+			Projectile.NewProjectile(source, position.X+Main.rand.Next(-10,10), position.Y-3+Main.rand.Next(-3,3), velocity.X, velocity.Y, type, damage, knockback, player.whoAmI);
 			return false;
 		}
 	}

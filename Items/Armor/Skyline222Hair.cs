@@ -11,34 +11,34 @@ namespace AlchemistNPC.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Skyline222's (Noire) hairstyle");
-			DisplayName.AddTranslation(GameCulture.Russian, "Причёска Нуар"); 
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Причёска Нуар"); 
 			Tooltip.SetDefault("Skyline222's fancy hairstyle");
-            Tooltip.AddTranslation(GameCulture.Russian, "Красивая причёска Нуар");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Красивая причёска Нуар");
 
-            DisplayName.AddTranslation(GameCulture.Chinese, "Skyline222's (Noire) 的发型");
-            Tooltip.AddTranslation(GameCulture.Chinese, "Skyline222的花俏发型");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "Skyline222's (Noire) 的发型");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "Skyline222的花俏发型");
 
-            ModTranslation text = mod.CreateTranslation("NoireSetBonus");
+            ModTranslation text = LocalizationLoader.CreateTranslation(Mod, "NoireSetBonus");
 		    text.SetDefault("Increases current ranged/minion damage by 20% and adds 20% to ranged critical strike chance"
 		    + "\n+40 defense"
 		    + "\nPrices are lower");
-            text.AddTranslation(GameCulture.Russian, "Увеличивает текущий урон в дальнем бою/прислужников на 20% и добаляет 20% к шансу критического удара\n+40 защиты\nЦены в магазинах ниже");
-            text.AddTranslation(GameCulture.Chinese, "增加20%当前远程/召唤伤害, 增加20%远程暴击率\n+40防御力\n让NPC降价");
-            mod.AddTranslation(text);
+            text.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Увеличивает текущий урон в дальнем бою/прислужников на 20% и добаляет 20% к шансу критического удара\n+40 защиты\nЦены в магазинах ниже");
+            text.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "增加20%当前远程/召唤伤害, 增加20%远程暴击率\n+40防御力\n让NPC降价");
+            LocalizationLoader.AddTranslation(text);
 		}
 
 		public override void SetDefaults()
 		{
-			item.width = 40;
-			item.height = 40;
-			item.value = 1650000;
-			item.rare = -11;
-			item.vanity = true;
+			Item.width = 40;
+			Item.height = 40;
+			Item.value = 1650000;
+			Item.rare = -11;
+			Item.vanity = true;
 		}
 		
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
-			return body.type == mod.ItemType("Skyline222Body") && legs.type == mod.ItemType("Skyline222Legs");
+			return body.type == ModContent.ItemType<Items.Armor.Skyline222Body>() && legs.type == ModContent.ItemType<Items.Armor.Skyline222Legs>();
 		}
 
 		public override void UpdateArmorSet(Player player)
@@ -47,9 +47,9 @@ namespace AlchemistNPC.Items.Armor
 			player.setBonus = NoireSetBonus;
 			player.discount = true;
             player.statDefense += 40;
-			player.rangedDamage += 0.2f;
-            player.minionDamage += 0.2f;
-            player.rangedCrit += 20;
+			player.GetDamage(DamageClass.Ranged) += 0.2f;
+            player.GetDamage(DamageClass.Summon) += 0.2f;
+            player.GetCritChance(DamageClass.Ranged) += 20;
 		}
 	}
 }

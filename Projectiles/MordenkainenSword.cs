@@ -14,37 +14,36 @@ namespace AlchemistNPC.Projectiles
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("MordenkainenSword");
-			projectile.light = 0.8f;
-			Main.projFrames[projectile.type] = 1;
+			Projectile.light = 0.8f;
+			Main.projFrames[Projectile.type] = 1;
 		}
 
 		public override void SetDefaults()
 		{
-			projectile.width = 44;
-			projectile.height = 44;
-			projectile.timeLeft = 30;
-			projectile.penetrate = -1;
-			projectile.hostile = false;
-			projectile.friendly = true;
-			projectile.tileCollide = false;
-			projectile.melee = true;
+			Projectile.width = 44;
+			Projectile.height = 44;
+			Projectile.timeLeft = 30;
+			Projectile.penetrate = -1;
+			Projectile.hostile = false;
+			Projectile.friendly = true;
+			Projectile.tileCollide = false;			Projectile.DamageType = DamageClass.Melee;
 		}
 		
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)	
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
 		{
 			return false;
 		}
 			
 		public override void AI()
 		{
-			projectile.tileCollide = false;
-			projectile.velocity *= 0f;
-			projectile.rotation += 0.15f;
+			Projectile.tileCollide = false;
+			Projectile.velocity *= 0f;
+			Projectile.rotation += 0.15f;
 		}
 		
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			target.immune[projectile.owner] = 6;
+			target.immune[Projectile.owner] = 6;
 		}
 	}
 }

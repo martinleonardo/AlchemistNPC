@@ -8,23 +8,23 @@ namespace AlchemistNPC.Items.Misc
 {
 	public class KnucklesBag : ModItem
 	{
-		public override int BossBagNPC => mod.NPCType("Knuckles");
+		public override int BossBagNPC => NPCType<NPCs.Knuckles>();
 		
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Treasure Bag");
 			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
-			DisplayName.AddTranslation(GameCulture.Chinese, "宝藏袋");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "宝藏袋");
 		}
 
 		public override void SetDefaults()
 		{
-			item.maxStack = 999;
-			item.consumable = true;
-			item.width = 24;
-			item.height = 24;
-			item.rare = 9;
-			item.expert = true;
+			Item.maxStack = 999;
+			Item.consumable = true;
+			Item.width = 24;
+			Item.height = 24;
+			Item.rare = 9;
+			Item.expert = true;
 		}
 
 		public override bool CanRightClick()
@@ -35,12 +35,12 @@ namespace AlchemistNPC.Items.Misc
 		public override void OpenBossBag(Player player)
 		{
 			player.TryGettingDevArmor();
-			player.QuickSpawnItem(mod.ItemType("EdgeOfChaos"));
-			player.QuickSpawnItem(mod.ItemType("LastTantrum"));
-			player.QuickSpawnItem(mod.ItemType("BreathOfTheVoid"));
-			player.QuickSpawnItem(mod.ItemType("ChaosBomb"));
-			player.QuickSpawnItem(mod.ItemType("UgandanTotem"));
-			player.QuickSpawnItem(mod.ItemType("AutoinjectorMK2"));
+			player.QuickSpawnItem(ModContent.ItemType<Items.Weapons.EdgeOfChaos>());
+			player.QuickSpawnItem(ModContent.ItemType<Items.Weapons.LastTantrum>());
+			player.QuickSpawnItem(ModContent.ItemType<Items.Weapons.BreathOfTheVoid>());
+			player.QuickSpawnItem(ModContent.ItemType<Items.Weapons.ChaosBomb>());
+			player.QuickSpawnItem(ModContent.ItemType<Items.Weapons.UgandanTotem>());
+			player.QuickSpawnItem(ModContent.ItemType<Items.Equippable.AutoinjectorMK2>());
 			player.QuickSpawnItem(ItemID.PlatinumCoin, 25);
 		}
 	}

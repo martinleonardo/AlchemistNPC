@@ -12,36 +12,35 @@ namespace AlchemistNPC.Items.Weapons
         {
             DisplayName.SetDefault("Chromovaria Bullet");
             Tooltip.SetDefault("Creates heavy damaging light explosion and inflicts Daybroken debuff");
-            DisplayName.AddTranslation(GameCulture.Russian, "Хромовариевая Пуля");
-            Tooltip.AddTranslation(GameCulture.Russian, "Создаёт взрыв, наносящий значительные повреждения и накладывает мощный дебафф");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Хромовариевая Пуля");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Создаёт взрыв, наносящий значительные повреждения и накладывает мощный дебафф");
 
-            DisplayName.AddTranslation(GameCulture.Chinese, "炫彩弹");
-            Tooltip.AddTranslation(GameCulture.Chinese, "造成巨大的伤害性爆炸并给予破晓Debuff");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "炫彩弹");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "造成巨大的伤害性爆炸并给予破晓Debuff");
         }    
 		public override void SetDefaults()
 		{
-			item.damage = 14;
-			item.ranged = true;
-			item.width = 16;
-			item.height = 16;
-			item.maxStack = 999;
-			item.consumable = true;
-			item.knockBack = 4;
-			item.value = Item.sellPrice(0, 0, 1, 0);
-			item.rare = 10;
-			item.shoot = mod.ProjectileType("ChromovariaBullet");
-			item.shootSpeed = 16f; 
-			item.ammo = AmmoID.Bullet; //
+			Item.damage = 14;
+			Item.DamageType = DamageClass.Ranged;
+			Item.width = 16;
+			Item.height = 16;
+			Item.maxStack = 999;
+			Item.consumable = true;
+			Item.knockBack = 4;
+			Item.value = Item.sellPrice(0, 0, 1, 0);
+			Item.rare = 10;
+			Item.shoot = ProjectileType<Projectiles.ChromovariaBullet>();
+			Item.shootSpeed = 16f; 
+			Item.ammo = AmmoID.Bullet; //
 		}
 
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.ExplodingBullet, 100);
-			recipe.AddIngredient(null, "ChromaticCrystal", 1);
-			recipe.AddTile(TileID.LunarCraftingStation);
-			recipe.SetResult(this, 100);
-			recipe.AddRecipe();
+			CreateRecipe(100)
+				.AddIngredient(ItemID.ExplodingBullet, 100)
+				.AddIngredient(null, "ChromaticCrystal", 1)
+				.AddTile(TileID.LunarCraftingStation)
+				.Register();
 		}
 	}
 }

@@ -4,57 +4,57 @@ using static Terraria.ModLoader.ModContent;
 
 namespace AlchemistNPC.Mounts
 {
-	public class Poro : ModMountData
+	public class Poro : ModMount
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
-			mountData.spawnDust = 143;
-			mountData.buff = mod.BuffType("Poro");
-			mountData.heightBoost = 36;
-			mountData.fallDamage = 0f;
-			mountData.runSpeed = 15f;
-			mountData.dashSpeed = 12f;
-			mountData.flightTimeMax = 0;
-			mountData.fatigueMax = 0;
-			mountData.jumpHeight = 50;
-			mountData.acceleration = 1f;
-			mountData.jumpSpeed = 10f;
-			mountData.blockExtraJumps = false;
-			mountData.totalFrames = 6;
-			mountData.constantJump = true;
-			int[] array = new int[mountData.totalFrames];
+			MountData.spawnDust = 143;
+			MountData.buff = ModContent.BuffType<Buffs.Poro>();
+			MountData.heightBoost = 36;
+			MountData.fallDamage = 0f;
+			MountData.runSpeed = 15f;
+			MountData.dashSpeed = 12f;
+			MountData.flightTimeMax = 0;
+			MountData.fatigueMax = 0;
+			MountData.jumpHeight = 50;
+			MountData.acceleration = 1f;
+			MountData.jumpSpeed = 10f;
+			MountData.blockExtraJumps = false;
+			MountData.totalFrames = 6;
+			MountData.constantJump = true;
+			int[] array = new int[MountData.totalFrames];
 			for (int l = 0; l < array.Length; l++)
 			{
 				array[l] = 32;
 			}
-			mountData.playerYOffsets = array;
-			mountData.xOffset = 10;
-			mountData.bodyFrame = 3;
-			mountData.yOffset = 16;
-			mountData.playerHeadOffset = 50;
-			mountData.standingFrameCount = 2;
-			mountData.standingFrameDelay = 50;
-			mountData.standingFrameStart = 0;
-			mountData.runningFrameCount = 4;
-			mountData.runningFrameDelay = 100;
-			mountData.runningFrameStart = 2;
-			mountData.flyingFrameCount = 0;
-			mountData.flyingFrameDelay = 0;
-			mountData.flyingFrameStart = 0;
-			mountData.inAirFrameCount = 4;
-			mountData.inAirFrameDelay = 50;
-			mountData.inAirFrameStart = 2;
-			mountData.idleFrameCount = 6;
-			mountData.idleFrameDelay = 12;
-			mountData.idleFrameStart = 0;
-			mountData.idleFrameLoop = true;
-			mountData.swimFrameCount = mountData.inAirFrameCount;
-			mountData.swimFrameDelay = mountData.inAirFrameDelay;
-			mountData.swimFrameStart = mountData.inAirFrameStart;
+			MountData.playerYOffsets = array;
+			MountData.xOffset = 10;
+			MountData.bodyFrame = 3;
+			MountData.yOffset = 16;
+			MountData.playerHeadOffset = 50;
+			MountData.standingFrameCount = 2;
+			MountData.standingFrameDelay = 50;
+			MountData.standingFrameStart = 0;
+			MountData.runningFrameCount = 4;
+			MountData.runningFrameDelay = 100;
+			MountData.runningFrameStart = 2;
+			MountData.flyingFrameCount = 0;
+			MountData.flyingFrameDelay = 0;
+			MountData.flyingFrameStart = 0;
+			MountData.inAirFrameCount = 4;
+			MountData.inAirFrameDelay = 50;
+			MountData.inAirFrameStart = 2;
+			MountData.idleFrameCount = 6;
+			MountData.idleFrameDelay = 12;
+			MountData.idleFrameStart = 0;
+			MountData.idleFrameLoop = true;
+			MountData.swimFrameCount = MountData.inAirFrameCount;
+			MountData.swimFrameDelay = MountData.inAirFrameDelay;
+			MountData.swimFrameStart = MountData.inAirFrameStart;
 			if (Main.netMode != 2)
 			{
-				mountData.textureWidth = mountData.backTexture.Width + 20;
-				mountData.textureHeight = mountData.backTexture.Height;
+				MountData.textureWidth = MountData.backTexture.Width() + 20;
+				MountData.textureHeight = MountData.backTexture.Height();
 			}
 		}
 	}

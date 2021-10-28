@@ -14,30 +14,29 @@ namespace AlchemistNPC.Projectiles
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("ExplosionDummyQD");
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 5;
-			ProjectileID.Sets.TrailingMode[projectile.type] = 0;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 		}
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(ProjectileID.LaserMachinegunLaser);
-			projectile.magic = false;
-			projectile.ranged = true;
-			projectile.width = 10;
-			projectile.height = 10;
-			projectile.penetrate = 40;
-			projectile.timeLeft = 30;
-			projectile.tileCollide = false;
-			aiType = ProjectileID.LaserMachinegunLaser;
+			Projectile.CloneDefaults(ProjectileID.LaserMachinegunLaser);
+			Projectile.DamageType = DamageClass.Ranged;
+			Projectile.width = 10;
+			Projectile.height = 10;
+			Projectile.penetrate = 40;
+			Projectile.timeLeft = 30;
+			Projectile.tileCollide = false;
+			AIType = ProjectileID.LaserMachinegunLaser;
 		}
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			target.immune[projectile.owner] = 1;
-			projectile.penetrate--;
-			if (projectile.penetrate <= 0)
+			target.immune[Projectile.owner] = 1;
+			Projectile.penetrate--;
+			if (Projectile.penetrate <= 0)
 			{
-				projectile.Kill();
+				Projectile.Kill();
 			}
 		}
 	

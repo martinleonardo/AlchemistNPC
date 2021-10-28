@@ -17,11 +17,11 @@ namespace AlchemistNPC.Projectiles
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(302);
-			projectile.width = 6;
-			projectile.tileCollide = false;
-			projectile.aiStyle = 1;
-			aiType = 302;
+			Projectile.CloneDefaults(302);
+			Projectile.width = 6;
+			Projectile.tileCollide = false;
+			Projectile.aiStyle = 1;
+			AIType = 302;
 		}
 		
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
@@ -34,7 +34,7 @@ namespace AlchemistNPC.Projectiles
 		
 		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
 		{
-			target.AddBuff(mod.BuffType("Petrified"), 10);
+			target.AddBuff(ModContent.BuffType<Buffs.Petrified>(), 10);
 		}
 	}
 }

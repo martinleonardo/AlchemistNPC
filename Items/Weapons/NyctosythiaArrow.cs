@@ -11,37 +11,36 @@ namespace AlchemistNPC.Items.Weapons
 		{
 			Tooltip.SetDefault("These arrows consume any form of light."
 			+"\nPhases through walls, releases homing projectiles on enemy/wall impact");
-			DisplayName.AddTranslation(GameCulture.Russian, "Никтосифиевая стрела");
-            Tooltip.AddTranslation(GameCulture.Russian, "Эти стрелы поглощают любой свет.\nПроходят сквозь стены, выпускают самонаводящиеся снаряды при попадании в противника/cтену");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Никтосифиевая стрела");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Эти стрелы поглощают любой свет.\nПроходят сквозь стены, выпускают самонаводящиеся снаряды при попадании в противника/cтену");
 
-            DisplayName.AddTranslation(GameCulture.Chinese, "夜蛾箭");
-            Tooltip.AddTranslation(GameCulture.Chinese, "这些箭消耗任意形式的光\n可穿墙, 第一次撞击墙壁或敌人后释放追踪敌人的子弹");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "夜蛾箭");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "这些箭消耗任意形式的光\n可穿墙, 第一次撞击墙壁或敌人后释放追踪敌人的子弹");
         }
 
 		public override void SetDefaults()
 		{
-			item.damage = 24;
-			item.ranged = true;
-			item.width = 14;
-			item.height = 38;
-			item.maxStack = 999;
-			item.consumable = true;             //You need to set the item consumable so that the ammo would automatically consumed
-			item.knockBack = 1;
-			item.value = 10000;
-			item.rare = 10;
-			item.shoot = mod.ProjectileType("NyctosythiaArrow");   //The projectile shoot when your weapon using this ammo
-			item.shootSpeed = 12f;                  //The speed of the projectile
-			item.ammo = AmmoID.Arrow;              //The ammo class this ammo belongs to.
+			Item.damage = 24;
+			Item.DamageType = DamageClass.Ranged;
+			Item.width = 14;
+			Item.height = 38;
+			Item.maxStack = 999;
+			Item.consumable = true;             //You need to set the item consumable so that the ammo would automatically consumed
+			Item.knockBack = 1;
+			Item.value = 10000;
+			Item.rare = 10;
+			Item.shoot = ProjectileType<Projectiles.NyctosythiaArrow>();   //The projectile shoot when your weapon using this ammo
+			Item.shootSpeed = 12f;                  //The speed of the projectile
+			Item.ammo = AmmoID.Arrow;              //The ammo class this ammo belongs to.
 		}
 
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.MoonlordArrow, 150);
-			recipe.AddIngredient(null, "NyctosythiaCrystal", 1);
-			recipe.AddTile(TileID.LunarCraftingStation);
-			recipe.SetResult(this, 150);
-			recipe.AddRecipe();
+			CreateRecipe(150)
+				.AddIngredient(ItemID.MoonlordArrow, 150)
+				.AddIngredient(null, "NyctosythiaCrystal", 1)
+				.AddTile(TileID.LunarCraftingStation)
+				.Register();
 		}
 	}
 }

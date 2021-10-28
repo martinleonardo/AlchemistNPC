@@ -13,12 +13,12 @@ namespace AlchemistNPC.Projectiles
 	{
 		public override void SetDefaults()
 		{
-			projectile.friendly = true;
-			projectile.width = 6400;
-			projectile.height = 6400;
-			projectile.penetrate = -1;
-			projectile.timeLeft = 90;
-			projectile.tileCollide = false;
+			Projectile.friendly = true;
+			Projectile.width = 6400;
+			Projectile.height = 6400;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 90;
+			Projectile.tileCollide = false;
 		}
 
 		public override void SetStaticDefaults()
@@ -28,8 +28,10 @@ namespace AlchemistNPC.Projectiles
 
 		public override void AI()
 		{
-			Player player = Main.player[projectile.owner];
-			Main.monolithType = 2;
+			Player player = Main.player[Projectile.owner];
+			// UPDATE FOR 1.4
+			//Main.monolithType = 2;
+			player.ManageSpecialBiomeVisuals("Stardust", true, player.Center);
 		}
 		
 		public override void ModifyHitNPC (NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
@@ -46,7 +48,7 @@ namespace AlchemistNPC.Projectiles
 		
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			target.immune[projectile.owner] = 1;
+			target.immune[Projectile.owner] = 1;
 		}
 	}
 }

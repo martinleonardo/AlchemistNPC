@@ -21,11 +21,11 @@ namespace AlchemistNPC.Items.Notes
 			+"\nI mixed some stuff from [c/00FF00:Alchemical Bundle] with [c/00FF00:enormously big bone] from ''Skeletron'' ."
 			+"\nThen I added contents of [c/00FF00:Hate Vial]."
 			+"\nAnd then, just polished everything with [c/00FF00:Flask of Rainbows]'");
-			DisplayName.AddTranslation(GameCulture.Russian, "Запись исследования №4");
-            Tooltip.AddTranslation(GameCulture.Russian, "' Раньше я думала, что только люди способны использовать магию.\nЯ видела своими глазами. Скелет использовал магию.\nХотя они и магические создания, использовать её они обычно не способны...\nОн сражался с Человеческим Ребёнком. Поначалу, я хотела помочь бедному дитя, но...\nЯ была поражена тем, как жестоко это ребёнок сокрушил этого скелета в кучу костей.\nКогда этот... монстр ушёл, я собрала немного пыли из той кучи.\nСтранно, но она просто сияла от содержащейся в ней магии.\nПозже, я нашла способ создать артефакт, хранящий эту невероятную силу.\nЯ смешала содержимое [c/00FF00:Алхимического Набора] с [c/00FF00:Огромной Костью] от 'Скелетрона'.\nТакже, я добавила содержимое [c/00FF00:Сосуда с Ненавистью] туда.\nА потом, я заполировала всё [c/00FF00:Флаконом Радуги]'");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Запись исследования №4");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "' Раньше я думала, что только люди способны использовать магию.\nЯ видела своими глазами. Скелет использовал магию.\nХотя они и магические создания, использовать её они обычно не способны...\nОн сражался с Человеческим Ребёнком. Поначалу, я хотела помочь бедному дитя, но...\nЯ была поражена тем, как жестоко это ребёнок сокрушил этого скелета в кучу костей.\nКогда этот... монстр ушёл, я собрала немного пыли из той кучи.\nСтранно, но она просто сияла от содержащейся в ней магии.\nПозже, я нашла способ создать артефакт, хранящий эту невероятную силу.\nЯ смешала содержимое [c/00FF00:Алхимического Набора] с [c/00FF00:Огромной Костью] от 'Скелетрона'.\nТакже, я добавила содержимое [c/00FF00:Сосуда с Ненавистью] туда.\nА потом, я заполировала всё [c/00FF00:Флаконом Радуги]'");
 
-            DisplayName.AddTranslation(GameCulture.Chinese, "研究笔记 #4");
-            Tooltip.AddTranslation(GameCulture.Chinese, "'在那之前我从来没有想过不止有人类可以使用魔法." +
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "研究笔记 #4");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "'在那之前我从来没有想过不止有人类可以使用魔法." +
                 "\n那天我亲眼看见, 骷髅居然在用魔法. 好像他们本身不是不会魔法是生物..." +
                 "\n他们与人类的小孩打架. 一开始, 我准备去帮助弱小的孩子, 但是之后..." +
                 "\n我十分震惊的看着孩子们是如何残忍地把那个骷髅拆成一片一片碎骨头的." +
@@ -39,11 +39,11 @@ namespace AlchemistNPC.Items.Notes
 
 		public override void SetDefaults()
 		{
-			item.width = 28;
-			item.height = 36;
-			item.maxStack = 1;
-			item.value = 10000000;
-			item.rare = 10;
+			Item.width = 28;
+			Item.height = 36;
+			Item.maxStack = 1;
+			Item.value = 10000000;
+			Item.rare = 10;
 		}	
 	}
 }

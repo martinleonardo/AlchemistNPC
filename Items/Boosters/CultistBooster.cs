@@ -14,20 +14,20 @@ namespace AlchemistNPC.Items.Boosters
 		{
 			DisplayName.SetDefault("Cultist booster");
 			Tooltip.SetDefault("Reduces damage taken from Pillars enemies, mobs may drop lunar fragments");
-			DisplayName.AddTranslation(GameCulture.Russian, "Усилитель Лунатика-Культиста");
-			Tooltip.AddTranslation(GameCulture.Russian, "Уменьшен урон от существ Башен, из мобов могут выпадать фрагменты");
-			DisplayName.AddTranslation(GameCulture.Chinese, "邪教徒增益容器");
-			Tooltip.AddTranslation(GameCulture.Chinese, "减少受到月柱敌人造成的伤害，小怪可能掉落月柱碎片");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Усилитель Лунатика-Культиста");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Уменьшен урон от существ Башен, из мобов могут выпадать фрагменты");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "邪教徒增益容器");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "减少受到月柱敌人造成的伤害，小怪可能掉落月柱碎片");
         }
 
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.LifeFruit);
-			item.consumable = false;
-			item.value = 100000;
+			Item.CloneDefaults(ItemID.LifeFruit);
+			Item.consumable = false;
+			Item.value = 100000;
 		}
 
-		public override bool UseItem(Player player)
+		public override bool? UseItem(Player player)
         {
 			if (player.GetModPlayer<AlchemistNPCPlayer>().CultistBooster == 0)
 			{

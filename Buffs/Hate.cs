@@ -12,16 +12,16 @@ namespace AlchemistNPC.Buffs
 	public class Hate : ModBuff
 	{
 		public static int count = 0;
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Hate");
 			Description.SetDefault("You are ready to unleash your Hate");
 			Main.debuff[Type] = false;
-			canBeCleared = true;
-			DisplayName.AddTranslation(GameCulture.Russian, "Ненависть");
-			Description.AddTranslation(GameCulture.Russian, "Вы готовы выпустить свою Ненависть");
-            DisplayName.AddTranslation(GameCulture.Chinese, "仇恨");
-            Description.AddTranslation(GameCulture.Chinese, "准备好释放你的仇恨吧!");
+			CanBeCleared = true;
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Ненависть");
+			Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Вы готовы выпустить свою Ненависть");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "仇恨");
+            Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "准备好释放你的仇恨吧!");
         }
 		
 		public override void Update(Player player, ref int buffIndex)
@@ -36,14 +36,16 @@ namespace AlchemistNPC.Buffs
 				}
 				count++;
 			}
-			player.allDamage += 0.15f;
-			player.meleeCrit += 15;
-			player.rangedCrit += 15;
-			player.magicCrit += 15;
-			player.thrownCrit += 15;
+			player.GetDamage(DamageClass.Generic) += 0.15f;
+			player.GetCritChance(DamageClass.Melee) += 15;
+			player.GetCritChance(DamageClass.Ranged) += 15;
+			player.GetCritChance(DamageClass.Magic) += 15;
+			player.GetCritChance(DamageClass.Throwing) += 15;
 			player.lifeRegen += 20;
 			player.endurance -= 0.15f;
 			player.statDefense -= 30;
+			// IMPLEMENT WHEN WEAKREFERENCES FIXED
+			/*
 			if (ModLoader.GetMod("ThoriumMod") != null)
 			{
 				ThoriumBoosts(player);
@@ -57,19 +59,23 @@ namespace AlchemistNPC.Buffs
 			{
 				Calamity.Call("AddRogueCrit", player, 15);
 			}
+			*/
 		}
 		
+		// IMPLEMENT WHEN WEAKREFERENCES FIXED
+		/*
 		private void RedemptionBoost(Player player)
         {
 			Redemption.Items.DruidDamageClass.DruidDamagePlayer RedemptionPlayer = player.GetModPlayer<Redemption.Items.DruidDamageClass.DruidDamagePlayer>();
-            RedemptionPlayer.druidCrit += 15;
+            Redemptionplayer.GetCritChance(DamageClass.Druid) += 15;
         }
 		
 		private void ThoriumBoosts(Player player)
         {
             ThoriumMod.ThoriumPlayer ThoriumPlayer = player.GetModPlayer<ThoriumMod.ThoriumPlayer>();
-            ThoriumPlayer.symphonicCrit += 15;
-            ThoriumPlayer.radiantCrit += 15;
+            Thoriumplayer.GetCritChance(DamageClass.Symphonic) += 15;
+            Thoriumplayer.GetCritChance(DamageClass.Radiant) += 15;
         }
+		*/
 	}
 }

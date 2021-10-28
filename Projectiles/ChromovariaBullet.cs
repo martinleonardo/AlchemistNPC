@@ -12,26 +12,26 @@ namespace AlchemistNPC.Projectiles
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Chromovaria Bullet");
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 5;    //The length of old position to be recorded
-			ProjectileID.Sets.TrailingMode[projectile.type] = 0;        //The recording mode
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;    //The length of old position to be recorded
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;        //The recording mode
 		}
 		
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(ProjectileID.BulletHighVelocity);
-			aiType = ProjectileID.BulletHighVelocity;
+			Projectile.CloneDefaults(ProjectileID.BulletHighVelocity);
+			AIType = ProjectileID.BulletHighVelocity;
 		}
 
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			projectile.penetrate--;
-			if (projectile.penetrate <= 0)
+			Projectile.penetrate--;
+			if (Projectile.penetrate <= 0)
 			{
-				projectile.Kill();
-				Main.PlaySound(2, (int)projectile.position.X, (int)projectile.position.Y, 62);
+				Projectile.Kill();
+				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.position.X, (int)Projectile.position.Y, 62);
 				Vector2 vel = new Vector2(0, -1);
 				vel *= 0f;
-				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, vel.X, vel.Y, mod.ProjectileType("Explosion"), projectile.damage/4, 0, Main.myPlayer);
+				Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, vel.X, vel.Y, ModContent.ProjectileType<Projectiles.Explosion>(), Projectile.damage/4, 0, Main.myPlayer);
 			}
 			return false;
 		}
@@ -39,14 +39,14 @@ namespace AlchemistNPC.Projectiles
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			target.AddBuff(189, 600);
-			projectile.penetrate--;
-			if (projectile.penetrate <= 0)
+			Projectile.penetrate--;
+			if (Projectile.penetrate <= 0)
 			{
-				projectile.Kill();
-				Main.PlaySound(2, (int)projectile.position.X, (int)projectile.position.Y, 62);
+				Projectile.Kill();
+				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.position.X, (int)Projectile.position.Y, 62);
 				Vector2 vel = new Vector2(0, -1);
 				vel *= 0f;
-				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, vel.X, vel.Y, mod.ProjectileType("Explosion"), projectile.damage/4, 0, Main.myPlayer);
+				Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, vel.X, vel.Y, ModContent.ProjectileType<Projectiles.Explosion>(), Projectile.damage/4, 0, Main.myPlayer);
 			}
 		}
 	}

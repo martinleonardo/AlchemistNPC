@@ -9,18 +9,18 @@ namespace AlchemistNPC.Buffs
 {
 	public class SymbolOfPain : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Symbol of Pain");
 			Description.SetDefault("Weakens enemies");
 			Main.debuff[Type] = true;
 			Main.pvpBuff[Type] = true;
 			Main.buffNoSave[Type] = false;
-			longerExpertDebuff = true;
-			DisplayName.AddTranslation(GameCulture.Russian, "Символ Боли");
-			Description.AddTranslation(GameCulture.Russian, "Ослабляет противников");
-            DisplayName.AddTranslation(GameCulture.Chinese, "痛苦法印");
-            Description.AddTranslation(GameCulture.Chinese, "虚弱敌人");
+			LongerExpertDebuff = true;
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Символ Боли");
+			Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Ослабляет противников");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "痛苦法印");
+            Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "虚弱敌人");
         }
 	}
 }

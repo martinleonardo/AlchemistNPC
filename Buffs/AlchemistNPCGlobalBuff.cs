@@ -22,9 +22,9 @@ namespace AlchemistNPC.Buffs
 					player.DelBuff(buffIndex);
 				}
 			}
-			if (((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).BuffsKeep == true)
+			if (((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).BuffsKeep == true)
 			{
-				if (type != 71 && type != 73 && type != 74 && type != 75 && type != 76 && type != 77 && type != 78 && type != 79 && type != mod.BuffType("RainbowFlaskBuff"))
+				if (type != 71 && type != 73 && type != 74 && type != 75 && type != 76 && type != 77 && type != 78 && type != 79 && type != ModContent.BuffType<Buffs.RainbowFlaskBuff>())
 				{
 					if (Main.debuff[type] == false)
 					{
@@ -32,9 +32,9 @@ namespace AlchemistNPC.Buffs
 					}
 				}
 			}
-			if (((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).BuffsKeep == false && NPC.downedMoonlord)
+			if (((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).BuffsKeep == false && NPC.downedMoonlord)
 			{
-				if (type != 71 && type != 73 && type != 74 && type != 75 && type != 76 && type != 77 && type != 78 && type != 79 && type != mod.BuffType("RainbowFlaskBuff"))
+				if (type != 71 && type != 73 && type != 74 && type != 75 && type != 76 && type != 77 && type != 78 && type != 79 && type != ModContent.BuffType<Buffs.RainbowFlaskBuff>())
 				{
 					if (Main.debuff[type] == false)
 					{

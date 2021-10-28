@@ -16,35 +16,35 @@ namespace AlchemistNPC.Items.Weapons
 			DisplayName.SetDefault("Edge of Chaos");
 			Tooltip.SetDefault("Swing of this blade may tear reality in half"
 			+"\nInflicts Chaos State debuff on hit");
-			DisplayName.AddTranslation(GameCulture.Russian, "Грань Хаоса");
-            Tooltip.AddTranslation(GameCulture.Russian, "Взмах этого меча может разорвать реальность надвое\nНакладывает Хаотическое Состояние на цель");
-			DisplayName.AddTranslation(GameCulture.Chinese, "混沌边缘");
-			Tooltip.AddTranslation(GameCulture.Chinese, "剑刃足以撕裂现实"
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Грань Хаоса");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Взмах этого меча может разорвать реальность надвое\nНакладывает Хаотическое Состояние на цель");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "混沌边缘");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "剑刃足以撕裂现实"
 			+"\n攻击造成混沌状态Debuff");
 
 		}
 
 		public override void SetDefaults()
 		{
-			item.damage = 33333;
-			item.melee = true;
-			item.width = 66;
-			item.height = 66;
-			item.useTime = 10;
-			item.useAnimation = 10;
-			item.useStyle = 1;
-			item.knockBack = 6;
-			item.value = Item.buyPrice(platinum: 1);
-			item.rare = 11;
-			item.UseSound = SoundID.Item1;
-			item.autoReuse = true;
+			Item.damage = 33333;
+			Item.DamageType = DamageClass.Melee;
+			Item.width = 66;
+			Item.height = 66;
+			Item.useTime = 10;
+			Item.useAnimation = 10;
+			Item.useStyle = 1;
+			Item.knockBack = 6;
+			Item.value = Item.buyPrice(platinum: 1);
+			Item.rare = 11;
+			Item.UseSound = SoundID.Item1;
+			Item.autoReuse = true;
 		}
 
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)
 		{
-			target.buffImmune[mod.BuffType("ChaosState")] = false;
-			target.AddBuff(mod.BuffType("ChaosState"), 1800);
-			Projectile.NewProjectile(target.position.X, target.position.Y, 0f, 0f, mod.ProjectileType("ExplosionAvenger"), damage, 0, Main.myPlayer);
+			target.buffImmune[ModContent.BuffType<Buffs.ChaosState>()] = false;
+			target.AddBuff(ModContent.BuffType<Buffs.ChaosState>(), 1800);
+			Projectile.NewProjectile(target.GetProjectileSpawnSource(), target.position.X, target.position.Y, 0f, 0f, ProjectileType<Projectiles.ExplosionAvenger>(), damage, 0, Main.myPlayer);
 		}
 	}
 }

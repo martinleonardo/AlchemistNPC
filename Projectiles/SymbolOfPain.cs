@@ -13,11 +13,11 @@ namespace AlchemistNPC.Projectiles
 	{
 		public override void SetDefaults()
 		{
-			projectile.width = 3200;
-			projectile.height = 3200;
-			projectile.penetrate = -1;
-			projectile.timeLeft = 90;
-			projectile.tileCollide = false;
+			Projectile.width = 3200;
+			Projectile.height = 3200;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 90;
+			Projectile.tileCollide = false;
 		}
 
 		public override void SetStaticDefaults()
@@ -27,23 +27,27 @@ namespace AlchemistNPC.Projectiles
 		
 		public override void AI()
 		{
-			Main.monolithType = 4;
+			Player player = Main.player[Projectile.owner];
+			// UPDATE FOR 1.4
+			//Main.monolithType = 4;
+			player.ManageSpecialBiomeVisuals("MoonLord", true, player.Center);
+
 			for (int k = 0; k < 200; k++)
 			{
 				NPC target = Main.npc[k];
-				if(target.Hitbox.Intersects(projectile.Hitbox) && !target.friendly)
+				if(target.Hitbox.Intersects(Projectile.Hitbox) && !target.friendly)
 				{
 						for (int i = 0; i < 10; i++)
 						{
-							int dustIndex = Dust.NewDust(target.position, target.width, target.height, mod.DustType("RainbowDust"));
+							int dustIndex = Dust.NewDust(target.position, target.width, target.height, ModContent.DustType<Dusts.RainbowDust>());
 							Dust dust = Main.dust[dustIndex];
 							dust.velocity.X = dust.velocity.X + Main.rand.Next(-50, 51) * 0.1f;
 							dust.velocity.Y = dust.velocity.Y + Main.rand.Next(-50, 51) * 0.1f;
 							dust.scale *= 0.9f;
 							dust.noGravity = true;
 						}
-						target.buffImmune[mod.BuffType("SymbolOfPain")] = false;
-						target.AddBuff(mod.BuffType("SymbolOfPain"), 3600);
+						target.buffImmune[ModContent.BuffType<Buffs.SymbolOfPain>()] = false;
+						target.AddBuff(ModContent.BuffType<Buffs.SymbolOfPain>(), 3600);
 				}
 			}
 		}

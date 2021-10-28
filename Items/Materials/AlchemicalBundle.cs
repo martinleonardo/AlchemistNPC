@@ -16,34 +16,33 @@ namespace AlchemistNPC.Items.Materials
 			DisplayName.SetDefault("Alchemical Bundle");
 			Tooltip.SetDefault("Contains some Lunar Materials"
 				+ "\nRequired for making Elixir of Life");
-			DisplayName.AddTranslation(GameCulture.Russian, "Алхимический набор");
-            Tooltip.AddTranslation(GameCulture.Russian, "Содержит в себе немного Лунных материалов\nНеобходим для создания Эликсира Жизни");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Алхимический набор");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Содержит в себе немного Лунных материалов\nНеобходим для создания Эликсира Жизни");
 
-            DisplayName.AddTranslation(GameCulture.Chinese, "炼金捆绑包");
-            Tooltip.AddTranslation(GameCulture.Chinese, "包含一些月之材料\n制作仙丹需要用到它");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "炼金捆绑包");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "包含一些月之材料\n制作仙丹需要用到它");
         }    
 		public override void SetDefaults()
 		{
-			item.width = 32;
-			item.height = 32;
-			item.maxStack = 999;
-			item.value = 2500000;
-			item.rare = 9;
-			item.knockBack = 6;
-			item.noMelee = true;
+			Item.width = 32;
+			Item.height = 32;
+			Item.maxStack = 999;
+			Item.value = 2500000;
+			Item.rare = 9;
+			Item.knockBack = 6;
+			Item.noMelee = true;
 		}
 		
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.FragmentSolar, 25);
-			recipe.AddIngredient(ItemID.FragmentNebula, 25);
-			recipe.AddIngredient(ItemID.FragmentVortex, 25);
-			recipe.AddIngredient(ItemID.FragmentStardust, 25);
-			recipe.AddIngredient(ItemID.LunarOre, 50);
-			recipe.AddTile(TileID.LunarCraftingStation);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe()
+				.AddIngredient(ItemID.FragmentSolar, 25)
+				.AddIngredient(ItemID.FragmentNebula, 25)
+				.AddIngredient(ItemID.FragmentVortex, 25)
+				.AddIngredient(ItemID.FragmentStardust, 25)
+				.AddIngredient(ItemID.LunarOre, 50)
+				.AddTile(TileID.LunarCraftingStation)
+				.Register();
 		}
 	}
 }

@@ -19,17 +19,17 @@ namespace AlchemistNPC.Projectiles
 
 		public override void SetDefaults()
 		{
-			projectile.width = 1;
-			projectile.height = 1;
-			projectile.friendly = false;
-			projectile.hostile = false;
-			projectile.damage = 0;
-			projectile.timeLeft = 1;
+			Projectile.width = 1;
+			Projectile.height = 1;
+			Projectile.friendly = false;
+			Projectile.hostile = false;
+			Projectile.damage = 0;
+			Projectile.timeLeft = 1;
 		}
 		
 		public override void Kill(int timeLeft)
         {
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			if (player.ZoneDesert)
 			{
 				if (Sandstorm.Happening)

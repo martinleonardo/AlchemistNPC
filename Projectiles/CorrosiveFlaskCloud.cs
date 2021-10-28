@@ -14,22 +14,21 @@ namespace AlchemistNPC.Projectiles
 	{
         public override void SetDefaults()
         {
-            projectile.damage = 250;
-			projectile.width = 32;
-            projectile.height = 32;
-            projectile.penetrate = 12;
-            projectile.aiStyle = 92;
-            aiType = 511;
-            projectile.friendly = true;
-            projectile.timeLeft = 600;
-			projectile.magic = false;
-			projectile.thrown = true;
+            Projectile.damage = 250;
+			Projectile.width = 32;
+            Projectile.height = 32;
+            Projectile.penetrate = 12;
+            Projectile.aiStyle = 92;
+            AIType = 511;
+            Projectile.friendly = true;
+            Projectile.timeLeft = 600;
+			Projectile.DamageType = DamageClass.Throwing;
         }
 		
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 			{
-				target.AddBuff(mod.BuffType("Corrosion"), 300);
-				target.immune[projectile.owner] = 3;
+				target.AddBuff(ModContent.BuffType<Buffs.Corrosion>(), 300);
+				target.immune[Projectile.owner] = 3;
 			}
     }
 }

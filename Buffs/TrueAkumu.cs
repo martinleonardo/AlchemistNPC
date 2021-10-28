@@ -10,26 +10,26 @@ namespace AlchemistNPC.Buffs
 {
 	public class TrueAkumu : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("True Akumu's Shield");
 			Description.SetDefault("Reflects any hostile projectiles");
 			Main.debuff[Type] = false;
-			canBeCleared = true;
-			DisplayName.AddTranslation(GameCulture.Russian, "Защита Акуму");
-			Description.AddTranslation(GameCulture.Russian, "Отражает любые снаряды противника");
-            DisplayName.AddTranslation(GameCulture.Chinese, "真·Akumu之盾");
-            Description.AddTranslation(GameCulture.Chinese, "反射所有敌对抛射物");
+			CanBeCleared = true;
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Защита Акуму");
+			Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Отражает любые снаряды противника");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "真·Akumu之盾");
+            Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "反射所有敌对抛射物");
         }
 		
 		public override void Update(Player player, ref int buffIndex)
 		{
-			if (player.ownedProjectileCounts[mod.ProjectileType("TrueAkumuShield")] == 0)
+			if (player.ownedProjectileCounts[ModContent.ProjectileType<Projectiles.TrueAkumuShield>()] == 0)
 			{
 				for (int h = 0; h < 1; h++) {
 				Vector2 vel = new Vector2(0, -1);
 				vel *= 0f;
-				Projectile.NewProjectile(player.position.X-15, player.position.Y, vel.X, vel.Y, mod.ProjectileType("TrueAkumuShield"), 0, 0, player.whoAmI);
+				Projectile.NewProjectile(player.GetProjectileSource_Buff(buffIndex), player.position.X-15, player.position.Y, vel.X, vel.Y, ModContent.ProjectileType<Projectiles.TrueAkumuShield>(), 0, 0, player.whoAmI);
 				}
 			}
 		}

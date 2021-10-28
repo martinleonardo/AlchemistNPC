@@ -13,6 +13,8 @@ using Terraria.ID;
 using System.Linq;
 using AlchemistNPC.NPCs;
 using AlchemistNPC.Items.Misc;
+using Terraria.Audio;
+using ReLogic.Content;
 
 namespace AlchemistNPC.Interface
 {
@@ -64,7 +66,7 @@ namespace AlchemistNPC.Interface
 			string Musician;
 			string Explorer;
 
-			if(Language.ActiveCulture == GameCulture.Chinese)
+			if(Language.ActiveCulture == GameCulture.FromCultureName(GameCulture.CultureName.Chinese))
 				{
 					ArmsDealer = "军火商";
 					Merchant = "商人";
@@ -304,7 +306,7 @@ namespace AlchemistNPC.Interface
 			text25.Height.Set(22, 0f);
 			DimensionalCasketPanel.Append(text25);
 
-			Texture2D buttonPlayTexture = ModContent.GetTexture("Terraria/UI/ButtonPlay");
+			Asset<Texture2D> buttonPlayTexture = ModContent.Request<Texture2D>("Terraria/Images/UI/ButtonPlay");
 			UIImageButton playButton = new UIImageButton(buttonPlayTexture);
 			playButton.Left.Set(10, 0f);
 			playButton.Top.Set(10, 0f);
@@ -663,7 +665,7 @@ namespace AlchemistNPC.Interface
 			playButton25.OnClick += new MouseEvent(PlayButtonClicked25);
 			DimensionalCasketPanel.Append(playButton25);
 			
-			Texture2D buttonDeleteTexture = ModContent.GetTexture("Terraria/UI/ButtonDelete");
+			Asset<Texture2D> buttonDeleteTexture = ModContent.Request<Texture2D>("Terraria/Images/UI/ButtonDelete");
 			UIImageButton closeButton = new UIImageButton(buttonDeleteTexture);
 			closeButton.Left.Set(370, 0f);
 			closeButton.Top.Set(10, 0f);
@@ -686,8 +688,8 @@ namespace AlchemistNPC.Interface
 					{
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = 2;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(2);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npcShop);
 					}
 				}
@@ -706,8 +708,8 @@ namespace AlchemistNPC.Interface
 					{
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = 1;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(1);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npcShop);
 					}
 				}
@@ -726,8 +728,8 @@ namespace AlchemistNPC.Interface
 					{
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = 4;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(4);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npcShop);
 					}
 				}
@@ -746,8 +748,8 @@ namespace AlchemistNPC.Interface
 					{
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = 3;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(3);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npcShop);
 					}
 				}
@@ -766,8 +768,8 @@ namespace AlchemistNPC.Interface
 					{
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = 15;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(15);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npcShop);
 					}
 				}
@@ -786,8 +788,8 @@ namespace AlchemistNPC.Interface
 					{
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = 12;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(12);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npcShop);
 					}
 				}
@@ -806,8 +808,8 @@ namespace AlchemistNPC.Interface
 					{
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = 6;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(6);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npcShop);
 					}
 				}
@@ -826,7 +828,7 @@ namespace AlchemistNPC.Interface
 					{
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
 						Main.InReforgeMenu = true;
 					}
 				}
@@ -845,8 +847,8 @@ namespace AlchemistNPC.Interface
 					{
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = 8;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(8);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npcShop);
 					}
 				}
@@ -865,8 +867,8 @@ namespace AlchemistNPC.Interface
 					{
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = 11;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(11);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npcShop);
 					}
 				}
@@ -885,8 +887,8 @@ namespace AlchemistNPC.Interface
 					{
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = 7;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(7);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npcShop);
 					}
 				}
@@ -905,8 +907,8 @@ namespace AlchemistNPC.Interface
 					{
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = 16;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(16);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npcShop);
 					}
 				}
@@ -925,8 +927,8 @@ namespace AlchemistNPC.Interface
 					{
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = 14;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(14);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npcShop);
 					}
 				}
@@ -945,8 +947,8 @@ namespace AlchemistNPC.Interface
 					{
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = 17;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(17);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npcShop);
 					}
 				}
@@ -965,8 +967,8 @@ namespace AlchemistNPC.Interface
 					{
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = 5;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(5);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npcShop);
 					}
 				}
@@ -985,8 +987,8 @@ namespace AlchemistNPC.Interface
 					{
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = 10;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(10);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npcShop);
 					}
 				}
@@ -1005,8 +1007,8 @@ namespace AlchemistNPC.Interface
 					{
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = 18;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(18);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npcShop);
 					}
 				}
@@ -1025,7 +1027,7 @@ namespace AlchemistNPC.Interface
 					{
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
 						Main.OpenHairWindow();
 					}
 				}
@@ -1044,8 +1046,8 @@ namespace AlchemistNPC.Interface
 					{
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = 13;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(13);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npcShop);
 					}
 				}
@@ -1055,19 +1057,19 @@ namespace AlchemistNPC.Interface
 		private void PlayButtonClicked18(UIMouseEvent evt, UIElement listeningElement)
 		{
 			visible = false;
-			if (NPC.AnyNPCs(mod.NPCType("Alchemist")))
+			if (NPC.AnyNPCs(NPCType<NPCs.Alchemist>()))
 			{
 				for (k = 0; k < 200; k++)
 				{
 					NPC npc = Main.npc[k];
-					if (Main.npc[k].type == mod.NPCType("Alchemist"))
+					if (Main.npc[k].type == NPCType<NPCs.Alchemist>())
 					{
 						Alchemist.baseShop = true;
 						Alchemist.plantShop = false;
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = Main.MaxShopIDs - 1;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(Main.MaxShopIDs - 1);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npc[k].type);
 					}
 				}
@@ -1077,18 +1079,18 @@ namespace AlchemistNPC.Interface
 		private void PlayButtonClicked191(UIMouseEvent evt, UIElement listeningElement)
 		{
 			visible = false;
-			if (NPC.AnyNPCs(mod.NPCType("Brewer")))
+			if (NPC.AnyNPCs(NPCType<NPCs.Brewer>()))
 			{
 				for (k = 0; k < 200; k++)
 				{
 					NPC npc = Main.npc[k];
-					if (Main.npc[k].type == mod.NPCType("Brewer"))
+					if (Main.npc[k].type == NPCType<NPCs.Brewer>())
 					{
 						Brewer.Shop = 1;
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = Main.MaxShopIDs - 1;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(Main.MaxShopIDs - 1);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npc[k].type);
 					}
 				}
@@ -1098,18 +1100,18 @@ namespace AlchemistNPC.Interface
 		private void PlayButtonClicked192(UIMouseEvent evt, UIElement listeningElement)
 		{
 			visible = false;
-			if (NPC.AnyNPCs(mod.NPCType("Brewer")))
+			if (NPC.AnyNPCs(NPCType<NPCs.Brewer>()))
 			{
 				for (k = 0; k < 200; k++)
 				{
 					NPC npc = Main.npc[k];
-					if (Main.npc[k].type == mod.NPCType("Brewer"))
+					if (Main.npc[k].type == NPCType<NPCs.Brewer>())
 					{
 						Brewer.Shop = 2;
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = Main.MaxShopIDs - 1;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(Main.MaxShopIDs - 1);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npc[k].type);
 					}
 				}
@@ -1119,18 +1121,18 @@ namespace AlchemistNPC.Interface
 		private void PlayButtonClicked1921(UIMouseEvent evt, UIElement listeningElement)
 		{
 			visible = false;
-			if (NPC.AnyNPCs(mod.NPCType("Brewer")))
+			if (NPC.AnyNPCs(NPCType<NPCs.Brewer>()))
 			{
 				for (k = 0; k < 200; k++)
 				{
 					NPC npc = Main.npc[k];
-					if (Main.npc[k].type == mod.NPCType("Brewer"))
+					if (Main.npc[k].type == NPCType<NPCs.Brewer>())
 					{
 						Brewer.Shop = 21;
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = Main.MaxShopIDs - 1;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(Main.MaxShopIDs - 1);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npc[k].type);
 					}
 				}
@@ -1140,18 +1142,18 @@ namespace AlchemistNPC.Interface
 		private void PlayButtonClicked193(UIMouseEvent evt, UIElement listeningElement)
 		{
 			visible = false;
-			if (NPC.AnyNPCs(mod.NPCType("Brewer")))
+			if (NPC.AnyNPCs(NPCType<NPCs.Brewer>()))
 			{
 				for (k = 0; k < 200; k++)
 				{
 					NPC npc = Main.npc[k];
-					if (Main.npc[k].type == mod.NPCType("Brewer"))
+					if (Main.npc[k].type == NPCType<NPCs.Brewer>())
 					{
 						Brewer.Shop = 3;
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = Main.MaxShopIDs - 1;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(Main.MaxShopIDs - 1);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npc[k].type);
 					}
 				}
@@ -1161,18 +1163,18 @@ namespace AlchemistNPC.Interface
 		private void PlayButtonClicked194(UIMouseEvent evt, UIElement listeningElement)
 		{
 			visible = false;
-			if (NPC.AnyNPCs(mod.NPCType("Brewer")))
+			if (NPC.AnyNPCs(NPCType<NPCs.Brewer>()))
 			{
 				for (k = 0; k < 200; k++)
 				{
 					NPC npc = Main.npc[k];
-					if (Main.npc[k].type == mod.NPCType("Brewer"))
+					if (Main.npc[k].type == NPCType<NPCs.Brewer>())
 					{
 						Brewer.Shop = 4;
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = Main.MaxShopIDs - 1;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(Main.MaxShopIDs - 1);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npc[k].type);
 					}
 				}
@@ -1182,18 +1184,18 @@ namespace AlchemistNPC.Interface
 		private void PlayButtonClicked195(UIMouseEvent evt, UIElement listeningElement)
 		{
 			visible = false;
-			if (NPC.AnyNPCs(mod.NPCType("Brewer")))
+			if (NPC.AnyNPCs(NPCType<NPCs.Brewer>()))
 			{
 				for (k = 0; k < 200; k++)
 				{
 					NPC npc = Main.npc[k];
-					if (Main.npc[k].type == mod.NPCType("Brewer"))
+					if (Main.npc[k].type == NPCType<NPCs.Brewer>())
 					{
 						Brewer.Shop = 5;
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = Main.MaxShopIDs - 1;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(Main.MaxShopIDs - 1);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npc[k].type);
 					}
 				}
@@ -1203,18 +1205,18 @@ namespace AlchemistNPC.Interface
 		private void PlayButtonClicked201(UIMouseEvent evt, UIElement listeningElement)
 		{
 			visible = false;
-			if (NPC.AnyNPCs(mod.NPCType("Architect")))
+			if (NPC.AnyNPCs(NPCType<NPCs.Architect>()))
 			{
 				for (k = 0; k < 200; k++)
 				{
 					NPC npc = Main.npc[k];
-					if (Main.npc[k].type == mod.NPCType("Architect"))
+					if (Main.npc[k].type == NPCType<NPCs.Architect>())
 					{
 						Architect.Shop = 1;
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = Main.MaxShopIDs - 1;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(Main.MaxShopIDs - 1);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npc[k].type);
 					}
 				}
@@ -1224,18 +1226,18 @@ namespace AlchemistNPC.Interface
 		private void PlayButtonClicked202(UIMouseEvent evt, UIElement listeningElement)
 		{
 			visible = false;
-			if (NPC.AnyNPCs(mod.NPCType("Architect")))
+			if (NPC.AnyNPCs(NPCType<NPCs.Architect>()))
 			{
 				for (k = 0; k < 200; k++)
 				{
 					NPC npc = Main.npc[k];
-					if (Main.npc[k].type == mod.NPCType("Architect"))
+					if (Main.npc[k].type == NPCType<NPCs.Architect>())
 					{
 						Architect.Shop = 2;
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = Main.MaxShopIDs - 1;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(Main.MaxShopIDs - 1);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npc[k].type);
 					}
 				}
@@ -1245,18 +1247,18 @@ namespace AlchemistNPC.Interface
 		private void PlayButtonClicked203(UIMouseEvent evt, UIElement listeningElement)
 		{
 			visible = false;
-			if (NPC.AnyNPCs(mod.NPCType("Architect")))
+			if (NPC.AnyNPCs(NPCType<NPCs.Architect>()))
 			{
 				for (k = 0; k < 200; k++)
 				{
 					NPC npc = Main.npc[k];
-					if (Main.npc[k].type == mod.NPCType("Architect"))
+					if (Main.npc[k].type == NPCType<NPCs.Architect>())
 					{
 						Architect.Shop = 3;
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = Main.MaxShopIDs - 1;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(Main.MaxShopIDs - 1);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npc[k].type);
 					}
 				}
@@ -1266,18 +1268,18 @@ namespace AlchemistNPC.Interface
 		private void PlayButtonClicked204(UIMouseEvent evt, UIElement listeningElement)
 		{
 			visible = false;
-			if (NPC.AnyNPCs(mod.NPCType("Architect")))
+			if (NPC.AnyNPCs(NPCType<NPCs.Architect>()))
 			{
 				for (k = 0; k < 200; k++)
 				{
 					NPC npc = Main.npc[k];
-					if (Main.npc[k].type == mod.NPCType("Architect"))
+					if (Main.npc[k].type == NPCType<NPCs.Architect>())
 					{
 						Architect.Shop = 4;
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = Main.MaxShopIDs - 1;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(Main.MaxShopIDs - 1);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npc[k].type);
 					}
 				}
@@ -1287,18 +1289,18 @@ namespace AlchemistNPC.Interface
 		private void PlayButtonClicked205(UIMouseEvent evt, UIElement listeningElement)
 		{
 			visible = false;
-			if (NPC.AnyNPCs(mod.NPCType("Architect")))
+			if (NPC.AnyNPCs(NPCType<NPCs.Architect>()))
 			{
 				for (k = 0; k < 200; k++)
 				{
 					NPC npc = Main.npc[k];
-					if (Main.npc[k].type == mod.NPCType("Architect"))
+					if (Main.npc[k].type == NPCType<NPCs.Architect>())
 					{
 						Architect.Shop = 5;
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = Main.MaxShopIDs - 1;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(Main.MaxShopIDs - 1);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npc[k].type);
 					}
 				}
@@ -1308,18 +1310,18 @@ namespace AlchemistNPC.Interface
 		private void PlayButtonClicked206(UIMouseEvent evt, UIElement listeningElement)
 		{
 			visible = false;
-			if (NPC.AnyNPCs(mod.NPCType("Architect")))
+			if (NPC.AnyNPCs(NPCType<NPCs.Architect>()))
 			{
 				for (k = 0; k < 200; k++)
 				{
 					NPC npc = Main.npc[k];
-					if (Main.npc[k].type == mod.NPCType("Architect"))
+					if (Main.npc[k].type == NPCType<NPCs.Architect>())
 					{
 						Architect.Shop = 6;
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = Main.MaxShopIDs - 1;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(Main.MaxShopIDs - 1);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npc[k].type);
 					}
 				}
@@ -1329,18 +1331,18 @@ namespace AlchemistNPC.Interface
 		private void PlayButtonClicked207(UIMouseEvent evt, UIElement listeningElement)
 		{
 			visible = false;
-			if (NPC.AnyNPCs(mod.NPCType("Architect")))
+			if (NPC.AnyNPCs(NPCType<NPCs.Architect>()))
 			{
 				for (k = 0; k < 200; k++)
 				{
 					NPC npc = Main.npc[k];
-					if (Main.npc[k].type == mod.NPCType("Architect"))
+					if (Main.npc[k].type == NPCType<NPCs.Architect>())
 					{
 						Architect.Shop = 7;
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = Main.MaxShopIDs - 1;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(Main.MaxShopIDs - 1);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npc[k].type);
 					}
 				}
@@ -1350,18 +1352,18 @@ namespace AlchemistNPC.Interface
 		private void PlayButtonClicked208(UIMouseEvent evt, UIElement listeningElement)
 		{
 			visible = false;
-			if (NPC.AnyNPCs(mod.NPCType("Architect")))
+			if (NPC.AnyNPCs(NPCType<NPCs.Architect>()))
 			{
 				for (k = 0; k < 200; k++)
 				{
 					NPC npc = Main.npc[k];
-					if (Main.npc[k].type == mod.NPCType("Architect"))
+					if (Main.npc[k].type == NPCType<NPCs.Architect>())
 					{
 						Architect.Shop = 8;
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = Main.MaxShopIDs - 1;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(Main.MaxShopIDs - 1);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npc[k].type);
 					}
 				}
@@ -1371,18 +1373,18 @@ namespace AlchemistNPC.Interface
 		private void PlayButtonClicked209(UIMouseEvent evt, UIElement listeningElement)
 		{
 			visible = false;
-			if (NPC.AnyNPCs(mod.NPCType("Architect")))
+			if (NPC.AnyNPCs(NPCType<NPCs.Architect>()))
 			{
 				for (k = 0; k < 200; k++)
 				{
 					NPC npc = Main.npc[k];
-					if (Main.npc[k].type == mod.NPCType("Architect"))
+					if (Main.npc[k].type == NPCType<NPCs.Architect>())
 					{
 						Architect.Shop = 9;
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = Main.MaxShopIDs - 1;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(Main.MaxShopIDs - 1);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npc[k].type);
 					}
 				}
@@ -1392,18 +1394,18 @@ namespace AlchemistNPC.Interface
 		private void PlayButtonClicked210(UIMouseEvent evt, UIElement listeningElement)
 		{
 			visible = false;
-			if (NPC.AnyNPCs(mod.NPCType("Architect")))
+			if (NPC.AnyNPCs(NPCType<NPCs.Architect>()))
 			{
 				for (k = 0; k < 200; k++)
 				{
 					NPC npc = Main.npc[k];
-					if (Main.npc[k].type == mod.NPCType("Architect"))
+					if (Main.npc[k].type == NPCType<NPCs.Architect>())
 					{
 						Architect.Shop = 10;
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = Main.MaxShopIDs - 1;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(Main.MaxShopIDs - 1);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npc[k].type);
 					}
 				}
@@ -1413,18 +1415,18 @@ namespace AlchemistNPC.Interface
 		private void PlayButtonClicked211(UIMouseEvent evt, UIElement listeningElement)
 		{
 			visible = false;
-			if (NPC.AnyNPCs(mod.NPCType("Operator")))
+			if (NPC.AnyNPCs(NPCType<NPCs.Operator>()))
 			{
 				for (k = 0; k < 200; k++)
 				{
 					NPC npc = Main.npc[k];
-					if (Main.npc[k].type == mod.NPCType("Operator"))
+					if (Main.npc[k].type == NPCType<NPCs.Operator>())
 					{
 						Operator.Shop = 1;
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = Main.MaxShopIDs - 1;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(Main.MaxShopIDs - 1);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npc[k].type);
 					}
 				}
@@ -1434,18 +1436,18 @@ namespace AlchemistNPC.Interface
 		private void PlayButtonClicked212(UIMouseEvent evt, UIElement listeningElement)
 		{
 			visible = false;
-			if (NPC.AnyNPCs(mod.NPCType("Operator")))
+			if (NPC.AnyNPCs(NPCType<NPCs.Operator>()))
 			{
 				for (k = 0; k < 200; k++)
 				{
 					NPC npc = Main.npc[k];
-					if (Main.npc[k].type == mod.NPCType("Operator"))
+					if (Main.npc[k].type == NPCType<NPCs.Operator>())
 					{
 						Operator.Shop = 2;
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = Main.MaxShopIDs - 1;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(Main.MaxShopIDs - 1);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npc[k].type);
 					}
 				}
@@ -1455,18 +1457,18 @@ namespace AlchemistNPC.Interface
 		private void PlayButtonClicked213(UIMouseEvent evt, UIElement listeningElement)
 		{
 			visible = false;
-			if (NPC.AnyNPCs(mod.NPCType("Operator")))
+			if (NPC.AnyNPCs(NPCType<NPCs.Operator>()))
 			{
 				for (k = 0; k < 200; k++)
 				{
 					NPC npc = Main.npc[k];
-					if (Main.npc[k].type == mod.NPCType("Operator"))
+					if (Main.npc[k].type == NPCType<NPCs.Operator>())
 					{
 						Operator.Shop = 3;
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = Main.MaxShopIDs - 1;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(Main.MaxShopIDs - 1);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npc[k].type);
 					}
 				}
@@ -1476,18 +1478,18 @@ namespace AlchemistNPC.Interface
 		private void PlayButtonClicked214(UIMouseEvent evt, UIElement listeningElement)
 		{
 			visible = false;
-			if (NPC.AnyNPCs(mod.NPCType("Operator")))
+			if (NPC.AnyNPCs(NPCType<NPCs.Operator>()))
 			{
 				for (k = 0; k < 200; k++)
 				{
 					NPC npc = Main.npc[k];
-					if (Main.npc[k].type == mod.NPCType("Operator"))
+					if (Main.npc[k].type == NPCType<NPCs.Operator>())
 					{
 						Operator.Shop = 4;
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = Main.MaxShopIDs - 1;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(Main.MaxShopIDs - 1);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npc[k].type);
 					}
 				}
@@ -1497,18 +1499,18 @@ namespace AlchemistNPC.Interface
 		private void PlayButtonClicked215(UIMouseEvent evt, UIElement listeningElement)
 		{
 			visible = false;
-			if (NPC.AnyNPCs(mod.NPCType("Operator")))
+			if (NPC.AnyNPCs(NPCType<NPCs.Operator>()))
 			{
 				for (k = 0; k < 200; k++)
 				{
 					NPC npc = Main.npc[k];
-					if (Main.npc[k].type == mod.NPCType("Operator"))
+					if (Main.npc[k].type == NPCType<NPCs.Operator>())
 					{
 						Operator.Shop = 5;
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = Main.MaxShopIDs - 1;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(Main.MaxShopIDs - 1);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npc[k].type);
 					}
 				}
@@ -1518,18 +1520,18 @@ namespace AlchemistNPC.Interface
 		private void PlayButtonClicked216(UIMouseEvent evt, UIElement listeningElement)
 		{
 			visible = false;
-			if (NPC.AnyNPCs(mod.NPCType("Operator")))
+			if (NPC.AnyNPCs(NPCType<NPCs.Operator>()))
 			{
 				for (k = 0; k < 200; k++)
 				{
 					NPC npc = Main.npc[k];
-					if (Main.npc[k].type == mod.NPCType("Operator"))
+					if (Main.npc[k].type == NPCType<NPCs.Operator>())
 					{
 						Operator.Shop = 11;
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = Main.MaxShopIDs - 1;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(Main.MaxShopIDs - 1);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npc[k].type);
 					}
 				}
@@ -1539,19 +1541,19 @@ namespace AlchemistNPC.Interface
 		private void PlayButtonClicked221(UIMouseEvent evt, UIElement listeningElement)
 		{
 			visible = false;
-			if (NPC.AnyNPCs(mod.NPCType("Jeweler")))
+			if (NPC.AnyNPCs(NPCType<NPCs.Jeweler>()))
 			{
 				for (k = 0; k < 200; k++)
 				{
 					NPC npc = Main.npc[k];
-					if (Main.npc[k].type == mod.NPCType("Jeweler"))
+					if (Main.npc[k].type == NPCType<NPCs.Jeweler>())
 					{
 						Jeweler.OH = true;
 						Jeweler.AS = false;
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = Main.MaxShopIDs - 1;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(Main.MaxShopIDs - 1);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npc[k].type);
 					}
 				}
@@ -1561,19 +1563,19 @@ namespace AlchemistNPC.Interface
 		private void PlayButtonClicked222(UIMouseEvent evt, UIElement listeningElement)
 		{
 			visible = false;
-			if (NPC.AnyNPCs(mod.NPCType("Jeweler")))
+			if (NPC.AnyNPCs(NPCType<NPCs.Jeweler>()))
 			{
 				for (k = 0; k < 200; k++)
 				{
 					NPC npc = Main.npc[k];
-					if (Main.npc[k].type == mod.NPCType("Jeweler"))
+					if (Main.npc[k].type == NPCType<NPCs.Jeweler>())
 					{
 						Jeweler.OH = false;
 						Jeweler.AS = true;
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = Main.MaxShopIDs - 1;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(Main.MaxShopIDs - 1);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npc[k].type);
 					}
 				}
@@ -1583,19 +1585,19 @@ namespace AlchemistNPC.Interface
 		private void PlayButtonClicked231(UIMouseEvent evt, UIElement listeningElement)
 		{
 			visible = false;
-			if (NPC.AnyNPCs(mod.NPCType("Young Brewer")))
+			if (NPC.AnyNPCs(NPCType<NPCs.YoungBrewer>()))
 			{
 				for (k = 0; k < 200; k++)
 				{
 					NPC npc = Main.npc[k];
-					if (Main.npc[k].type == mod.NPCType("Young Brewer"))
+					if (Main.npc[k].type == NPCType<NPCs.YoungBrewer>())
 					{
 						YoungBrewer.Shop1 = true;
 						YoungBrewer.Shop2 = false;
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = Main.MaxShopIDs - 1;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(Main.MaxShopIDs - 1);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npc[k].type);
 					}
 				}
@@ -1605,19 +1607,19 @@ namespace AlchemistNPC.Interface
 		private void PlayButtonClicked232(UIMouseEvent evt, UIElement listeningElement)
 		{
 			visible = false;
-			if (NPC.AnyNPCs(mod.NPCType("Young Brewer")))
+			if (NPC.AnyNPCs(NPCType<NPCs.YoungBrewer>()))
 			{
 				for (k = 0; k < 200; k++)
 				{
 					NPC npc = Main.npc[k];
-					if (Main.npc[k].type == mod.NPCType("Young Brewer"))
+					if (Main.npc[k].type == NPCType<NPCs.YoungBrewer>())
 					{
 						YoungBrewer.Shop2 = true;
 						YoungBrewer.Shop1 = false;
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = Main.MaxShopIDs - 1;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(Main.MaxShopIDs - 1);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npc[k].type);
 					}
 				}
@@ -1627,20 +1629,20 @@ namespace AlchemistNPC.Interface
 		private void PlayButtonClicked241(UIMouseEvent evt, UIElement listeningElement)
 		{
 			visible = false;
-			if (NPC.AnyNPCs(mod.NPCType("Musician")))
+			if (NPC.AnyNPCs(NPCType<NPCs.Musician>()))
 			{
 				for (k = 0; k < 200; k++)
 				{
 					NPC npc = Main.npc[k];
-					if (Main.npc[k].type == mod.NPCType("Musician"))
+					if (Main.npc[k].type == NPCType<NPCs.Musician>())
 					{
 						Musician.S1 = true;
 						Musician.S2 = false;
 						Musician.S3 = false;
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = Main.MaxShopIDs - 1;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(Main.MaxShopIDs - 1);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npc[k].type);
 					}
 				}
@@ -1650,20 +1652,20 @@ namespace AlchemistNPC.Interface
 		private void PlayButtonClicked242(UIMouseEvent evt, UIElement listeningElement)
 		{
 			visible = false;
-			if (NPC.AnyNPCs(mod.NPCType("Musician")))
+			if (NPC.AnyNPCs(NPCType<NPCs.Musician>()))
 			{
 				for (k = 0; k < 200; k++)
 				{
 					NPC npc = Main.npc[k];
-					if (Main.npc[k].type == mod.NPCType("Musician"))
+					if (Main.npc[k].type == NPCType<NPCs.Musician>())
 					{
 						Musician.S1 = false;
 						Musician.S2 = true;
 						Musician.S3 = false;
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = Main.MaxShopIDs - 1;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(Main.MaxShopIDs - 1);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npc[k].type);
 					}
 				}
@@ -1673,20 +1675,20 @@ namespace AlchemistNPC.Interface
 		private void PlayButtonClicked243(UIMouseEvent evt, UIElement listeningElement)
 		{
 			visible = false;
-			if (NPC.AnyNPCs(mod.NPCType("Musician")))
+			if (NPC.AnyNPCs(NPCType<NPCs.Musician>()))
 			{
 				for (k = 0; k < 200; k++)
 				{
 					NPC npc = Main.npc[k];
-					if (Main.npc[k].type == mod.NPCType("Musician"))
+					if (Main.npc[k].type == NPCType<NPCs.Musician>())
 					{
 						Musician.S1 = false;
 						Musician.S2 = false;
 						Musician.S3 = true;
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = Main.MaxShopIDs - 1;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(Main.MaxShopIDs - 1);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npc[k].type);
 					}
 				}
@@ -1696,17 +1698,17 @@ namespace AlchemistNPC.Interface
 		private void PlayButtonClicked25(UIMouseEvent evt, UIElement listeningElement)
 		{
 			visible = false;
-			if (NPC.AnyNPCs(mod.NPCType("Explorer")))
+			if (NPC.AnyNPCs(NPCType<NPCs.Explorer>()))
 			{
 				for (k = 0; k < 200; k++)
 				{
 					NPC npc = Main.npc[k];
-					if (Main.npc[k].type == mod.NPCType("Explorer"))
+					if (Main.npc[k].type == NPCType<NPCs.Explorer>())
 					{
 						Main.playerInventory = true;
 						forcetalk = true;
-						Main.player[Main.myPlayer].talkNPC = k;
-						Main.npcShop = Main.MaxShopIDs - 1;
+						Main.player[Main.myPlayer].SetTalkNPC(k);
+						Main.SetNPCShopIndex(Main.MaxShopIDs - 1);
 						Main.instance.shop[Main.npcShop].SetupShop(Main.npc[k].type);
 					}
 				}
@@ -1715,7 +1717,7 @@ namespace AlchemistNPC.Interface
 
 		private void CloseButtonClicked(UIMouseEvent evt, UIElement listeningElement)
 		{
-			Main.PlaySound(SoundID.MenuOpen);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.MenuOpen);
 			visible = false;
 		}
 

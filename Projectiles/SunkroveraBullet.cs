@@ -12,25 +12,25 @@ namespace AlchemistNPC.Projectiles
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Sunkrovera Bullet");     //The English name of the projectile
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 5;    //The length of old position to be recorded
-			ProjectileID.Sets.TrailingMode[projectile.type] = 0;        //The recording mode
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;    //The length of old position to be recorded
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;        //The recording mode
 		}
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(ProjectileID.MeteorShot);
-			projectile.penetrate = 1;
-			projectile.timeLeft = 300;
-			aiType = ProjectileID.MeteorShot;           //Act exactly like default Bullet
+			Projectile.CloneDefaults(ProjectileID.MeteorShot);
+			Projectile.penetrate = 1;
+			Projectile.timeLeft = 300;
+			AIType = ProjectileID.MeteorShot;           //Act exactly like default Bullet
 		}
 		
 		public override void AI()
 		{
 			if (Main.rand.Next(3) == 0)
 				{
-					Dust dust = Dust.NewDustDirect(projectile.position, projectile.height, projectile.width, mod.DustType("RainbowDust"),
-						projectile.velocity.X * .2f, projectile.velocity.Y * .2f, 200, Scale: 1.2f);
-					dust.velocity += projectile.velocity * 0.3f;
+					Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.height, Projectile.width, ModContent.DustType<Dusts.RainbowDust>(),
+						Projectile.velocity.X * .2f, Projectile.velocity.Y * .2f, 200, Scale: 1.2f);
+					dust.velocity += Projectile.velocity * 0.3f;
 					dust.velocity *= 0.2f;
 					dust.noGravity = true;
 				}
@@ -38,17 +38,17 @@ namespace AlchemistNPC.Projectiles
 		
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			projectile.penetrate--;
-			if (projectile.penetrate <= 0)
+			Projectile.penetrate--;
+			if (Projectile.penetrate <= 0)
 			{
-				projectile.Kill();
+				Projectile.Kill();
 			for (int h = 0; h < 3; h++)
 				{
 					Vector2 vel = new Vector2(0, -1);
 					float rand = Main.rand.NextFloat() * 6.283f;
 					vel = vel.RotatedBy(rand);
 					vel *= 5f;
-					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, vel.X, vel.Y, mod.ProjectileType("SB"), projectile.damage/3, 0, Main.myPlayer);
+					Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, vel.X, vel.Y, ModContent.ProjectileType<Projectiles.SB>(), Projectile.damage/3, 0, Main.myPlayer);
 				}
 			}
 			return false;
@@ -56,21 +56,21 @@ namespace AlchemistNPC.Projectiles
 		
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			projectile.Kill();
+			Projectile.Kill();
 			for (int g = 0; g < 3; g++)
 				{
 					Vector2 vel = new Vector2(0, -1);
 					float rand = Main.rand.NextFloat() * 6.283f;
 					vel = vel.RotatedBy(rand);
 					vel *= 5f;
-					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, vel.X, vel.Y, mod.ProjectileType("SB"), projectile.damage/3, 0, Main.myPlayer);
+					Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, vel.X, vel.Y, ModContent.ProjectileType<Projectiles.SB>(), Projectile.damage/3, 0, Main.myPlayer);
 			
 			}
 		}
 		
 		public override bool PreKill(int timeLeft)
 		{
-			projectile.type = ProjectileID.Bullet;
+			Projectile.type = ProjectileID.Bullet;
 			return true;
 		}
 	}

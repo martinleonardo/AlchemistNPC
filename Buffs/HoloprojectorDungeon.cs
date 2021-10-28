@@ -18,15 +18,15 @@ namespace AlchemistNPC.Buffs
 {
 	public class HoloprojectorDungeon : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Holoprojector ''Dungeon''");
 			Description.SetDefault("Biome state is set to Dungeon now");
 			Main.buffNoTimeDisplay[Type] = true;
-			DisplayName.AddTranslation(GameCulture.Russian, "Голографический Проектор ''Данж''");
-			Description.AddTranslation(GameCulture.Russian, "Изменяет текущий биом на Данж");
-            DisplayName.AddTranslation(GameCulture.Chinese, "全息投影仪 ''地牢''");
-            Description.AddTranslation(GameCulture.Chinese, "当前地形设置:地牢");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Голографический Проектор ''Данж''");
+			Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Изменяет текущий биом на Данж");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "全息投影仪 ''地牢''");
+            Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "当前地形设置:地牢");
         }
 		
 		public override void Update(Player player, ref int buffIndex)

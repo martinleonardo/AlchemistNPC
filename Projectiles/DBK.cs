@@ -14,30 +14,29 @@ namespace AlchemistNPC.Projectiles
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("DBK");
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 5;
-			ProjectileID.Sets.TrailingMode[projectile.type] = 0;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 		}
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(ProjectileID.Bullet);
-			projectile.ranged = false;
-			projectile.magic = true;
-			projectile.width = 60;
-			projectile.height = 34;
-			projectile.timeLeft = 300;
-			aiType = ProjectileID.Bullet;
+			Projectile.CloneDefaults(ProjectileID.Bullet);
+			Projectile.DamageType = DamageClass.Magic;
+			Projectile.width = 60;
+			Projectile.height = 34;
+			Projectile.timeLeft = 300;
+			AIType = ProjectileID.Bullet;
 		}
 		
 		public override bool PreKill(int timeLeft)
 		{
-			projectile.type = ProjectileID.HellfireArrow;
+			Projectile.type = ProjectileID.HellfireArrow;
 			return true;
 		}
 		
 		public override void ModifyHitNPC (NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
-			Player player = Main.player[projectile.owner]; 
+			Player player = Main.player[Projectile.owner]; 
 			player.statLife += 5;
 			player.HealEffect(5, true);
 		}

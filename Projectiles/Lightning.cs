@@ -17,11 +17,11 @@ namespace AlchemistNPC.Projectiles
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(580);
-			projectile.hostile = false;
-			projectile.friendly = true;
-			projectile.aiStyle = 88;
-			aiType = 580;
+			Projectile.CloneDefaults(580);
+			Projectile.hostile = false;
+			Projectile.friendly = true;
+			Projectile.aiStyle = 88;
+			AIType = 580;
 		}
 		
 		public override bool CanHitPlayer(Player target)
@@ -40,7 +40,7 @@ namespace AlchemistNPC.Projectiles
 		
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-		target.immune[projectile.owner] = 3;
+		target.immune[Projectile.owner] = 3;
 		}
 	}
 }

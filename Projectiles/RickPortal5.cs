@@ -18,37 +18,37 @@ namespace AlchemistNPC.Projectiles
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(643);
-			projectile.friendly = false;
-			projectile.hostile = false;
-			projectile.width = 54;
-			projectile.height = 100;
-			projectile.penetrate = -1;
-			projectile.timeLeft = 90;
-			projectile.tileCollide = false;
-			aiType = 641;
+			Projectile.CloneDefaults(643);
+			Projectile.friendly = false;
+			Projectile.hostile = false;
+			Projectile.width = 54;
+			Projectile.height = 100;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 90;
+			Projectile.tileCollide = false;
+			AIType = 641;
 		}
 
 		public override void AI()
 		{
-			projectile.rotation = 0f;
+			Projectile.rotation = 0f;
 			for (int i = 0; i < 200; i++)
             {
                 NPC target = Main.npc[i];
 
-                float shootToX = target.position.X + target.width * 0.5f - projectile.Center.X;
-                float shootToY = target.position.Y + target.height * 0.5f - projectile.Center.Y;
+                float shootToX = target.position.X + target.width * 0.5f - Projectile.Center.X;
+                float shootToY = target.position.Y + target.height * 0.5f - Projectile.Center.Y;
                 float distance = (float)Math.Sqrt(shootToX * shootToX + shootToY * shootToY);
 
                 if (distance < 400f && target.catchItem == 0 && !target.friendly && target.active)
                 {
-                    if (projectile.ai[0] > 10f)
+                    if (Projectile.ai[0] > 10f)
                     {
                         distance = 1.6f / distance;
                         shootToX *= distance * 3;
                         shootToY *= distance * 3;
-                        Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, shootToX*2, shootToY*2, 523, projectile.damage, 0, Main.myPlayer, 0f, 0f);
-                        projectile.ai[0] = 0f;
+                        Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, shootToX*2, shootToY*2, 523, Projectile.damage, 0, Main.myPlayer, 0f, 0f);
+                        Projectile.ai[0] = 0f;
                     }
                 }
             }

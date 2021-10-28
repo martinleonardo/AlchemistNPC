@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using Terraria.ID;
 using System.Linq;
 using AlchemistNPC.Items;
+using Terraria.Audio;
+using ReLogic.Content;
 
 namespace AlchemistNPC.Interface
 {
@@ -43,7 +45,7 @@ namespace AlchemistNPC.Interface
 			string Tier6;
 			string BottonText;
 
-			if(Language.ActiveCulture == GameCulture.Chinese)
+			if(Language.ActiveCulture == GameCulture.FromCultureName(GameCulture.CultureName.Chinese))
 			{
 				Tier1 = "1级硬币";
 				Tier2 = "2级硬币";
@@ -107,7 +109,7 @@ namespace AlchemistNPC.Interface
 			CoinsConvertPanel.Append(text6);
 
 			Mod mod = AlchemistNPC.Instance;
-			Texture2D buttonBackTexture = mod.GetTexture("Interface/ButtonUp");
+			Asset<Texture2D> buttonBackTexture = mod.Assets.Request<Texture2D>("Interface/ButtonUp");
 			UIHoverImageButton playButton = new UIHoverImageButton(buttonBackTexture, BottonText);
 			playButton.Left.Set(130, 0f);
 			playButton.Top.Set(40, 0f);
@@ -193,7 +195,7 @@ namespace AlchemistNPC.Interface
 
 		private void CloseButtonClicked(UIMouseEvent evt, UIElement listeningElement)
 		{
-			Main.PlaySound(SoundID.MenuOpen);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.MenuOpen);
 			visible = false;
 		}
 
@@ -236,7 +238,7 @@ namespace AlchemistNPC.Interface
 	{
 		internal string HoverText;
 
-		public UIHoverImageButton(Texture2D texture, string hoverText) : base(texture) {
+		public UIHoverImageButton(Asset<Texture2D> texture, string hoverText) : base(texture) {
 			HoverText = hoverText;
 		}
 
@@ -266,7 +268,7 @@ namespace AlchemistNPC.Interface
 			Player player = Main.LocalPlayer;
 			AlchemistNPCPlayer modPlayer = player.GetModPlayer<AlchemistNPCPlayer>();
 			int anchorX = (int)shopx;
-			DynamicSpriteFont font = Main.fontMouseText;
+			DynamicSpriteFont font = Terraria.GameContent.FontAssets.MouseText.Value;
 			string maxText = "9999";
 			Vector2 maxTextSize = font.MeasureString(maxText);
 			Color textColor = new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor);

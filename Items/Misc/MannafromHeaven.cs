@@ -14,19 +14,19 @@ namespace AlchemistNPC.Items.Misc
 		{
 			DisplayName.SetDefault("Manna from Heaven");
 			Tooltip.SetDefault("Makes you permanently Well Fed");
-			DisplayName.AddTranslation(GameCulture.Russian, "Манна Небесная");
-			Tooltip.AddTranslation(GameCulture.Russian, "Делает вас постоянно сытым");
-			DisplayName.AddTranslation(GameCulture.Chinese, "天赐食粮");
-			Tooltip.AddTranslation(GameCulture.Chinese, "使你获得永久的'吃饱喝足'效果");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Манна Небесная");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Делает вас постоянно сытым");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "天赐食粮");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "使你获得永久的'吃饱喝足'效果");
 
         }
 
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.LifeFruit);
-			item.width = 26;
-			item.height = 14;
-			item.value = 25000000;
+			Item.CloneDefaults(ItemID.LifeFruit);
+			Item.width = 26;
+			Item.height = 14;
+			Item.value = 25000000;
 		}
 
 		public override bool CanUseItem(Player player)
@@ -34,7 +34,7 @@ namespace AlchemistNPC.Items.Misc
 			return player.GetModPlayer<AlchemistNPCPlayer>().WellFed < 1;
 		}
 
-		public override bool UseItem(Player player)
+		public override bool? UseItem(Player player)
 		{
 			player.GetModPlayer<AlchemistNPCPlayer>().WellFed += 1;
 			return true;

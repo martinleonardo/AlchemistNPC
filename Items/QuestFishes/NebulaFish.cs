@@ -10,23 +10,23 @@ namespace AlchemistNPC.Items.QuestFishes
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Nebula Fish");
-			DisplayName.AddTranslation(GameCulture.Russian, "Туманная Рыба");
-			DisplayName.AddTranslation(GameCulture.Chinese, "星云鱼");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Туманная Рыба");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "星云鱼");
 		}
 
 		public override void SetDefaults()
 		{
-			item.questItem = true;
-			item.maxStack = 1;
-			item.width = 26;
-			item.height = 26;
-			item.uniqueStack = true;
-			item.rare = -11;		//The rarity of -11 gives the item orange color
+			Item.questItem = true;
+			Item.maxStack = 1;
+			Item.width = 26;
+			Item.height = 26;
+			Item.uniqueStack = true;
+			Item.rare = -11;		//The rarity of -11 gives the item orange color
 		}
 
 		public override void UpdateInventory(Player player)
 		{
-		((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).NebulaFish = true;
+		((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).NebulaFish = true;
 		}
 		
 		public override bool IsQuestFish()

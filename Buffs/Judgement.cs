@@ -10,7 +10,7 @@ namespace AlchemistNPC.Buffs
 {
 	public class Judgement : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Judgement");
 			Description.SetDefault("You conjure sharp bones to impale your foes"
@@ -18,12 +18,12 @@ namespace AlchemistNPC.Buffs
 			+"\nReduces your Damage reduction by 33%");
 			Main.buffNoSave[Type] = true;
 			Main.debuff[Type] = false;
-			canBeCleared = true;
+			CanBeCleared = true;
 			Main.buffNoTimeDisplay[Type] = true;
-			DisplayName.AddTranslation(GameCulture.Russian, "Правосудие");
-            Description.AddTranslation(GameCulture.Russian, "Вы призываете острые кости, пронзающие врагов\n33% шанс уменьшить полученный урон до 2 единиц здоровья\nПонижает ваше сопротивление урону на 33%");
-            DisplayName.AddTranslation(GameCulture.Chinese, "审判");
-            Description.AddTranslation(GameCulture.Chinese, "产生锋利的骨刺穿透你的敌人\n有33%的概率减少2点所受伤害\n伤害减免降低33%");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Правосудие");
+            Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Вы призываете острые кости, пронзающие врагов\n33% шанс уменьшить полученный урон до 2 единиц здоровья\nПонижает ваше сопротивление урону на 33%");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "审判");
+            Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "产生锋利的骨刺穿透你的敌人\n有33%的概率减少2点所受伤害\n伤害减免降低33%");
         }
 		
 		public override void Update(Player player, ref int buffIndex)

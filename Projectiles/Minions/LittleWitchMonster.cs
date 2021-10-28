@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace AlchemistNPC.Projectiles.Minions
 {
@@ -8,11 +9,11 @@ namespace AlchemistNPC.Projectiles.Minions
 	{
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(391);
-			projectile.minionSlots = 1;
-            Main.projFrames[projectile.type] = 11;
-			projectile.aiStyle = 26;
-            aiType = 391;
+			Projectile.CloneDefaults(391);
+			Projectile.minionSlots = 1;
+            Main.projFrames[Projectile.type] = 11;
+			Projectile.aiStyle = 26;
+            AIType = 391;
 		}
 
 		public override void SetStaticDefaults()
@@ -20,7 +21,7 @@ namespace AlchemistNPC.Projectiles.Minions
 			DisplayName.SetDefault("LittleWitchMonster");
 		}
 
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough) 
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) 
 		{ 
 		fallThrough = false; 
 		return true; 
@@ -28,29 +29,29 @@ namespace AlchemistNPC.Projectiles.Minions
 
 		public override void CheckActive()
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			AlchemistNPCPlayer modPlayer = player.GetModPlayer<AlchemistNPCPlayer>();
 			if (player.dead || !modPlayer.LaetitiaGift)
 			{
 				modPlayer.lwm = false;
-				projectile.Kill();
+				Projectile.Kill();
 			}
-			if (!player.HasBuff(mod.BuffType("LittleWitchMonster")))
+			if (!player.HasBuff(ModContent.BuffType<Buffs.LittleWitchMonster>()))
 			{
 				modPlayer.lwm = false;
-				projectile.Kill();
+				Projectile.Kill();
 			}
 			if (!modPlayer.LaetitiaSet && !modPlayer.ParadiseLost)
 			{
 				modPlayer.lwm = false;
-				projectile.Kill();
+				Projectile.Kill();
 			}
 		}
 
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
-			Player player = Main.player[projectile.owner];
-			if (((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).ParadiseLost == true)
+			Player player = Main.player[Projectile.owner];
+			if (((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).ParadiseLost == true)
 			{
 			damage *= 4;
 			}
@@ -60,9 +61,9 @@ namespace AlchemistNPC.Projectiles.Minions
 		{
 			target.AddBuff(BuffID.ShadowFlame, 600);
 			target.AddBuff(BuffID.Ichor, 600);
-			target.immune[projectile.owner] = 5;
-			Player player = Main.player[projectile.owner];
-			if (((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).ParadiseLost == true)
+			target.immune[Projectile.owner] = 5;
+			Player player = Main.player[Projectile.owner];
+			if (((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).ParadiseLost == true)
 			{
 			damage *= 4;
 			}
@@ -70,9 +71,9 @@ namespace AlchemistNPC.Projectiles.Minions
 		
 		public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            if (projectile.penetrate == 0)
+            if (Projectile.penetrate == 0)
             {
-                projectile.Kill();
+                Projectile.Kill();
             }
             return false;
         }

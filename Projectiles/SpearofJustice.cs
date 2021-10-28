@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using System;
 using AlchemistNPC.Items.Weapons;
+using Terraria.GameContent;
 
 namespace AlchemistNPC.Projectiles
 {
@@ -13,23 +14,23 @@ namespace AlchemistNPC.Projectiles
 	{
 		public override void SetDefaults()
 		{
-			projectile.width = 14;
-			projectile.height = 14;
-			projectile.friendly = true;
-			projectile.aiStyle = 113;
-			projectile.thrown = true;
-			projectile.penetrate = 1;
-			projectile.timeLeft = 1200;
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 5;
-			ProjectileID.Sets.TrailingMode[projectile.type] = 2;
-			aiType = 636;
+			Projectile.width = 14;
+			Projectile.height = 14;
+			Projectile.friendly = true;
+			Projectile.aiStyle = 113;
+			Projectile.DamageType = DamageClass.Throwing;
+			Projectile.penetrate = 1;
+			Projectile.timeLeft = 1200;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			AIType = 636;
 		}
 
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("SpearofJustice");
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 1;
-			ProjectileID.Sets.TrailingMode[projectile.type] = 0; 
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 1;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 0; 
 
 		}
 		
@@ -37,74 +38,74 @@ namespace AlchemistNPC.Projectiles
 		{
 			if (Main.rand.Next(2) == 0)
 				{
-					Dust dust = Dust.NewDustDirect(projectile.position, projectile.height, projectile.width, mod.DustType("RainbowDust"),
-						projectile.velocity.X * .2f, projectile.velocity.Y * .2f, 200, Scale: 1.2f);
-					dust.velocity += projectile.velocity * 0.3f;
+					Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.height, Projectile.width, ModContent.DustType<Dusts.RainbowDust>(),
+						Projectile.velocity.X * .2f, Projectile.velocity.Y * .2f, 200, Scale: 1.2f);
+					dust.velocity += Projectile.velocity * 0.3f;
 					dust.velocity *= 0.2f;
 					dust.noGravity = true;
 				}
 		}
 		
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) {
+		public override bool PreDraw(ref Color lightColor) {
             
-            Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
-            for (int i = 0; i < projectile.oldPos.Length; i++) {
-                Vector2 drawPos = projectile.oldPos[i] - Main.screenPosition + drawOrigin + new Vector2(0f, projectile.gfxOffY);
-                Color color = projectile.GetAlpha(lightColor) * ((float)(projectile.oldPos.Length - i) / (float)projectile.oldPos.Length);
-                spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos, new Rectangle(0, projectile.frame * Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type], Main.projectileTexture[projectile.type].Width, Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type]), color, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+            Vector2 drawOrigin = new Vector2(TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
+            for (int i = 0; i < Projectile.oldPos.Length; i++) {
+                Vector2 drawPos = Projectile.oldPos[i] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+                Color color = Projectile.GetAlpha(lightColor) * ((float)(Projectile.oldPos.Length - i) / (float)Projectile.oldPos.Length);
+                Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, drawPos, new Rectangle(0, Projectile.frame * TextureAssets.Projectile[Projectile.type].Value.Height / Main.projFrames[Projectile.type], TextureAssets.Projectile[Projectile.type].Value.Width, TextureAssets.Projectile[Projectile.type].Value.Height / Main.projFrames[Projectile.type]), color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             }
             return true;
         }
 		
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			projectile.penetrate--;
-			if (projectile.penetrate <= 0)
+			Projectile.penetrate--;
+			if (Projectile.penetrate <= 0)
 			{
-				projectile.Kill();
-				Main.PlaySound(2, (int)projectile.position.X, (int)projectile.position.Y, 62);
+				Projectile.Kill();
+				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.position.X, (int)Projectile.position.Y, 62);
 				Vector2 vel = new Vector2(0, -1);
 				vel *= 0f;
-				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, vel.X, vel.Y, mod.ProjectileType("ExplosionSOJ"), projectile.damage, 0, Main.myPlayer);
+				Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, vel.X, vel.Y, ModContent.ProjectileType<Projectiles.ExplosionSOJ>(), Projectile.damage, 0, Main.myPlayer);
 			}
 			return false;
 		}
 		
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			projectile.penetrate--;
-			if (projectile.penetrate <= 0)
+			Projectile.penetrate--;
+			if (Projectile.penetrate <= 0)
 			{
-				projectile.Kill();
-				Main.PlaySound(2, (int)projectile.position.X, (int)projectile.position.Y, 62);
+				Projectile.Kill();
+				Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.position.X, (int)Projectile.position.Y, 62);
 				Vector2 vel = new Vector2(0, -1);
 				vel *= 0f;
-				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, vel.X, vel.Y, mod.ProjectileType("ExplosionSOJ"), projectile.damage, 0, Main.myPlayer);
+				Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, vel.X, vel.Y, ModContent.ProjectileType<Projectiles.ExplosionSOJ>(), Projectile.damage, 0, Main.myPlayer);
 			}
 			Vector2 vel1 = new Vector2(-1, -1);
 			vel1 *= 4f;
-			Projectile.NewProjectile(target.position.X+150, target.position.Y+150, vel1.X, vel1.Y, mod.ProjectileType("SpearofJusticeB"), projectile.damage/2, 0, Main.myPlayer);
+			Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), target.position.X+150, target.position.Y+150, vel1.X, vel1.Y, ModContent.ProjectileType<Projectiles.SpearofJusticeB>(), Projectile.damage/2, 0, Main.myPlayer);
 			Vector2 vel2 = new Vector2(1, 1);
 			vel2 *= 4f;
-			Projectile.NewProjectile(target.position.X-150, target.position.Y-150, vel2.X, vel2.Y, mod.ProjectileType("SpearofJusticeB"), projectile.damage/2, 0, Main.myPlayer);
+			Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), target.position.X-150, target.position.Y-150, vel2.X, vel2.Y, ModContent.ProjectileType<Projectiles.SpearofJusticeB>(), Projectile.damage/2, 0, Main.myPlayer);
 			Vector2 vel3 = new Vector2(1, -1);
 			vel3 *= 4f;
-			Projectile.NewProjectile(target.position.X-150, target.position.Y+150, vel3.X, vel3.Y, mod.ProjectileType("SpearofJusticeB"), projectile.damage/2, 0, Main.myPlayer);
+			Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), target.position.X-150, target.position.Y+150, vel3.X, vel3.Y, ModContent.ProjectileType<Projectiles.SpearofJusticeB>(), Projectile.damage/2, 0, Main.myPlayer);
 			Vector2 vel4 = new Vector2(-1, 1);
 			vel4 *= 4f;
-			Projectile.NewProjectile(target.position.X+150, target.position.Y-150, vel4.X, vel4.Y, mod.ProjectileType("SpearofJusticeB"), projectile.damage/2, 0, Main.myPlayer);
+			Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), target.position.X+150, target.position.Y-150, vel4.X, vel4.Y, ModContent.ProjectileType<Projectiles.SpearofJusticeB>(), Projectile.damage/2, 0, Main.myPlayer);
 			Vector2 vel5 = new Vector2(0, -1);
 			vel5 *= 4f;
-			Projectile.NewProjectile(target.position.X, target.position.Y+150, vel5.X, vel5.Y, mod.ProjectileType("SpearofJusticeB"), projectile.damage/2, 0, Main.myPlayer);
+			Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), target.position.X, target.position.Y+150, vel5.X, vel5.Y, ModContent.ProjectileType<Projectiles.SpearofJusticeB>(), Projectile.damage/2, 0, Main.myPlayer);
 			Vector2 vel6 = new Vector2(0, 1);
 			vel6 *= 4f;
-			Projectile.NewProjectile(target.position.X, target.position.Y-150, vel6.X, vel6.Y, mod.ProjectileType("SpearofJusticeB"), projectile.damage/2, 0, Main.myPlayer);
+			Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), target.position.X, target.position.Y-150, vel6.X, vel6.Y, ModContent.ProjectileType<Projectiles.SpearofJusticeB>(), Projectile.damage/2, 0, Main.myPlayer);
 			Vector2 vel7 = new Vector2(1, 0);
 			vel7 *= 4f;
-			Projectile.NewProjectile(target.position.X-150, target.position.Y, vel7.X, vel7.Y, mod.ProjectileType("SpearofJusticeB"), projectile.damage/2, 0, Main.myPlayer);
+			Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), target.position.X-150, target.position.Y, vel7.X, vel7.Y, ModContent.ProjectileType<Projectiles.SpearofJusticeB>(), Projectile.damage/2, 0, Main.myPlayer);
 			Vector2 vel8 = new Vector2(-1, 0);
 			vel8 *= 4f;
-			Projectile.NewProjectile(target.position.X+150, target.position.Y, vel8.X, vel8.Y, mod.ProjectileType("SpearofJusticeB"), projectile.damage/2, 0, Main.myPlayer);
+			Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), target.position.X+150, target.position.Y, vel8.X, vel8.Y, ModContent.ProjectileType<Projectiles.SpearofJusticeB>(), Projectile.damage/2, 0, Main.myPlayer);
 		}
 	}
 }

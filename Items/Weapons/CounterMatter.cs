@@ -19,10 +19,10 @@ namespace AlchemistNPC.Items.Weapons
 			+"\nDestroys nearby enemy projectiles"
 			+"\nAfter blocking the projectile, your next strike would be 100% critical"
 			+"\n[c/00FF00:Stats are growing through progression]");
-			DisplayName.AddTranslation(GameCulture.Russian, "Противодействующая Материя");
-            Tooltip.AddTranslation(GameCulture.Russian, "Шар 199\n[c/00FF00:Легендарное Оружие]\nУничтожает снаряды противника поблизости\nПосле блокирования снаряда ваша следуящая атака гарантированно будет критом\n[c/00FF00:Статы улучшаются по мере прохождения]");
-			DisplayName.AddTranslation(GameCulture.Chinese, "复位物质");
-			Tooltip.AddTranslation(GameCulture.Chinese, "球体 199"
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Противодействующая Материя");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Шар 199\n[c/00FF00:Легендарное Оружие]\nУничтожает снаряды противника поблизости\nПосле блокирования снаряда ваша следуящая атака гарантированно будет критом\n[c/00FF00:Статы улучшаются по мере прохождения]");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "复位物质");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "球体 199"
 			+"\n[c/00FF00:传奇武器]"
 			+"\n摧毁附近的敌人抛射物"
 			+"\n阻挡抛射物后, 下一次攻击100%暴击"
@@ -31,27 +31,27 @@ namespace AlchemistNPC.Items.Weapons
 		
 		public override void SetDefaults()
 		{
-			item.mana = 100;
-			item.width = 48;
-			item.height = 48;
-			item.useTime = 30;
-			item.useAnimation = 30;
-			item.useStyle = 1;
-			item.noMelee = true;
-			item.value = Item.buyPrice(1, 0, 0, 0);
-			item.rare = 11;
-			item.UseSound = SoundID.Item44;
-			item.autoReuse = true;
-			item.noUseGraphic = true;
-			item.buffType = mod.BuffType("ProjCounter");
-			item.scale = 0.5f;
+			Item.mana = 100;
+			Item.width = 48;
+			Item.height = 48;
+			Item.useTime = 30;
+			Item.useAnimation = 30;
+			Item.useStyle = 1;
+			Item.noMelee = true;
+			Item.value = Item.buyPrice(1, 0, 0, 0);
+			Item.rare = 11;
+			Item.UseSound = SoundID.Item44;
+			Item.autoReuse = true;
+			Item.noUseGraphic = true;
+			Item.buffType = ModContent.BuffType<Buffs.ProjCounter>();
+			Item.scale = 0.5f;
 		}
 		
-		public override void UseStyle(Player player)
+		public override void UseStyle(Player player, Rectangle rectangle)
 		{
 			if (player.whoAmI == Main.myPlayer && player.itemTime == 0)
 			{
-				player.AddBuff(item.buffType, 2, true);
+				player.AddBuff(Item.buffType, 2, true);
 			}
 		}
 	}

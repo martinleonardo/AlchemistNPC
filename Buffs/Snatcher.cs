@@ -8,7 +8,7 @@ namespace AlchemistNPC.Buffs
 {
 	public class Snatcher : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Snatcher, the Cursed Prince");
 			Description.SetDefault("Uh... You don't seem to have a soul. What a shame. OK then, let's make a deal..."
@@ -18,10 +18,10 @@ namespace AlchemistNPC.Buffs
 			+"\nDoes that sound good enough? I hope so...");
             Main.buffNoTimeDisplay[Type] = true;
 			Main.vanityPet[Type] = true;
-			DisplayName.AddTranslation(GameCulture.Russian, "Хвататель, Проклятый Принц");
-			Description.AddTranslation(GameCulture.Russian, "Давай-ка заключим сделку!");
-            DisplayName.AddTranslation(GameCulture.Chinese, "掠夺者, 被诅咒的王子");
-            Description.AddTranslation(GameCulture.Chinese, "我们来做个交易吧!");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Хвататель, Проклятый Принц");
+			Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Давай-ка заключим сделку!");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "掠夺者, 被诅咒的王子");
+            Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "我们来做个交易吧!");
 		}
 
 		public override void ModifyBuffTip (ref string tipline, ref int rare)
@@ -44,7 +44,7 @@ namespace AlchemistNPC.Buffs
 			+"\n听起来不错, 是吧? 希望如此..."
 			+"\n" + modPlayer.SnatcherCounter + "已收集的灵魂.";
 
-			if(Language.ActiveCulture == GameCulture.Chinese)
+			if(Language.ActiveCulture == GameCulture.FromCultureName(GameCulture.CultureName.Chinese))
 				{
 					tipline = tipch;
 				}
@@ -104,7 +104,7 @@ namespace AlchemistNPC.Buffs
 				tipch += "\n让你可以通过暗影爆发攻击附近的敌人\n伤害由当前手持武器决定";
 			}
 			
-			if(Language.ActiveCulture == GameCulture.Chinese)
+			if(Language.ActiveCulture == GameCulture.FromCultureName(GameCulture.CultureName.Chinese))
 				{
 					tipline = tipch;
 				}
@@ -117,7 +117,7 @@ namespace AlchemistNPC.Buffs
 		public override void Update(Player player, ref int buffIndex)
 		{
 			AlchemistNPCPlayer modPlayer = player.GetModPlayer<AlchemistNPCPlayer>();
-			if (player.ownedProjectileCounts[mod.ProjectileType("Snatcher")] > 0)
+			if (player.ownedProjectileCounts[ModContent.ProjectileType<Projectiles.Pets.Snatcher>()] > 0)
 			{
 				modPlayer.snatcher = true;
 			}
@@ -131,13 +131,13 @@ namespace AlchemistNPC.Buffs
 				player.buffTime[buffIndex] = 18000;
 			}
 			bool petProjectileNotSpawned = true;
-			if (player.ownedProjectileCounts[mod.ProjectileType("Snatcher")] > 0)
+			if (player.ownedProjectileCounts[ModContent.ProjectileType<Projectiles.Pets.Snatcher>()] > 0)
 			{
 				petProjectileNotSpawned = false;
 			}
 			if (petProjectileNotSpawned && player.whoAmI == Main.myPlayer)
 			{
-				Projectile.NewProjectile(player.position.X + player.width / 2, player.position.Y + player.height / 2, 0f, 0f, mod.ProjectileType("Snatcher"), 0, 0f, player.whoAmI, 0f, 0f);
+				Projectile.NewProjectile(player.GetProjectileSource_Buff(buffIndex), player.position.X + player.width / 2, player.position.Y + player.height / 2, 0f, 0f, ModContent.ProjectileType<Projectiles.Pets.Snatcher>(), 0, 0f, player.whoAmI, 0f, 0f);
 			}
 			if (modPlayer.SnatcherCounter >= 500)
 			{
@@ -158,14 +158,16 @@ namespace AlchemistNPC.Buffs
 			}
 			if (modPlayer.SnatcherCounter >= 3500)
 			{
-				player.allDamage += 0.08f;
+				player.GetDamage(DamageClass.Generic) += 0.08f;
 			}
 			if (modPlayer.SnatcherCounter >= 5000)
 			{
-				player.meleeCrit += 5;
-				player.rangedCrit += 5;
-				player.magicCrit += 5;
-				player.thrownCrit += 5;
+				player.GetCritChance(DamageClass.Melee) += 5;
+				player.GetCritChance(DamageClass.Ranged) += 5;
+				player.GetCritChance(DamageClass.Magic) += 5;
+				player.GetCritChance(DamageClass.Throwing) += 5;
+				// IMPLEMENT WHEN WEAKREFERENCES FIXED
+				/*
 				if (ModLoader.GetMod("ThoriumMod") != null)
 				{
 					ThoriumCBoosts(player);
@@ -179,6 +181,7 @@ namespace AlchemistNPC.Buffs
 				{
 					Calamity.Call("AddRogueCrit", player, 5);
 				}
+				*/
 			}
 			if (modPlayer.SnatcherCounter >= 6666)
 			{
@@ -190,17 +193,20 @@ namespace AlchemistNPC.Buffs
 			}
 		}
 		
+		// IMPLEMENT WHEN WEAKREFERENCES FIXED
+		/*
 		private void RedemptionCBoost(Player player)
         {
 			Redemption.Items.DruidDamageClass.DruidDamagePlayer RedemptionPlayer = player.GetModPlayer<Redemption.Items.DruidDamageClass.DruidDamagePlayer>();
-            RedemptionPlayer.druidCrit += 5;
+            Redemptionplayer.GetCritChance(DamageClass.Druid) += 5;
         }
 		
 		private void ThoriumCBoosts(Player player)
         {
             ThoriumMod.ThoriumPlayer ThoriumPlayer = player.GetModPlayer<ThoriumMod.ThoriumPlayer>();
-            ThoriumPlayer.symphonicCrit += 5;
-            ThoriumPlayer.radiantCrit += 5;
+            Thoriumplayer.GetCritChance(DamageClass.Symphonic) += 5;
+            Thoriumplayer.GetCritChance(DamageClass.Radiant) += 5;
         }
+		*/
 	}
 }

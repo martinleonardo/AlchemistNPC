@@ -17,16 +17,15 @@ namespace AlchemistNPC.Projectiles
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(503);
-			projectile.melee = false;
-			projectile.thrown = true;
-			projectile.aiStyle = 5;
-			aiType = 503;
+			Projectile.CloneDefaults(503);
+			Projectile.DamageType = DamageClass.Throwing;
+			Projectile.aiStyle = 5;
+			AIType = 503;
 		}
 
 		public override bool PreKill(int timeLeft)
 		{
-			projectile.type = 503;
+			Projectile.type = 503;
 			return true;
 		}
 		
@@ -37,7 +36,7 @@ namespace AlchemistNPC.Projectiles
 		
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-		target.immune[projectile.owner] = 1;
+		target.immune[Projectile.owner] = 1;
 		}
 	}
 }

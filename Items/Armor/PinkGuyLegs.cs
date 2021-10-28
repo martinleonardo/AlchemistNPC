@@ -11,21 +11,21 @@ namespace AlchemistNPC.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Pink Guy's Leggings");
-			DisplayName.AddTranslation(GameCulture.Russian, "Штаны Розового Парня"); 
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Штаны Розового Парня"); 
 			Tooltip.SetDefault("The perfect pants for leg day. Perhaps they could even make you stronger.");
-            Tooltip.AddTranslation(GameCulture.Russian, "Превосходные штаны для пробежки. Возможно, могут даже сделать вас сильнее.");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Превосходные штаны для пробежки. Возможно, могут даже сделать вас сильнее.");
 
-            DisplayName.AddTranslation(GameCulture.Chinese, "Pink Guy的裤子");
-            Tooltip.AddTranslation(GameCulture.Chinese, "为练腿日存在完美的裤子.甚至会让你更强壮.");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "Pink Guy的裤子");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "为练腿日存在完美的裤子.甚至会让你更强壮.");
         }
 
 		public override void SetDefaults()
 		{
-			item.width = 22;
-			item.height = 16;
-			item.value = 1650000;
-			item.rare = -11;
-			item.vanity = true;
+			Item.width = 22;
+			Item.height = 16;
+			Item.value = 1650000;
+			Item.rare = -11;
+			Item.vanity = true;
 		}
 	}
 }

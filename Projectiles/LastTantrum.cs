@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+using Terraria.GameContent;
 
 namespace AlchemistNPC.Projectiles
 {
@@ -12,44 +13,44 @@ namespace AlchemistNPC.Projectiles
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Last Tantrum P");
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 3;
-			ProjectileID.Sets.TrailingMode[projectile.type] = 0;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 		}
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(616);
-			projectile.width = 10;
-			projectile.height = 24;
-			aiType = 616;
+			Projectile.CloneDefaults(616);
+			Projectile.width = 10;
+			Projectile.height = 24;
+			AIType = 616;
 		}
 		
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) {
+		public override bool PreDraw(ref Color lightColor) {
             
-            Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
-            for (int i = 0; i < projectile.oldPos.Length; i++) {
-                Vector2 drawPos = projectile.oldPos[i] - Main.screenPosition + drawOrigin + new Vector2(0f, projectile.gfxOffY);
-                Color color = projectile.GetAlpha(lightColor) * ((float)(projectile.oldPos.Length - i) / (float)projectile.oldPos.Length);
-                spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos, new Rectangle(0, projectile.frame * Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type], Main.projectileTexture[projectile.type].Width, Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type]), color, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+            Vector2 drawOrigin = new Vector2(TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
+            for (int i = 0; i < Projectile.oldPos.Length; i++) {
+                Vector2 drawPos = Projectile.oldPos[i] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+                Color color = Projectile.GetAlpha(lightColor) * ((float)(Projectile.oldPos.Length - i) / (float)Projectile.oldPos.Length);
+                Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, drawPos, new Rectangle(0, Projectile.frame * TextureAssets.Projectile[Projectile.type].Value.Height / Main.projFrames[Projectile.type], TextureAssets.Projectile[Projectile.type].Value.Width, TextureAssets.Projectile[Projectile.type].Value.Height / Main.projFrames[Projectile.type]), color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             }
             return true;
         }
 		
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			projectile.Kill();
-			Main.PlaySound(SoundID.Item34, projectile.position);
+			Projectile.Kill();
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item34, Projectile.position);
 			Vector2 vel = new Vector2(0, -1);
 			float rand = Main.rand.NextFloat() * 6.283f;
 			vel = vel.RotatedBy(rand);
 			vel *= 0f;
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, vel.X, vel.Y, mod.ProjectileType("ExplosionNyx"), projectile.damage, 0, Main.myPlayer);
+			Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, vel.X, vel.Y, ModContent.ProjectileType<Projectiles.ExplosionNyx>(), Projectile.damage, 0, Main.myPlayer);
 			return true;
 		}
 		
 		public override void ModifyHitNPC (NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
-			if (target.type == mod.NPCType("BillCipher"))
+			if (target.type == ModContent.NPCType<NPCs.BillCipher>())
 			{
 			damage /= 250;
 			}
@@ -57,13 +58,13 @@ namespace AlchemistNPC.Projectiles
 		
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			projectile.Kill();
-			Main.PlaySound(SoundID.Item34, projectile.position);
+			Projectile.Kill();
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item34, Projectile.position);
 			Vector2 vel = new Vector2(0, -1);
 			float rand = Main.rand.NextFloat() * 6.283f;
 			vel = vel.RotatedBy(rand);
 			vel *= 0f;
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, vel.X, vel.Y, mod.ProjectileType("ExplosionNyx"), projectile.damage, 0, Main.myPlayer);
+			Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, vel.X, vel.Y, ModContent.ProjectileType<Projectiles.ExplosionNyx>(), Projectile.damage, 0, Main.myPlayer);
 		}
 	}
 }

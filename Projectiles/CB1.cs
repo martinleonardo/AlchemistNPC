@@ -8,6 +8,8 @@ using static Terraria.ModLoader.ModContent;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria.Audio;
+using Terraria.GameContent;
 
 namespace AlchemistNPC.Projectiles
 {
@@ -16,31 +18,31 @@ namespace AlchemistNPC.Projectiles
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("CB1");
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 5;
-			ProjectileID.Sets.TrailingMode[projectile.type] = 0;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 22;
-            projectile.height = 28;
-            projectile.friendly = true;
-            projectile.thrown = true;
-            projectile.ignoreWater = true;
-            projectile.extraUpdates = 2;
-			projectile.tileCollide = false;
-			projectile.penetrate = -1;
-			projectile.timeLeft = 150;
+            Projectile.width = 22;
+            Projectile.height = 28;
+            Projectile.friendly = true;
+            Projectile.DamageType = DamageClass.Throwing;
+            Projectile.ignoreWater = true;
+            Projectile.extraUpdates = 2;
+			Projectile.tileCollide = false;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 150;
         }
 		
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			target.immune[projectile.owner] = 1;
+			target.immune[Projectile.owner] = 1;
 		}
 
 		public override void ModifyHitNPC (NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
-			if (target.type == mod.NPCType("BillCipher"))
+			if (target.type == ModContent.NPCType<NPCs.BillCipher>())
 			{
 			damage /= 150;
 			}
@@ -48,29 +50,29 @@ namespace AlchemistNPC.Projectiles
 
         public override void AI()
         {
-            projectile.rotation =
-					projectile.velocity.ToRotation() +
+            Projectile.rotation =
+					Projectile.velocity.ToRotation() +
 					MathHelper.ToRadians(
 						90f);
         }
 		
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) {
+		public override bool PreDraw(ref Color lightColor) {
             
-            Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
-            for (int i = 0; i < projectile.oldPos.Length; i++) {
-                Vector2 drawPos = projectile.oldPos[i] - Main.screenPosition + drawOrigin + new Vector2(0f, projectile.gfxOffY);
-                Color color = projectile.GetAlpha(lightColor) * ((float)(projectile.oldPos.Length - i) / (float)projectile.oldPos.Length);
-                spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos, new Rectangle(0, projectile.frame * Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type], Main.projectileTexture[projectile.type].Width, Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type]), color, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+            Vector2 drawOrigin = new Vector2(TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
+            for (int i = 0; i < Projectile.oldPos.Length; i++) {
+                Vector2 drawPos = Projectile.oldPos[i] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+                Color color = Projectile.GetAlpha(lightColor) * ((float)(Projectile.oldPos.Length - i) / (float)Projectile.oldPos.Length);
+                Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, drawPos, new Rectangle(0, Projectile.frame * TextureAssets.Projectile[Projectile.type].Value.Height / Main.projFrames[Projectile.type], TextureAssets.Projectile[Projectile.type].Value.Width, TextureAssets.Projectile[Projectile.type].Value.Height / Main.projFrames[Projectile.type]), color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             }
             return true;
         }
 		
 		public override void Kill(int timeLeft)
 		{
-			Main.PlaySound(SoundID.DD2_ExplosiveTrapExplode, projectile.position);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, Projectile.position);
 			for (int index1 = 0; index1 < 20; ++index1)
 			{
-				int index2 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 29, 0.0f, 0.0f, 100, new Color(), 1f);
+				int index2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 29, 0.0f, 0.0f, 100, new Color(), 1f);
 				Main.dust[index2].velocity *= 1.1f;
 				Main.dust[index2].scale *= 0.99f;
 			}

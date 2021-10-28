@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using Terraria.ModLoader.IO;
 using Terraria.Localization;
-using Terraria.World.Generation;
+using Terraria.DataStructures;
 
 namespace AlchemistNPC.Items.Weapons
 {
@@ -22,10 +22,10 @@ namespace AlchemistNPC.Items.Weapons
 			+ "\n[c/FF0000:EGO weapon]"
 			+ "\nCauses some ornament balls to fall from the sky on swing"
 			+ "\nGives 3% chance to get Present from any enemy as drop");
-			DisplayName.AddTranslation(GameCulture.Russian, "Рождество (F-02-49)");
-            Tooltip.AddTranslation(GameCulture.Russian, "''Он запечатан в крепкую кожи. Никто не знает, откуда она.\nЧто находится под ней - неизвестно, но эта таинственность лишь делает оружие сильнее.''\n[c/FF0000:Оружие Э.П.О.С.]\nВызывает падение нескольких ёлочных украшений при взмахе\nДаёт 3% шанс на получение подарка при убийстве любого противника");
-			DisplayName.AddTranslation(GameCulture.Chinese, "悲惨圣诞 (F-02-49)");
-			Tooltip.AddTranslation(GameCulture.Chinese, "''掩盖在层层厚皮下的真相绝不能被人知道."
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Рождество (F-02-49)");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "''Он запечатан в крепкую кожи. Никто не знает, откуда она.\nЧто находится под ней - неизвестно, но эта таинственность лишь делает оружие сильнее.''\n[c/FF0000:Оружие Э.П.О.С.]\nВызывает падение нескольких ёлочных украшений при взмахе\nДаёт 3% шанс на получение подарка при убийстве любого противника");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "悲惨圣诞 (F-02-49)");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "''掩盖在层层厚皮下的真相绝不能被人知道."
 			+"\n对真相的刻意隐瞒只会使这把武器更加强大.''"
 			+"\n[c/FF0000:EGO 武器]"
 			+"\n挥舞时从天上掉落装饰球"
@@ -34,54 +34,54 @@ namespace AlchemistNPC.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.Starfury);
-			item.melee = true;
-			item.damage = 33;
-			item.width = 78;
-			item.height = 106;
-			item.useTime = 30;
-			item.useAnimation = 30;
-			item.useStyle = 1;
-			item.value = 50000;
-			item.rare = 3;
-            item.knockBack = 6;
-            item.autoReuse = true;
-			item.UseSound = SoundID.Item1;
-			item.scale = 1f;
+			Item.CloneDefaults(ItemID.Starfury);
+			Item.DamageType = DamageClass.Melee;
+			Item.damage = 33;
+			Item.width = 78;
+			Item.height = 106;
+			Item.useTime = 30;
+			Item.useAnimation = 30;
+			Item.useStyle = 1;
+			Item.value = 50000;
+			Item.rare = 3;
+            Item.knockBack = 6;
+            Item.autoReuse = true;
+			Item.UseSound = SoundID.Item1;
+			Item.scale = 1f;
 		}
 		
 		public override bool CanUseItem(Player player)
 		{
-			if (((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).ParadiseLost == true)
+			if (((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).ParadiseLost == true)
 			{
-				item.damage = 150;
-				item.useTime = 20;
-				item.useAnimation = 20;
+				Item.damage = 150;
+				Item.useTime = 20;
+				Item.useAnimation = 20;
 			}
 			else
 			{
-				item.damage = 33;
+				Item.damage = 33;
 			}
 			return base.CanUseItem(player);
 		}
 		
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+		public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
 			type = 335;
-			if (((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).ParadiseLost == true)
+			if (((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).ParadiseLost == true)
 			{
-				Projectile.NewProjectile(position.X+Main.rand.Next(-75,75), position.Y+Main.rand.Next(-75,75), speedX, speedY, type, damage, 3, player.whoAmI);
-				Projectile.NewProjectile(position.X+Main.rand.Next(-100,100), position.Y+Main.rand.Next(-100,100), speedX, speedY, type, damage, 3, player.whoAmI);
-				Projectile.NewProjectile(position.X+Main.rand.Next(-25,25), position.Y+Main.rand.Next(-25,25), speedX, speedY, type, damage/2, 3, player.whoAmI);
-				Projectile.NewProjectile(position.X+Main.rand.Next(-50,50), position.Y+Main.rand.Next(-50,50), speedX, speedY, type, damage/2, 3, player.whoAmI);
+				Projectile.NewProjectile(source, position.X+Main.rand.Next(-75,75), position.Y+Main.rand.Next(-75,75), velocity.X, velocity.Y, type, damage, 3, player.whoAmI);
+				Projectile.NewProjectile(source, position.X+Main.rand.Next(-100,100), position.Y+Main.rand.Next(-100,100), velocity.X, velocity.Y, type, damage, 3, player.whoAmI);
+				Projectile.NewProjectile(source, position.X+Main.rand.Next(-25,25), position.Y+Main.rand.Next(-25,25), velocity.X, velocity.Y, type, damage/2, 3, player.whoAmI);
+				Projectile.NewProjectile(source, position.X+Main.rand.Next(-50,50), position.Y+Main.rand.Next(-50,50), velocity.X, velocity.Y, type, damage/2, 3, player.whoAmI);
 			}
 			else
 			{
 				damage /= 2;
-				Projectile.NewProjectile(position.X+Main.rand.Next(-25,25), position.Y+Main.rand.Next(-25,25), speedX, speedY, type, damage/2, 3, player.whoAmI);
-				Projectile.NewProjectile(position.X+Main.rand.Next(-50,50), position.Y+Main.rand.Next(-50,50), speedX, speedY, type, damage/2, 3, player.whoAmI);
+				Projectile.NewProjectile(source, position.X+Main.rand.Next(-25,25), position.Y+Main.rand.Next(-25,25), velocity.X, velocity.Y, type, damage/2, 3, player.whoAmI);
+				Projectile.NewProjectile(source, position.X+Main.rand.Next(-50,50), position.Y+Main.rand.Next(-50,50), velocity.X, velocity.Y, type, damage/2, 3, player.whoAmI);
 			}
-			return base.Shoot(player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
+			return base.Shoot(player, source, position, velocity, type, damage, knockback);
 		}
 
 		public override void MeleeEffects(Player player, Rectangle hitbox)
@@ -94,14 +94,13 @@ namespace AlchemistNPC.Items.Weapons
 		
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.PlatinumBar, 5);
-			recipe.AddRecipeGroup("AlchemistNPC:EvilBar", 5);
-			recipe.AddIngredient(ItemID.BorealWood, 25);
-			recipe.AddRecipeGroup("AlchemistNPC:EvilComponent", 15);
-			recipe.AddTile(null, "WingoftheWorld");
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe()
+				.AddIngredient(ItemID.PlatinumBar, 5)
+				.AddRecipeGroup("AlchemistNPC:EvilBar", 5)
+				.AddIngredient(ItemID.BorealWood, 25)
+				.AddRecipeGroup("AlchemistNPC:EvilComponent", 15)
+				.AddTile(null, "WingoftheWorld")
+				.Register();
 		}
 	}
 }

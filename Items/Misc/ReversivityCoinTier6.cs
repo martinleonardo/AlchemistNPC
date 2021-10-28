@@ -14,21 +14,21 @@ namespace AlchemistNPC.Items.Misc
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Reversivity Coin Tier 6");
-			DisplayName.AddTranslation(GameCulture.Russian, "Монета Реверсии Шестого Уровня");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Монета Реверсии Шестого Уровня");
             Tooltip.SetDefault("Can be used for buying Treasure Bags from Operator");
-			Tooltip.AddTranslation(GameCulture.Russian, "Может быть использована для покупки сумок у Оператора");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Может быть использована для покупки сумок у Оператора");
 
-            DisplayName.AddTranslation(GameCulture.Chinese, "逆转硬币 T-6");
-            Tooltip.AddTranslation(GameCulture.Chinese, "可以用来在操作员处购买宝藏袋");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "逆转硬币 T-6");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "可以用来在操作员处购买宝藏袋");
         }
 
         public override void SetDefaults()
 		{
-			item.width = 32;
-			item.height = 32;
-			item.maxStack = 9999;
-			item.value = 10000;
-			item.rare = 8;
+			Item.width = 32;
+			Item.height = 32;
+			Item.maxStack = 9999;
+			Item.value = 10000;
+			Item.rare = 8;
 		}
     }
 }

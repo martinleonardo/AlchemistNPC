@@ -14,36 +14,36 @@ namespace AlchemistNPC.NPCs
 	{
 		public override void SetStaticDefaults()
 		{
-			Main.npcFrameCount[npc.type] = 7;
+			Main.npcFrameCount[NPC.type] = 7;
 			DisplayName.SetDefault("Otherworldly Portal");
-			DisplayName.AddTranslation(GameCulture.Russian, "Портал Иного Мира");
-            DisplayName.AddTranslation(GameCulture.Chinese, "异界传送门");
-			ModTranslation text = mod.CreateTranslation("PortalName");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Портал Иного Мира");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "异界传送门");
+			ModTranslation text = LocalizationLoader.CreateTranslation(Mod, "PortalName");
             text.SetDefault("Otherworldly Portal");
-            text.AddTranslation(GameCulture.Russian, "Портал Иного Мира");
-            text.AddTranslation(GameCulture.Chinese, "异界传送门");
-            mod.AddTranslation(text);
+            text.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Портал Иного Мира");
+            text.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "异界传送门");
+            LocalizationLoader.AddTranslation(text);
 		}
 
 		public override void SetDefaults()
 		{
-            npc.CloneDefaults(NPCID.BoundMechanic);
-			npc.townNPC = true;
-			npc.width = 50;
-			npc.height = 114;
-			npc.damage = 1;
-			npc.defense = 500;
-			npc.lifeMax = 500;
-			npc.knockBackResist = 0.1f;
-			npc.noGravity = true;
-			npc.rarity = 5;
+            NPC.CloneDefaults(NPCID.BoundMechanic);
+			NPC.townNPC = true;
+			NPC.width = 50;
+			NPC.height = 114;
+			NPC.damage = 1;
+			NPC.defense = 500;
+			NPC.lifeMax = 500;
+			NPC.knockBackResist = 0.1f;
+			NPC.noGravity = true;
+			NPC.rarity = 5;
 		}
 		
 		public override string GetChat()
 		{
 			string barrierStabilized = Language.GetTextValue("Mods.AlchemistNPC.barrierStabilized");
 			Main.NewText(barrierStabilized, 55, 55, 255);
-			npc.Transform(mod.NPCType("Explorer"));
+			NPC.Transform(NPCType<NPCs.Explorer>());
 			return Language.GetTextValue("Mods.AlchemistNPC.portalOpen");
 		}
 		
@@ -63,51 +63,51 @@ namespace AlchemistNPC.NPCs
 		
 		public override void FindFrame(int frameHeight)
 		{
-			npc.frameCounter++;
-			if (npc.frameCounter < 12)
+			NPC.frameCounter++;
+			if (NPC.frameCounter < 12)
 			{
-				npc.frame.Y = Frame_P11 * frameHeight;
+				NPC.frame.Y = Frame_P11 * frameHeight;
 			}
-			else if (npc.frameCounter < 24)
+			else if (NPC.frameCounter < 24)
 			{
-				npc.frame.Y = Frame_P12 * frameHeight;
+				NPC.frame.Y = Frame_P12 * frameHeight;
 			}
-			else if (npc.frameCounter < 36)
+			else if (NPC.frameCounter < 36)
 			{
-				npc.frame.Y = Frame_P13 * frameHeight;
+				NPC.frame.Y = Frame_P13 * frameHeight;
 			}
-			else if (npc.frameCounter < 48)
+			else if (NPC.frameCounter < 48)
 			{
-				npc.frame.Y = Frame_P14 * frameHeight;
+				NPC.frame.Y = Frame_P14 * frameHeight;
 			}
-			else if (npc.frameCounter < 60)
+			else if (NPC.frameCounter < 60)
 			{
-				npc.frame.Y = Frame_P15 * frameHeight;
+				NPC.frame.Y = Frame_P15 * frameHeight;
 			}
-			else if (npc.frameCounter < 72)
+			else if (NPC.frameCounter < 72)
 			{
-				npc.frame.Y = Frame_P16 * frameHeight;
+				NPC.frame.Y = Frame_P16 * frameHeight;
 			}
-			else if (npc.frameCounter < 84)
+			else if (NPC.frameCounter < 84)
 			{
-				npc.frame.Y = Frame_P17 * frameHeight;
+				NPC.frame.Y = Frame_P17 * frameHeight;
 			}
 			else
 			{
-				npc.frameCounter = 0;
+				NPC.frameCounter = 0;
 			}
 		}
 		
 		public override void AI()
         {
-			Lighting.AddLight(npc.position, 0.1f, 0.2f, 0.7f);
+			Lighting.AddLight(NPC.position, 0.1f, 0.2f, 0.7f);
 			
 			if (Main.rand.Next(2) == 0)
 			{
 				for (int i = 0; i < 5; i++)
 				{
 					int dustType = Main.rand.Next(51, 54);
-					int dustIndex = Dust.NewDust(npc.position, npc.width, npc.height, dustType);
+					int dustIndex = Dust.NewDust(NPC.position, NPC.width, NPC.height, dustType);
 					Dust dust = Main.dust[dustIndex];
 					dust.velocity.X = dust.velocity.X + Main.rand.Next(-50, 51) * 0.01f;
 					dust.velocity.Y = dust.velocity.Y + Main.rand.Next(-50, 51) * 0.01f;
@@ -115,13 +115,13 @@ namespace AlchemistNPC.NPCs
 					dust.noGravity = true;
 				}
 			}
-            if (npc.aiStyle == 0)
+            if (NPC.aiStyle == 0)
             {
                 for (int index = 0; index < (int)byte.MaxValue; ++index)
                 {
-                    if (Main.player[index].active && Main.player[index].talkNPC == npc.whoAmI)
+                    if (Main.player[index].active && Main.player[index].talkNPC == NPC.whoAmI)
                     {
-						npc.Transform(mod.NPCType("Explorer"));
+						NPC.Transform(NPCType<NPCs.Explorer>());
 						return;
 					}
 				}

@@ -10,17 +10,17 @@ namespace AlchemistNPC.Buffs
 {
 	public class CrimsonSoda : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Crimson Soda");
 			Description.SetDefault("Greatly increases life regeneration");
 			Main.debuff[Type] = false;
-			canBeCleared = true;
-			DisplayName.AddTranslation(GameCulture.Russian, "Алая Сода");
-			Description.AddTranslation(GameCulture.Russian, "Значительно увеличивает регенерацию здоровья");
+			CanBeCleared = true;
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Алая Сода");
+			Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Значительно увеличивает регенерацию здоровья");
 
-            DisplayName.AddTranslation(GameCulture.Chinese, "绯红苏打加持");
-            Description.AddTranslation(GameCulture.Chinese, "极大增加生命回复速度");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "绯红苏打加持");
+            Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "极大增加生命回复速度");
         }
 		
 		public override void Update(Player player, ref int buffIndex)

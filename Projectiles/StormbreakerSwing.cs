@@ -5,6 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using System;
+using Terraria.GameContent;
 
 namespace AlchemistNPC.Projectiles
 {
@@ -17,83 +18,83 @@ namespace AlchemistNPC.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 110;
-            projectile.height = 94;
-            projectile.friendly = true;
-            projectile.penetrate = -1;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.melee = true;
-            projectile.usesLocalNPCImmunity = true;
-            projectile.localNPCHitCooldown = 8;
+            Projectile.width = 110;
+            Projectile.height = 94;
+            Projectile.friendly = true;
+            Projectile.penetrate = -1;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.DamageType = DamageClass.Melee;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 8;
         }
 
         public override void AI()
         {
-            projectile.ai[0]++;
+            Projectile.ai[0]++;
             //-------------------------------------------------------------Sound-------------------------------------------------------
-            projectile.soundDelay--;
-            if (projectile.soundDelay <= 0)//this is the proper sound delay for this type of weapon
+            Projectile.soundDelay--;
+            if (Projectile.soundDelay <= 0)//this is the proper sound delay for this type of weapon
             {
-                Main.PlaySound(SoundID.Item1);    //this is the sound when the weapon is used
-                projectile.soundDelay = 45;    //this is the proper sound delay for this type of weapon
+                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item1);    //this is the sound when the weapon is used
+                Projectile.soundDelay = 45;    //this is the proper sound delay for this type of weapon
             }
             //-----------------------------------------------How the projectile works---------------------------------------------------------------------
-            Player player = Main.player[projectile.owner];
-            if (Main.myPlayer == projectile.owner)
+            Player player = Main.player[Projectile.owner];
+            if (Main.myPlayer == Projectile.owner)
             {
                 if (!player.channel || player.noItems || player.CCed)
                 {
-                    projectile.Kill();
+                    Projectile.Kill();
                 }
             }
-            projectile.Center = player.MountedCenter;
-            projectile.position.X += player.width / 2 * player.direction;
-            projectile.spriteDirection = player.direction;
-            projectile.rotation += 0.7f * player.direction;
-            if (projectile.rotation > MathHelper.TwoPi)
+            Projectile.Center = player.MountedCenter;
+            Projectile.position.X += player.width / 2 * player.direction;
+            Projectile.spriteDirection = player.direction;
+            Projectile.rotation += 0.7f * player.direction;
+            if (Projectile.rotation > MathHelper.TwoPi)
             {
-                projectile.rotation -= MathHelper.TwoPi;
+                Projectile.rotation -= MathHelper.TwoPi;
             }
-            else if (projectile.rotation < 0)
+            else if (Projectile.rotation < 0)
             {
-                projectile.rotation += MathHelper.TwoPi;
+                Projectile.rotation += MathHelper.TwoPi;
             }
-            player.heldProj = projectile.whoAmI;
+            player.heldProj = Projectile.whoAmI;
             player.itemTime = 2;
             player.itemAnimation = 2;
-            player.itemRotation = projectile.rotation;
+            player.itemRotation = Projectile.rotation;
         }
 
 
         public override void Kill(int timeLeft)
 		{
-			if (projectile.ai[0] >= 30)
+			if (Projectile.ai[0] >= 30)
 			{
-			    Player player = Main.player[projectile.owner];
+			    Player player = Main.player[Projectile.owner];
 			    Vector2 vector82 =  -Main.player[Main.myPlayer].Center + Main.MouseWorld;
                 float ai = Main.rand.Next(100);
                 Vector2 vector83 = Vector2.Normalize(vector82) * 12f;
-                int n1 = Projectile.NewProjectile(player.Center.X, player.Center.Y, vector83.X, vector83.Y, 580, projectile.damage/2, .5f, player.whoAmI, vector82.ToRotation(), ai);
-			    int n2 = Projectile.NewProjectile(player.Center.X, player.Center.Y, vector83.X+10, vector83.Y+10, 580, projectile.damage/2, .5f, player.whoAmI, vector82.ToRotation(), ai);
-			    int n3 = Projectile.NewProjectile(player.Center.X, player.Center.Y, vector83.X-10, vector83.Y-10, 580, projectile.damage/2, .5f, player.whoAmI, vector82.ToRotation(), ai);
+                int n1 = Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), player.Center.X, player.Center.Y, vector83.X, vector83.Y, 580, Projectile.damage/2, .5f, player.whoAmI, vector82.ToRotation(), ai);
+			    int n2 = Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), player.Center.X, player.Center.Y, vector83.X+10, vector83.Y+10, 580, Projectile.damage/2, .5f, player.whoAmI, vector82.ToRotation(), ai);
+			    int n3 = Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), player.Center.X, player.Center.Y, vector83.X-10, vector83.Y-10, 580, Projectile.damage/2, .5f, player.whoAmI, vector82.ToRotation(), ai);
 			    Main.projectile[n1].usesLocalNPCImmunity = true;
 			    Main.projectile[n2].usesLocalNPCImmunity = true;
 			    Main.projectile[n3].usesLocalNPCImmunity = true;
-                projectile.ai[0] = 0;
+                Projectile.ai[0] = 0;
 			}
 		}
 		
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			target.immune[projectile.owner] = 5;
-			target.AddBuff(mod.BuffType("Electrocute"), 300);
+			target.immune[Projectile.owner] = 5;
+			target.AddBuff(ModContent.BuffType<Buffs.Electrocute>(), 300);
 		}
 
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)  //this make the projectile sprite rotate perfectaly around the player
+        public override bool PreDraw(ref Color lightColor)  //this make the projectile sprite rotate perfectaly around the player
         {
-            Texture2D texture = Main.projectileTexture[projectile.type];
-            spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, null, Color.White, projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), 1f, projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), 1f, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
             return false;
         }
     }

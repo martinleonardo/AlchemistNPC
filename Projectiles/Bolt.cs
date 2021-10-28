@@ -6,6 +6,8 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using System;
 using System.Collections.Generic;
+using Terraria.Audio;
+using Terraria.GameContent;
 
 namespace AlchemistNPC.Projectiles
 {
@@ -14,53 +16,53 @@ namespace AlchemistNPC.Projectiles
 		public float rot = 0f;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Magic Bolt");
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 3;
-			ProjectileID.Sets.TrailingMode[projectile.type] = 0;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 		}
 
 		public override void SetDefaults() {
-			projectile.width = 16;               //The width of projectile hitbox
-			projectile.height = 20;              //The height of projectile hitbox
-			projectile.aiStyle = 1;             //The ai style of the projectile, please reference the source code of Terraria
-			projectile.friendly = true;         //Can the projectile deal damage to enemies?
-			projectile.hostile = false;         //Can the projectile deal damage to the player?
-			projectile.magic = true;           //Is the projectile shoot by a ranged weapon?
-			projectile.penetrate = -1;           //How many monsters the projectile can penetrate. (OnTileCollide below also decrements penetrate for bounces as well)
-			projectile.timeLeft = 300;          //The live time for the projectile (60 = 1 second, so 600 is 10 seconds)
-			projectile.alpha = 255;             //The transparency of the projectile, 255 for completely transparent. (aiStyle 1 quickly fades the projectile in) Make sure to delete this if you aren't using an aiStyle that fades in. You'll wonder why your projectile is invisible.
-			projectile.light = 0.5f;            //How much light emit around the projectile
-			projectile.ignoreWater = true;          //Does the projectile's speed be influenced by water?
-			projectile.tileCollide = true;          //Can the projectile collide with tiles?
-			projectile.extraUpdates = 1;            //Set to above 0 if you want the projectile to update multiple time in a frame
-			aiType = ProjectileID.Bullet;           //Act exactly like default Bullet
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = -1;
+			Projectile.width = 16;               //The width of projectile hitbox
+			Projectile.height = 20;              //The height of projectile hitbox
+			Projectile.aiStyle = 1;             //The ai style of the projectile, please reference the source code of Terraria
+			Projectile.friendly= true;        //Can the projectile deal damage to enemies?
+			Projectile.hostile = false;         //Can the projectile deal damage to the player?
+			Projectile.DamageType = DamageClass.Magic;           //Is the projectile shoot by a ranged weapon?
+			Projectile.penetrate = -1;           //How many monsters the projectile can penetrate. (OnTileCollide below also decrements penetrate for bounces as well)
+			Projectile.timeLeft = 300;          //The live time for the projectile (60 = 1 second, so 600 is 10 seconds)
+			Projectile.alpha = 255;             //The transparency of the projectile, 255 for completely transparent. (aiStyle 1 quickly fades the projectile in) Make sure to delete this if you aren't using an aiStyle that fades in. You'll wonder why your projectile is invisible.
+			Projectile.light = 0.5f;            //How much light emit around the projectile
+			Projectile.ignoreWater = true;         //Does the projectile's speed be influenced by water?
+			Projectile.tileCollide = true;          //Can the projectile collide with tiles?
+			Projectile.extraUpdates = 1;            //Set to above 0 if you want the projectile to update multiple time in a frame
+			AIType = ProjectileID.Bullet;           //Act exactly like default Bullet
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = -1;
 		}
 		
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) {
+		public override bool PreDraw(ref Color lightColor) {
             
-            Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
-            for (int i = 0; i < projectile.oldPos.Length; i++) {
-                Vector2 drawPos = projectile.oldPos[i] - Main.screenPosition + drawOrigin + new Vector2(0f, projectile.gfxOffY);
-                Color color = projectile.GetAlpha(lightColor) * ((float)(projectile.oldPos.Length - i) / (float)projectile.oldPos.Length);
-                spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos, new Rectangle(0, projectile.frame * Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type], Main.projectileTexture[projectile.type].Width, Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type]), color, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+            Vector2 drawOrigin = new Vector2(TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
+            for (int i = 0; i < Projectile.oldPos.Length; i++) {
+                Vector2 drawPos = Projectile.oldPos[i] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+                Color color = Projectile.GetAlpha(lightColor) * ((float)(Projectile.oldPos.Length - i) / (float)Projectile.oldPos.Length);
+                Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, drawPos, new Rectangle(0, Projectile.frame * TextureAssets.Projectile[Projectile.type].Value.Height / Main.projFrames[Projectile.type], TextureAssets.Projectile[Projectile.type].Value.Width, TextureAssets.Projectile[Projectile.type].Value.Height / Main.projFrames[Projectile.type]), color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             }
             return true;
         }
 
 		public override bool OnTileCollide(Vector2 oldVelocity) {
-				Collision.HitTiles(projectile.position + projectile.velocity, projectile.velocity, projectile.width, projectile.height);
-				projectile.velocity.X = 0f;
-				projectile.velocity.Y = 0f;
-				rot = projectile.rotation;
+				Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
+				Projectile.velocity.X = 0f;
+				Projectile.velocity.Y = 0f;
+				rot = Projectile.rotation;
 			return false;
 		}
-		
-		public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI) {
+			
+		public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> overPlayers, List<int> drawCacheProjsOverWiresUI) {
 			// If attached to an NPC, draw behind tiles (and the npc) if that NPC is behind tiles, otherwise just behind the NPC.
-			if (projectile.ai[0] == 1f) // or if(isStickingToTarget) since we made that helper method.
+			if (Projectile.ai[0] == 1f) // or if(isStickingToTarget) since we made that helper method.
 			{
-				int npcIndex = (int)projectile.ai[1];
+				int npcIndex = (int)Projectile.ai[1];
 				if (npcIndex >= 0 && npcIndex < 200 && Main.npc[npcIndex].active) {
 					if (Main.npc[npcIndex].behindTiles) {
 						drawCacheProjsBehindNPCsAndTiles.Add(index);
@@ -76,7 +78,7 @@ namespace AlchemistNPC.Projectiles
 			drawCacheProjsBehindProjectiles.Add(index);
 		}
 
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough) {
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
 			// For going through platforms and such, javelins use a tad smaller size
 			width = height = 10; // notice we set the width to the height, the height to 10. so both are 10
 			return true;
@@ -84,13 +86,13 @@ namespace AlchemistNPC.Projectiles
 		
 		public override void AI()
         {
-			if (projectile.velocity.X != 0f && projectile.velocity.Y != 0f)
+			if (Projectile.velocity.X != 0f && Projectile.velocity.Y != 0f)
 			{
-				projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
+				Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
 			}
 			else
 			{
-				projectile.rotation = rot;
+				Projectile.rotation = rot;
 			}
 						
 			UpdateAlpha();
@@ -102,31 +104,31 @@ namespace AlchemistNPC.Projectiles
 
 		public override void Kill(int timeLeft)
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			// This code and the similar code above in OnTileCollide spawn dust from the tiles collided with. SoundID.Item10 is the bounce sound you hear.
-			Collision.HitTiles(projectile.position + projectile.velocity, projectile.velocity, projectile.width, projectile.height);
-			Main.PlaySound(2, (int)projectile.position.X, (int)projectile.position.Y, 89);
+			Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
+			Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.position.X, (int)Projectile.position.Y, 89);
 			for (int index1 = 0; index1 < 15; ++index1)
 			{
-				int index2 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 29, 0.0f, 0.0f, 100, new Color(), 2.5f);
+				int index2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 29, 0.0f, 0.0f, 100, new Color(), 2.5f);
 				Main.dust[index2].noGravity = true;
 				Main.dust[index2].velocity *= 7f;
-				int index3 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 29, 0.0f, 0.0f, 100, new Color(), 1.5f);
+				int index3 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 29, 0.0f, 0.0f, 100, new Color(), 1.5f);
 				Main.dust[index3].velocity *= 3f;
 				Main.dust[index3].noGravity = true;
 			}
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0f, 0f, mod.ProjectileType("ExplosionDummyL"), projectile.damage+(projectile.damage/3), projectile.knockBack, player.whoAmI);
+			Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0f, 0f, ModContent.ProjectileType<Projectiles.ExplosionDummyL>(), Projectile.damage+(Projectile.damage/3), Projectile.knockBack, player.whoAmI);
 		}
 		
 		public bool IsStickingToTarget {
-			get => projectile.ai[0] == 1f;
-			set => projectile.ai[0] = value ? 1f : 0f;
+			get => Projectile.ai[0] == 1f;
+			set => Projectile.ai[0] = value ? 1f : 0f;
 		}
 
 		// Index of the current target
 		public int TargetWhoAmI {
-			get => (int)projectile.ai[1];
-			set => projectile.ai[1] = value;
+			get => (int)Projectile.ai[1];
+			set => Projectile.ai[1] = value;
 		}
 
 		private const int MAX_STICKY_JAVELINS = 100; // This is the max. amount of javelins being able to attach
@@ -135,10 +137,10 @@ namespace AlchemistNPC.Projectiles
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
 			IsStickingToTarget = true; // we are sticking to a target
 			TargetWhoAmI = target.whoAmI; // Set the target whoAmI
-			projectile.velocity =
-				(target.Center - projectile.Center) *
+			Projectile.velocity =
+				(target.Center - Projectile.Center) *
 				0.75f; // Change velocity based on delta center of targets (difference between entity centers)
-			projectile.netUpdate = true; // netUpdate this javelin
+			Projectile.netUpdate = true; // netUpdate this javelin
 
 			// It is recommended to split your code into separate methods to keep code clean and clear
 			UpdateStickyJavelins(target);
@@ -154,11 +156,11 @@ namespace AlchemistNPC.Projectiles
 			for (int i = 0; i < Main.maxProjectiles; i++) // Loop all projectiles
 			{
 				Projectile currentProjectile = Main.projectile[i];
-				if (i != projectile.whoAmI // Make sure the looped projectile is not the current javelin
+				if (i != Projectile.whoAmI // Make sure the looped projectile is not the current javelin
 				    && currentProjectile.active // Make sure the projectile is active
 				    && currentProjectile.owner == Main.myPlayer // Make sure the projectile's owner is the client's player
-				    && currentProjectile.type == projectile.type // Make sure the projectile is of the same type as this javelin
-				    && currentProjectile.modProjectile is Bolt javelinProjectile // Use a pattern match cast so we can access the projectile like an ExampleJavelinProjectile
+				    && currentProjectile.type == Projectile.type // Make sure the projectile is of the same type as this javelin
+				    && currentProjectile.ModProjectile is Bolt javelinProjectile // Use a pattern match cast so we can access the projectile like an ExampleJavelinProjectile
 				    && javelinProjectile.IsStickingToTarget // the previous pattern match allows us to use our properties
 				    && javelinProjectile.TargetWhoAmI == target.whoAmI) {
 
@@ -190,13 +192,13 @@ namespace AlchemistNPC.Projectiles
 		private void UpdateAlpha()
 		{
 			// Slowly remove alpha as it is present
-			if (projectile.alpha > 0) {
-				projectile.alpha -= ALPHA_REDUCTION;
+			if (Projectile.alpha > 0) {
+				Projectile.alpha -= ALPHA_REDUCTION;
 			}
 
 			// If alpha gets lower than 0, set it to 0
-			if (projectile.alpha < 0) {
-				projectile.alpha = 0;
+			if (Projectile.alpha < 0) {
+				Projectile.alpha = 0;
 			}
 		}
 
@@ -208,16 +210,16 @@ namespace AlchemistNPC.Projectiles
 		private void StickyAI()
 		{
 			// These 2 could probably be moved to the ModifyNPCHit hook, but in vanilla they are present in the AI
-			projectile.ignoreWater = true; // Make sure the projectile ignores water
-			projectile.tileCollide = false; // Make sure the projectile doesn't collide with tiles anymore
-			projectile.localAI[0] += 1f;
+			Projectile.ignoreWater = true;// Make sure the projectile ignores water
+			Projectile.tileCollide = false; // Make sure the projectile doesn't collide with tiles anymore
+			Projectile.localAI[0] += 1f;
 
 			// Every 30 ticks, the javelin will perform a hit effect
 			int projTargetIndex = (int)TargetWhoAmI;
 			if (Main.npc[projTargetIndex].active && !Main.npc[projTargetIndex].dontTakeDamage) { // If the target is active and can take damage
 				// Set the projectile's position relative to the target's center
-				projectile.Center = Main.npc[projTargetIndex].Center - projectile.velocity * 2f;
-				projectile.gfxOffY = Main.npc[projTargetIndex].gfxOffY;
+				Projectile.Center = Main.npc[projTargetIndex].Center - Projectile.velocity * 2f;
+				Projectile.gfxOffY = Main.npc[projTargetIndex].gfxOffY;
 				}
 		}
 	}

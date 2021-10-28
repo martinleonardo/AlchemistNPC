@@ -4,6 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using Terraria.Localization;
+using Terraria.DataStructures;
 
 namespace AlchemistNPC.Items.Weapons
 {
@@ -12,23 +13,23 @@ namespace AlchemistNPC.Items.Weapons
 		public override void SetDefaults()
 		{
 
-			item.damage = 175;
-			item.thrown = true;
-			item.width = 26;
-			item.noUseGraphic = true;
-			item.maxStack = 1;
-			item.consumable = false;
-			item.height = 30;
-			item.useTime = 20;
-			item.useAnimation = 20;
-			item.shoot = mod.ProjectileType("SpearofJustice");
-			item.shootSpeed = 32f;
-			item.useStyle = 1;
-			item.knockBack = 8;
-			item.value = 1000000;
-			item.rare = 11;
-			item.UseSound = SoundID.Item1;
-			item.autoReuse = true;
+			Item.damage = 175;
+			Item.DamageType = DamageClass.Throwing;
+			Item.width = 26;
+			Item.noUseGraphic = true;
+			Item.maxStack = 1;
+			Item.consumable = false;
+			Item.height = 30;
+			Item.useTime = 20;
+			Item.useAnimation = 20;
+			Item.shoot = ProjectileType<Projectiles.SpearofJustice>();
+			Item.shootSpeed = 32f;
+			Item.useStyle = 1;
+			Item.knockBack = 8;
+			Item.value = 1000000;
+			Item.rare = 11;
+			Item.UseSound = SoundID.Item1;
+			Item.autoReuse = true;
 		}
 
 		public override bool AltFunctionUse(Player player)
@@ -40,78 +41,78 @@ namespace AlchemistNPC.Items.Weapons
 		{
 			if (player.altFunctionUse == 2 && player.statMana < 200)
 			{
-				item.useTime = 20;
-				item.useAnimation = 20;
-				item.damage = 175;
-				item.shootSpeed = 32f;
-				item.shoot = mod.ProjectileType("SpearofJustice");
+				Item.useTime = 20;
+				Item.useAnimation = 20;
+				Item.damage = 175;
+				Item.shootSpeed = 32f;
+				Item.shoot = ProjectileType<Projectiles.SpearofJustice>();
 			}
 			if (player.altFunctionUse == 2 && player.statMana > 200)
 			{
-				item.useTime = 90;
-				item.useAnimation = 90;
-				item.damage = 200;
-				item.shootSpeed = 64f;
-				item.shoot = mod.ProjectileType("SpearofJusticeG");
+				Item.useTime = 90;
+				Item.useAnimation = 90;
+				Item.damage = 200;
+				Item.shootSpeed = 64f;
+				Item.shoot = ProjectileType<Projectiles.SpearofJusticeG>();
 			}
 			if (player.altFunctionUse != 2)
 			{
-				item.useTime = 20;
-				item.useAnimation = 20;
-				item.damage = 175;
-				item.shootSpeed = 32f;
-				item.shoot = mod.ProjectileType("SpearofJustice");
+				Item.useTime = 20;
+				Item.useAnimation = 20;
+				Item.damage = 175;
+				Item.shootSpeed = 32f;
+				Item.shoot = ProjectileType<Projectiles.SpearofJustice>();
 			}
 			return base.CanUseItem(player);
 		}
 		
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+		public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
 			if (player.altFunctionUse == 2)
 			{
 				if (player.statMana > 390)
 					{
-					Projectile.NewProjectile(position.X, position.Y-20, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X, position.Y-40, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X, position.Y-60, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X, position.Y-80, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X, position.Y-100, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X, position.Y-120, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X, position.Y+20, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X, position.Y+40, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X, position.Y+60, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X, position.Y+80, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X, position.Y+100, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X, position.Y+120, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X-50, position.Y, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X-50, position.Y-15, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X-50, position.Y-30, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X-50, position.Y-45, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X-50, position.Y-60, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X-50, position.Y-75, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X-50, position.Y-90, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X-50, position.Y+15, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X-50, position.Y+30, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X-50, position.Y+45, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X-50, position.Y+60, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X-50, position.Y+75, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X-50, position.Y+90, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
+					Projectile.NewProjectile(source, position.X, position.Y-20, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X, position.Y-40, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X, position.Y-60, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X, position.Y-80, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X, position.Y-100, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X, position.Y-120, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X, position.Y+20, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X, position.Y+40, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X, position.Y+60, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X, position.Y+80, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X, position.Y+100, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X, position.Y+120, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X-50, position.Y, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X-50, position.Y-15, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X-50, position.Y-30, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X-50, position.Y-45, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X-50, position.Y-60, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X-50, position.Y-75, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X-50, position.Y-90, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X-50, position.Y+15, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X-50, position.Y+30, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X-50, position.Y+45, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X-50, position.Y+60, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X-50, position.Y+75, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X-50, position.Y+90, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
 					player.statMana -= 390;
 					}
 				if (player.statMana > 200)
 					{
-					Projectile.NewProjectile(position.X, position.Y-15, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X, position.Y-30, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X, position.Y-45, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X, position.Y-60, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X, position.Y-75, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X, position.Y-90, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X, position.Y+15, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X, position.Y+30, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X, position.Y+45, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X, position.Y+60, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X, position.Y+75, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X, position.Y+90, speedX, speedY, mod.ProjectileType("SpearofJusticeG"), damage, knockBack, player.whoAmI);
+					Projectile.NewProjectile(source, position.X, position.Y-15, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X, position.Y-30, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X, position.Y-45, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X, position.Y-60, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X, position.Y-75, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X, position.Y-90, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X, position.Y+15, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X, position.Y+30, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X, position.Y+45, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X, position.Y+60, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X, position.Y+75, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X, position.Y+90, velocity.X, velocity.Y, ProjectileType<Projectiles.SpearofJusticeG>(), damage, knockback, player.whoAmI);
 					player.statMana -= 200;
 					}
 			}
@@ -126,23 +127,22 @@ namespace AlchemistNPC.Items.Weapons
 			+"\nHas alternative attack mode on right-click"
 			+"\n200 or 400 mana is required for using alternative attack");
 			
-			DisplayName.AddTranslation(GameCulture.Russian, "Копье Правосудия");
-			Tooltip.AddTranslation(GameCulture.Russian, "Его удары могут уничтожить все на своем пути\nКопье истинного героя\nИмеет альтернативную атаку (правая кнопка мыши)\nДля ее использования нужно 200 или 400 маны");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Копье Правосудия");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Его удары могут уничтожить все на своем пути\nКопье истинного героя\nИмеет альтернативную атаку (правая кнопка мыши)\nДля ее использования нужно 200 или 400 маны");
 
-            DisplayName.AddTranslation(GameCulture.Chinese, "正义之矛");
-            Tooltip.AddTranslation(GameCulture.Chinese, "它的攻击可以摧毁沿途的一切\n一个[c/FF0000:真英雄]特有的矛\n右键会有特殊的攻击方式\n特殊攻击需要200/400法力");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "正义之矛");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "它的攻击可以摧毁沿途的一切\n一个[c/FF0000:真英雄]特有的矛\n右键会有特殊的攻击方式\n特殊攻击需要200/400法力");
         }
 
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "SoulEssence", 7);
-			recipe.AddIngredient(null, "HateVial");
-			recipe.AddIngredient(3543);
-			recipe.AddIngredient(null, "EmagledFragmentation", 300);
-			recipe.AddTile(null, "MateriaTransmutator");
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe()
+				.AddIngredient(null, "SoulEssence", 7)
+				.AddIngredient(null, "HateVial")
+				.AddIngredient(3543)
+				.AddIngredient(null, "EmagledFragmentation", 300)
+				.AddTile(null, "MateriaTransmutator")
+				.Register();
 		}
 	}
 }

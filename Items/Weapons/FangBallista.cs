@@ -4,6 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using Terraria.Localization;
+using Terraria.DataStructures;
 
 namespace AlchemistNPC.Items.Weapons
 {
@@ -14,37 +15,37 @@ namespace AlchemistNPC.Items.Weapons
 			DisplayName.SetDefault("Fang Ballista");
 			Tooltip.SetDefault("Shoots highly damaging spider fang"
 			+"\nNormal enemies would be impaled and immobilized");
-			DisplayName.AddTranslation(GameCulture.Russian, "Клыковая баллиста");
-            Tooltip.AddTranslation(GameCulture.Russian, "Выстреливает прибивающий противников паучий клык\nМожет обездвижить обычных противников");
-			DisplayName.AddTranslation(GameCulture.Chinese, "蛛牙弩");
-            Tooltip.AddTranslation(GameCulture.Chinese, "射出高伤害蜘蛛牙\n正常敌人会被刺穿并被束缚");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Клыковая баллиста");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Выстреливает прибивающий противников паучий клык\nМожет обездвижить обычных противников");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "蛛牙弩");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "射出高伤害蜘蛛牙\n正常敌人会被刺穿并被束缚");
         }
 
 		public override void SetDefaults()
 		{
-			item.damage = 99;
-			item.ranged = true;
-			item.crit = 21;
-			item.width = 32;
-			item.height = 46;
-			item.useTime = 90;
-			item.useAnimation = 90;
-			item.useStyle = 5;
-			item.noMelee = true; //so the item's animation doesn't do damage
-			item.knockBack = 8;
-			item.value = 10000;
-			item.rare = 2;
-			item.UseSound = SoundID.Item5;
-			item.autoReuse = true;
-			item.shoot = 10;
-			item.useAmmo = AmmoID.Arrow;
-			item.shootSpeed = 12f;
+			Item.damage = 99;
+			Item.DamageType = DamageClass.Ranged;
+			Item.crit = 21;
+			Item.width = 32;
+			Item.height = 46;
+			Item.useTime = 90;
+			Item.useAnimation = 90;
+			Item.useStyle = 5;
+			Item.noMelee = true; //so the item's animation doesn't do damage
+			Item.knockBack = 8;
+			Item.value = 10000;
+			Item.rare = 2;
+			Item.UseSound = SoundID.Item5;
+			Item.autoReuse = true;
+			Item.shoot = 10;
+			Item.useAmmo = AmmoID.Arrow;
+			Item.shootSpeed = 12f;
 		}
 
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+		public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			type = mod.ProjectileType("SpiderFang");
-			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI);
+			type = ProjectileType<Projectiles.SpiderFang>();
+			Projectile.NewProjectile(source, position.X, position.Y, velocity.X, velocity.Y, type, damage, knockback, player.whoAmI);
 			return false;
 		}
 	}

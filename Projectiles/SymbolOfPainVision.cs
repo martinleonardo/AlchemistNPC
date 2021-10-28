@@ -14,39 +14,39 @@ namespace AlchemistNPC.Projectiles
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Akumu Shield");
-			projectile.light = 0.2f;
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 5;
-			ProjectileID.Sets.TrailingMode[projectile.type] = 0;
-			Main.projFrames[projectile.type] = 4;
+			Projectile.light = 0.2f;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+			Main.projFrames[Projectile.type] = 4;
 		}
 
 		public override void SetDefaults()
 		{
-			projectile.width = 38;
-			projectile.height = 60;
-			projectile.penetrate = -1;
-			projectile.timeLeft = 90;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
-			projectile.friendly = false;
-			projectile.alpha = 50;
+			Projectile.width = 38;
+			Projectile.height = 60;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 90;
+			Projectile.tileCollide = false;
+			Projectile.hostile = false;
+			Projectile.friendly = false;
+			Projectile.alpha = 50;
 		}
 		public override void AI()
 		{
-			Player player = Main.player[projectile.owner];
-			projectile.position.X = player.Center.X;
-			projectile.position.Y = player.Center.Y - 100;
-			if (++projectile.frameCounter >= 10)
+			Player player = Main.player[Projectile.owner];
+			Projectile.position.X = player.Center.X;
+			Projectile.position.Y = player.Center.Y - 100;
+			if (++Projectile.frameCounter >= 10)
             {
-                projectile.frameCounter = 0;
-                if (++projectile.frame >= 4)
+                Projectile.frameCounter = 0;
+                if (++Projectile.frame >= 4)
                 {
-                    projectile.frame = 0;
+                    Projectile.frame = 0;
                 }
             }
 			if (player.dead)
 			{
-				projectile.Kill();
+				Projectile.Kill();
 			}
 		}
 	}

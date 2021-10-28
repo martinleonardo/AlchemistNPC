@@ -28,7 +28,6 @@ using Terraria.UI;
 using Terraria.UI.Chat;
 using Terraria.UI.Gamepad;
 using Terraria.Utilities;
-using Terraria.World.Generation;
 using Terraria;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -39,18 +38,18 @@ namespace AlchemistNPC.Buffs
 {
 	public class MindBurn : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Mind Burn");
 			Description.SetDefault("Your mind is burning!");
 			Main.debuff[Type] = true;
 			Main.pvpBuff[Type] = true;
 			Main.buffNoSave[Type] = false;
-			longerExpertDebuff = true;
-			DisplayName.AddTranslation(GameCulture.Russian, "Mind Burn");
-			Description.AddTranslation(GameCulture.Russian, "Разум горит!");
-            DisplayName.AddTranslation(GameCulture.Chinese, "心智燃烧");
-            Description.AddTranslation(GameCulture.Chinese, "心智在燃烧!");
+			LongerExpertDebuff = true;
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Mind Burn");
+			Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Разум горит!");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "心智燃烧");
+            Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "心智在燃烧!");
         }
 
         public override void Update(Player player, ref int buffIndex)

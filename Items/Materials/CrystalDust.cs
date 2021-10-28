@@ -15,28 +15,27 @@ namespace AlchemistNPC.Items.Materials
 		{
 			DisplayName.SetDefault("Crystal Dust");
 			Tooltip.SetDefault("Dust made from Crystal Shards.");
-			DisplayName.AddTranslation(GameCulture.Russian, "Кристальная пыль");
-			Tooltip.AddTranslation(GameCulture.Russian, "Пьль, сделанная из осколков кристалла");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Кристальная пыль");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Пьль, сделанная из осколков кристалла");
 
-            DisplayName.AddTranslation(GameCulture.Chinese, "水晶粉尘");
-            Tooltip.AddTranslation(GameCulture.Chinese, "用碎魔晶捻成的粉尘");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "水晶粉尘");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "用碎魔晶捻成的粉尘");
         }    
 		public override void SetDefaults()
 		{
-			item.width = 26;
-			item.height = 14;
-			item.maxStack = 999;
-			item.value = 100;
-			item.rare = 1;
+			Item.width = 26;
+			Item.height = 14;
+			Item.maxStack = 999;
+			Item.value = 100;
+			Item.rare = 1;
 		}
 
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.CrystalShard);
-			recipe.AddTile(TileID.Autohammer);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
+			CreateRecipe()
+				.AddIngredient(ItemID.CrystalShard)
+				.AddTile(TileID.Autohammer)
+				.Register();
 		}
 	}
 }

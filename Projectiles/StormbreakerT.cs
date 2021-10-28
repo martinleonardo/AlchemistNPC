@@ -17,20 +17,19 @@ namespace AlchemistNPC.Projectiles
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(182);
-			projectile.width = 50;
-			projectile.height = 40;
-			projectile.aiStyle = 3;
-			projectile.melee = false;
-			projectile.thrown = true;
-			aiType = 182;
-			projectile.usesLocalNPCImmunity = true;
+			Projectile.CloneDefaults(182);
+			Projectile.width = 50;
+			Projectile.height = 40;
+			Projectile.aiStyle = 3;
+			Projectile.DamageType = DamageClass.Throwing;
+			AIType = 182;
+			Projectile.usesLocalNPCImmunity = true;
 		}
 		
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			Player player = Main.player[projectile.owner];
-			Main.PlaySound(SoundID.Item94.WithVolume(.6f), projectile.position);
+			Player player = Main.player[Projectile.owner];
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item94.WithVolume(.6f), Projectile.position);
 			for (int h = 0; h < 2; h++)
 				{
 					Vector2 vel1 = new Vector2(0, -1);
@@ -38,7 +37,7 @@ namespace AlchemistNPC.Projectiles
 					vel1 = vel1.RotatedBy(rand);
 					vel1 *= 16f;
 					float ai = Main.rand.Next(100);
-					int n1 = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, vel1.X, vel1.Y, 580, damage/5, .5f, player.whoAmI, vel1.ToRotation(), ai);
+					int n1 = Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, vel1.X, vel1.Y, 580, damage/5, .5f, player.whoAmI, vel1.ToRotation(), ai);
 					Main.projectile[n1].usesLocalNPCImmunity = true;
 				}
 		}

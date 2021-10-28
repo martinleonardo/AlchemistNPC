@@ -4,6 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using Terraria.Localization;
+using Terraria.DataStructures;
 
 namespace AlchemistNPC.Items.Weapons
 {
@@ -18,11 +19,11 @@ namespace AlchemistNPC.Items.Weapons
 			+"\nAttacking fills Disaster Gauge"
 			+"\nFull gauge allows you to switch weapon's form"
 			+"\nRight click to change form");
-			DisplayName.AddTranslation(GameCulture.Russian, "Пандора (Форма 124)");
-            Tooltip.AddTranslation(GameCulture.Russian, "'Оружие преисподней, имеющее 666 различных форм'\nВерсия с разблокированным потенциалом\nЗапускает 3 мощных самонаводящихся ракеты\nПри наборе полной шкалы Бедствия вы можете сменить форму Пандоры\nНажмите правую кнопку мыши для смены формы");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Пандора (Форма 124)");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "'Оружие преисподней, имеющее 666 различных форм'\nВерсия с разблокированным потенциалом\nЗапускает 3 мощных самонаводящихся ракеты\nПри наборе полной шкалы Бедствия вы можете сменить форму Пандоры\nНажмите правую кнопку мыши для смены формы");
 
-            DisplayName.AddTranslation(GameCulture.Chinese, "潘多拉 (PF124)");
-			Tooltip.AddTranslation(GameCulture.Chinese, "'来自地狱的武器, 有666种不同的形态'"
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "潘多拉 (PF124)");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "'来自地狱的武器, 有666种不同的形态'"
 			+"\n修复了的潘多拉, 解锁了破坏潜力"
 			+"\n发射3枚高伤追踪火箭"
 			+"\n攻击装填灾厄槽"
@@ -32,38 +33,38 @@ namespace AlchemistNPC.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			item.damage = 88;
-			item.ranged = true;
-			item.crit = 21;
-			item.width = 56;
-			item.height = 30;
-			item.useTime = 15;
-			item.useAnimation = 15;
-			item.useStyle = 5;
-			item.noMelee = true; //so the item's animation doesn't do damage
-			item.knockBack = 8;
-			item.value = 1000000;
-			item.rare = 12;
-			item.autoReuse = true;
-			item.shoot = 340;
-			item.shootSpeed = 32f;
-			item.UseSound = SoundID.Item11;
+			Item.damage = 88;
+			Item.DamageType = DamageClass.Ranged;
+			Item.crit = 21;
+			Item.width = 56;
+			Item.height = 30;
+			Item.useTime = 15;
+			Item.useAnimation = 15;
+			Item.useStyle = 5;
+			Item.noMelee = true; //so the item's animation doesn't do damage
+			Item.knockBack = 8;
+			Item.value = 1000000;
+			Item.rare = 11;
+			Item.autoReuse = true;
+			Item.shoot = 340;
+			Item.shootSpeed = 32f;
+			Item.UseSound = SoundID.Item11;
 		}
 
 		public override void HoldItem(Player player)
 		{
-		((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).PH = true;
+		((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).PH = true;
 		}
 		
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+		public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).DisasterGauge += 4;
+			((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).DisasterGauge += 4;
 			if (player.altFunctionUse != 2)
 			{
 			type = 340;
-			Projectile.NewProjectile(position.X, position.Y-8, speedX, speedY, type, damage, knockBack, player.whoAmI);
-			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI);
-			Projectile.NewProjectile(position.X, position.Y+8, speedX, speedY, type, damage, knockBack, player.whoAmI);
+			Projectile.NewProjectile(source, position.X, position.Y-8, velocity.X, velocity.Y, type, damage, knockback, player.whoAmI);
+			Projectile.NewProjectile(source, position.X, position.Y, velocity.X, velocity.Y, type, damage, knockback, player.whoAmI);
+			Projectile.NewProjectile(source, position.X, position.Y+8, velocity.X, velocity.Y, type, damage, knockback, player.whoAmI);
 			return false;
 			}
 			if (player.altFunctionUse == 2)
@@ -84,14 +85,14 @@ namespace AlchemistNPC.Items.Weapons
 			{
 				return true;
 			}
-			if (player.altFunctionUse == 2 && ((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).DisasterGauge < 500)
+			if (player.altFunctionUse == 2 && ((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).DisasterGauge < 500)
 			{
 				return false;
 			}
-			if (player.altFunctionUse == 2 && ((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).DisasterGauge >= 500)
+			if (player.altFunctionUse == 2 && ((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).DisasterGauge >= 500)
 			{
-				((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).DisasterGauge = 0;
-				item.SetDefaults(mod.ItemType("PandoraPF262"));
+				((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).DisasterGauge = 0;
+				Item.SetDefaults(ModContent.ItemType<Items.Weapons.PandoraPF262>());
 			}
 			return false;
 		}

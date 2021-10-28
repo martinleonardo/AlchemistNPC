@@ -15,17 +15,17 @@ namespace AlchemistNPC.Items.Misc
 		{
 			DisplayName.SetDefault("Life Elixir");
 			Tooltip.SetDefault("Permanently increases maximum life by 50. Can be used twice.");
-			DisplayName.AddTranslation(GameCulture.Russian, "Эликсир Жизни");
-			Tooltip.AddTranslation(GameCulture.Russian, "Увеличивает максимальное здоровье на 50. Можно использовать дважды.");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Эликсир Жизни");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Увеличивает максимальное здоровье на 50. Можно использовать дважды.");
 
-            DisplayName.AddTranslation(GameCulture.Chinese, "仙丹");
-            Tooltip.AddTranslation(GameCulture.Chinese, "永久增加50最大生命值. 能使用两次.");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "仙丹");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "永久增加50最大生命值. 能使用两次.");
         }
 
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.LifeFruit);
-			item.value = 5000000;
+			Item.CloneDefaults(ItemID.LifeFruit);
+			Item.value = 5000000;
 		}
 
 		public override bool CanUseItem(Player player)
@@ -33,7 +33,7 @@ namespace AlchemistNPC.Items.Misc
 			return player.statLifeMax >= 500 && player.GetModPlayer<AlchemistNPCPlayer>().LifeElixir < 2;
 		}
 
-		public override bool UseItem(Player player)
+		public override bool? UseItem(Player player)
 		{
 			player.statLifeMax2 += 50;
 			player.statLife += 50;

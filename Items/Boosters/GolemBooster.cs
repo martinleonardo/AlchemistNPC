@@ -14,17 +14,17 @@ namespace AlchemistNPC.Items.Boosters
 		{
 			DisplayName.SetDefault("Golem booster");
 			Tooltip.SetDefault("Increases attack speed by 10% and increases melee knockback");
-			DisplayName.AddTranslation(GameCulture.Russian, "Усилитель Голема");
-			Tooltip.AddTranslation(GameCulture.Russian, "Увеличивает скорсть атаки на 10% и усиливает отбрасывание в ближнем бою");
-			DisplayName.AddTranslation(GameCulture.Chinese, "石巨人增益容器");
-			Tooltip.AddTranslation(GameCulture.Chinese, "增加10%攻击速度，提升近战击退力");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Усилитель Голема");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Увеличивает скорсть атаки на 10% и усиливает отбрасывание в ближнем бою");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "石巨人增益容器");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "增加10%攻击速度，提升近战击退力");
         }
 
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.LifeFruit);
-			item.consumable = false;
-			item.value = 100000;
+			Item.CloneDefaults(ItemID.LifeFruit);
+			Item.consumable = false;
+			Item.value = 100000;
 		}
 
 		public override bool CanUseItem(Player player)

@@ -14,63 +14,62 @@ namespace AlchemistNPC.Projectiles
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Paradise Lost Mirror");
-			projectile.light = 0.8f;
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 5;
-			ProjectileID.Sets.TrailingMode[projectile.type] = 0;
-			Main.projFrames[projectile.type] = 7;
+			Projectile.light = 0.8f;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+			Main.projFrames[Projectile.type] = 7;
 		}
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(ProjectileID.LaserMachinegunLaser);
-			projectile.magic = false;
-			projectile.ranged = true;
-			projectile.width = 60;
-			projectile.height = 46;
-			projectile.penetrate = 200;
-			projectile.timeLeft = 70;
-			projectile.tileCollide = false;
-			projectile.extraUpdates = 1;
-			aiType = ProjectileID.LaserMachinegunLaser;
-			projectile.scale = 2f;
+			Projectile.CloneDefaults(ProjectileID.LaserMachinegunLaser);
+			Projectile.DamageType = DamageClass.Ranged;
+			Projectile.width = 60;
+			Projectile.height = 46;
+			Projectile.penetrate = 200;
+			Projectile.timeLeft = 70;
+			Projectile.tileCollide = false;
+			Projectile.extraUpdates = 1;
+			AIType = ProjectileID.LaserMachinegunLaser;
+			Projectile.scale = 2f;
 		}
 		public override void AI()
 		{
-			Player player = Main.player[projectile.owner]; 
-			projectile.position.X = player.position.X-40;
-			projectile.position.Y = player.position.Y-10;
-			projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(180f);
-			if (projectile.spriteDirection == -1)
+			Player player = Main.player[Projectile.owner]; 
+			Projectile.position.X = player.position.X-40;
+			Projectile.position.Y = player.position.Y-10;
+			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(180f);
+			if (Projectile.spriteDirection == -1)
 			{
-				projectile.rotation -= MathHelper.ToRadians(0f);
+				Projectile.rotation -= MathHelper.ToRadians(0f);
 			}
-			if (projectile.frameCounter < 10)
-				projectile.frame = 0;
-			else if (projectile.frameCounter >= 10 && projectile.frameCounter < 20)
-				projectile.frame = 1;
-			else if (projectile.frameCounter >= 20 && projectile.frameCounter < 30)
-				projectile.frame = 2;
-			else if (projectile.frameCounter >= 30 && projectile.frameCounter < 40)
-				projectile.frame = 3;
-			else if (projectile.frameCounter >= 40 && projectile.frameCounter < 50)
-				projectile.frame = 4;
-			else if (projectile.frameCounter >= 50 && projectile.frameCounter < 60)
-				projectile.frame = 5;
-			else if (projectile.frameCounter >= 60 && projectile.frameCounter < 70)
-				projectile.frame = 6;
+			if (Projectile.frameCounter < 10)
+				Projectile.frame = 0;
+			else if (Projectile.frameCounter >= 10 && Projectile.frameCounter < 20)
+				Projectile.frame = 1;
+			else if (Projectile.frameCounter >= 20 && Projectile.frameCounter < 30)
+				Projectile.frame = 2;
+			else if (Projectile.frameCounter >= 30 && Projectile.frameCounter < 40)
+				Projectile.frame = 3;
+			else if (Projectile.frameCounter >= 40 && Projectile.frameCounter < 50)
+				Projectile.frame = 4;
+			else if (Projectile.frameCounter >= 50 && Projectile.frameCounter < 60)
+				Projectile.frame = 5;
+			else if (Projectile.frameCounter >= 60 && Projectile.frameCounter < 70)
+				Projectile.frame = 6;
 			else
-				projectile.frameCounter = 0;
-			projectile.frameCounter++;
+				Projectile.frameCounter = 0;
+			Projectile.frameCounter++;
 		}
 		
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			target.AddBuff(mod.BuffType("Twilight"), 600);
-			target.immune[projectile.owner] = 2;
-			projectile.penetrate--;
-			if (projectile.penetrate <= 0)
+			target.AddBuff(ModContent.BuffType<Buffs.Twilight>(), 600);
+			target.immune[Projectile.owner] = 2;
+			Projectile.penetrate--;
+			if (Projectile.penetrate <= 0)
 			{
-				projectile.Kill();
+				Projectile.Kill();
 			}
 			if (Main.rand.Next(6) == 0)
 			{
@@ -80,7 +79,7 @@ namespace AlchemistNPC.Projectiles
 					float rand = Main.rand.NextFloat() * 6.283f;
 					vel = vel.RotatedBy(rand);
 					vel *= 0f;
-					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, vel.X, vel.Y, mod.ProjectileType("PaleStar"), projectile.damage, 0, Main.myPlayer);
+					Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, vel.X, vel.Y, ModContent.ProjectileType<Projectiles.PaleStar>(), Projectile.damage, 0, Main.myPlayer);
 				}
 			}
 		}

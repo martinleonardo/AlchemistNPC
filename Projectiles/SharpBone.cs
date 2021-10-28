@@ -5,6 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using System;
+using Terraria.GameContent;
 
 namespace AlchemistNPC.Projectiles
 {
@@ -13,27 +14,26 @@ namespace AlchemistNPC.Projectiles
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Sharp Bone");
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 3;
-			ProjectileID.Sets.TrailingMode[projectile.type] = 0;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 		}
 		
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(ProjectileID.Bullet);
-			projectile.ranged = false;
-			projectile.minion = true;
-			projectile.tileCollide = false;
-			projectile.timeLeft = 120;
-			aiType = ProjectileID.Bullet;
+			Projectile.CloneDefaults(ProjectileID.Bullet);
+			Projectile.DamageType = DamageClass.Summon;
+			Projectile.tileCollide = false;
+			Projectile.timeLeft = 120;
+			AIType = ProjectileID.Bullet;
 		}
 
 		public override void AI()
 		{
-			projectile.velocity *= 1.01f;
-			if (projectile.localAI[0] == 0f)
+			Projectile.velocity *= 1.01f;
+			if (Projectile.localAI[0] == 0f)
 			{
-				AdjustMagnitude(ref projectile.velocity);
-				projectile.localAI[0] = 1f;
+				AdjustMagnitude(ref Projectile.velocity);
+				Projectile.localAI[0] = 1f;
 			}
 			Vector2 move = Vector2.Zero;
 			float distance = 600f;
@@ -42,7 +42,7 @@ namespace AlchemistNPC.Projectiles
 			{
 				if (Main.npc[k].active && !Main.npc[k].dontTakeDamage && !Main.npc[k].friendly && Main.npc[k].lifeMax > 5)
 				{
-					Vector2 newMove = Main.npc[k].Center - projectile.Center;
+					Vector2 newMove = Main.npc[k].Center - Projectile.Center;
 					float distanceTo = (float)Math.Sqrt(newMove.X * newMove.X + newMove.Y * newMove.Y);
 					if (distanceTo < distance)
 					{
@@ -55,18 +55,18 @@ namespace AlchemistNPC.Projectiles
 			if (target)
 			{
 				AdjustMagnitude(ref move);
-				projectile.velocity = (10 * projectile.velocity + move) / 5f;
-				AdjustMagnitude(ref projectile.velocity);
+				Projectile.velocity = (10 * Projectile.velocity + move) / 5f;
+				AdjustMagnitude(ref Projectile.velocity);
 			}
 		}
 		
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) {
+		public override bool PreDraw(ref Color lightColor) {
             
-            Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
-            for (int i = 0; i < projectile.oldPos.Length; i++) {
-                Vector2 drawPos = projectile.oldPos[i] - Main.screenPosition + drawOrigin + new Vector2(0f, projectile.gfxOffY);
-                Color color = projectile.GetAlpha(lightColor) * ((float)(projectile.oldPos.Length - i) / (float)projectile.oldPos.Length);
-                spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos, new Rectangle(0, projectile.frame * Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type], Main.projectileTexture[projectile.type].Width, Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type]), color, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+            Vector2 drawOrigin = new Vector2(TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
+            for (int i = 0; i < Projectile.oldPos.Length; i++) {
+                Vector2 drawPos = Projectile.oldPos[i] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+                Color color = Projectile.GetAlpha(lightColor) * ((float)(Projectile.oldPos.Length - i) / (float)Projectile.oldPos.Length);
+                Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, drawPos, new Rectangle(0, Projectile.frame * TextureAssets.Projectile[Projectile.type].Value.Height / Main.projFrames[Projectile.type], TextureAssets.Projectile[Projectile.type].Value.Width, TextureAssets.Projectile[Projectile.type].Value.Height / Main.projFrames[Projectile.type]), color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             }
             return true;
         }
@@ -82,13 +82,13 @@ namespace AlchemistNPC.Projectiles
 		
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			projectile.penetrate--;
-			if (projectile.penetrate <= 0)
+			Projectile.penetrate--;
+			if (Projectile.penetrate <= 0)
 			{
-				projectile.Kill();
+				Projectile.Kill();
 				Vector2 vel = new Vector2(0, -1);
 				vel *= 0f;
-				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, vel.X, vel.Y, mod.ProjectileType("ExplosionDummySB"), projectile.damage/2, 0, Main.myPlayer);
+				Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, vel.X, vel.Y, ModContent.ProjectileType<Projectiles.ExplosionDummySB>(), Projectile.damage/2, 0, Main.myPlayer);
 			}
 		}
 		

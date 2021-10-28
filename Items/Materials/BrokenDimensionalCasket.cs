@@ -13,20 +13,20 @@ namespace AlchemistNPC.Items.Materials
 			DisplayName.SetDefault("Broken Dimensional Casket");
 			Tooltip.SetDefault(@"Broken Dimensional Casket
 Required for making working one");
-			DisplayName.AddTranslation(GameCulture.Russian, "Сломанная Телепортирующая Шкатулка");
-            Tooltip.AddTranslation(GameCulture.Russian, @"Сломанная межизмеренческая шкатулка
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Сломанная Телепортирующая Шкатулка");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), @"Сломанная межизмеренческая шкатулка
 Необходима для создания рабочей");
-			DisplayName.AddTranslation(GameCulture.Chinese, "破损的次元匣");
-			Tooltip.AddTranslation(GameCulture.Chinese, @"破损的次元匣
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "破损的次元匣");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), @"破损的次元匣
 用于制作次元匣");
         }
 
 		public override void SetDefaults()
 		{
-			item.width = 32;
-			item.height = 32;
-			item.value = 1000000;
-			item.rare = 5;
+			Item.width = 32;
+			Item.height = 32;
+			Item.value = 1000000;
+			Item.rare = 5;
 	
 		}
 	}

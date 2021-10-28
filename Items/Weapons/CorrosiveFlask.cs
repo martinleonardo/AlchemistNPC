@@ -12,44 +12,43 @@ namespace AlchemistNPC.Items.Weapons
 		{
 			DisplayName.SetDefault("Corrosive Flask");
 			Tooltip.SetDefault("Toxic Flask, improved by Celestial Powers.");
-			DisplayName.AddTranslation(GameCulture.Russian, "Колба Коррозии");
-            Tooltip.AddTranslation(GameCulture.Russian, "Колба с токсинами, улучшенная Небесными Силами");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Колба Коррозии");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Колба с токсинами, улучшенная Небесными Силами");
 
-            DisplayName.AddTranslation(GameCulture.Chinese, "腐蚀烧瓶");
-            Tooltip.AddTranslation(GameCulture.Chinese, "被炼金师加强过的剧毒药水");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "腐蚀烧瓶");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "被炼金师加强过的剧毒药水");
         }    
 		public override void SetDefaults()
 		{
-			item.damage = 175;
-			item.magic = true;
-			item.mana = 20;
-			item.width = 28;
-			item.height = 28;
-			item.useTime = 25;
-			item.useAnimation = 25;
-			item.useStyle = 1;
-			item.knockBack = 10;
-			item.value = 100000;
-			item.rare = 9;
-			item.UseSound = SoundID.Item106;
-			item.autoReuse = true;
-			item.shoot = mod.ProjectileType("CorrosiveFlaskMagic");
-			item.shootSpeed = 16f;
-			item.noUseGraphic = true;
-			item.noMelee = true;
+			Item.damage = 175;
+			Item.DamageType = DamageClass.Magic;
+			Item.mana = 20;
+			Item.width = 28;
+			Item.height = 28;
+			Item.useTime = 25;
+			Item.useAnimation = 25;
+			Item.useStyle = 1;
+			Item.knockBack = 10;
+			Item.value = 100000;
+			Item.rare = 9;
+			Item.UseSound = SoundID.Item106;
+			Item.autoReuse = true;
+			Item.shoot = ProjectileType<Projectiles.CorrosiveFlaskMagic>();
+			Item.shootSpeed = 16f;
+			Item.noUseGraphic = true;
+			Item.noMelee = true;
 		}
 		
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.ToxicFlask, 1);
-			recipe.AddIngredient(ItemID.FragmentSolar, 5);
-			recipe.AddIngredient(ItemID.FragmentNebula, 5);
-			recipe.AddIngredient(ItemID.FragmentVortex, 5);
-			recipe.AddIngredient(ItemID.FragmentStardust, 5);
-			recipe.AddTile(TileID.LunarCraftingStation);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe()
+				.AddIngredient(ItemID.ToxicFlask, 1)
+				.AddIngredient(ItemID.FragmentSolar, 5)
+				.AddIngredient(ItemID.FragmentNebula, 5)
+				.AddIngredient(ItemID.FragmentVortex, 5)
+				.AddIngredient(ItemID.FragmentStardust, 5)
+				.AddTile(TileID.LunarCraftingStation)
+				.Register();
 		}
 	}
 }

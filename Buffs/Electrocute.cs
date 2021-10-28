@@ -11,18 +11,18 @@ namespace AlchemistNPC.Buffs
 {
 	public class Electrocute : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Electrocute");
 			Description.SetDefault("High voltage is flowing through you");
 			Main.debuff[Type] = true;
 			Main.pvpBuff[Type] = true;
 			Main.buffNoSave[Type] = false;
-			longerExpertDebuff = true;
-			DisplayName.AddTranslation(GameCulture.Russian, "Электрошок");
-			Description.AddTranslation(GameCulture.Russian, "Через вас проходит высокое напряжение");
-            DisplayName.AddTranslation(GameCulture.Chinese, "触电");
-            Description.AddTranslation(GameCulture.Chinese, "高压电流过你的身体..");
+			LongerExpertDebuff = true;
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Электрошок");
+			Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Через вас проходит высокое напряжение");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "触电");
+            Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "高压电流过你的身体..");
         }
 
         public override void Update(NPC npc, ref int buffIndex)

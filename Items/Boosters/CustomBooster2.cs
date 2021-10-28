@@ -14,20 +14,20 @@ namespace AlchemistNPC.Items.Boosters
 		{
 			DisplayName.SetDefault("Custom Booster 2");
 			Tooltip.SetDefault("Provides immunity to fire blocks, gives Obsidian Skin, Gills and Flipper effects");
-			DisplayName.AddTranslation(GameCulture.Russian, "Выборочный усилитель 2");
-			Tooltip.AddTranslation(GameCulture.Russian, "Даёт иммунитет к огненным блокам, даёт эффекты Жабр и Обсидиановой Кожи");
-			DisplayName.AddTranslation(GameCulture.Chinese, "普通增益容器2号");
-			Tooltip.AddTranslation(GameCulture.Chinese, "给予免疫火块，黑曜石皮肤，鱼鳃，脚蹼药剂效果");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Выборочный усилитель 2");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Даёт иммунитет к огненным блокам, даёт эффекты Жабр и Обсидиановой Кожи");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "普通增益容器2号");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "给予免疫火块，黑曜石皮肤，鱼鳃，脚蹼药剂效果");
         }
 
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.LifeFruit);
-			item.consumable = false;
-			item.value = 100000;
+			Item.CloneDefaults(ItemID.LifeFruit);
+			Item.consumable = false;
+			Item.value = 100000;
 		}
 
-		public override bool UseItem(Player player)
+		public override bool? UseItem(Player player)
         {
 			if (player.GetModPlayer<AlchemistNPCPlayer>().CustomBooster2 == 0)
 			{
@@ -44,16 +44,15 @@ namespace AlchemistNPC.Items.Boosters
 		
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(mod.ItemType("BrokenBooster2"), 1);
-			recipe.AddIngredient(ItemID.ObsidianSkinPotion, 30);
-			recipe.AddIngredient(ItemID.GillsPotion, 30);
-			recipe.AddIngredient(ItemID.FlipperPotion, 30);
-			recipe.AddRecipeGroup("AlchemistNPC:EvilBar", 8);
-			recipe.AddRecipeGroup("AlchemistNPC:EvilComponent", 15);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe()
+				.AddIngredient(ModContent.ItemType<Items.Boosters.BrokenBooster2>(), 1)
+				.AddIngredient(ItemID.ObsidianSkinPotion, 30)
+				.AddIngredient(ItemID.GillsPotion, 30)
+				.AddIngredient(ItemID.FlipperPotion, 30)
+				.AddRecipeGroup("AlchemistNPC:EvilBar", 8)
+				.AddRecipeGroup("AlchemistNPC:EvilComponent", 15)
+				.AddTile(TileID.Anvils)
+				.Register();
 		}
 	}
 }

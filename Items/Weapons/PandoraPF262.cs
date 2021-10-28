@@ -20,11 +20,11 @@ namespace AlchemistNPC.Items.Weapons
 			+"\nAttacking fills Disaster Gauge"
 			+"\nFull gauge allows you to switch weapon's form"
 			+"\nRight click to change form");
-			DisplayName.AddTranslation(GameCulture.Russian, "Пандора (Форма 262)");
-            Tooltip.AddTranslation(GameCulture.Russian, "'Оружие преисподней, имеющее 666 различных форм'\nВерсия с разблокированным потенциалом\nПулемёт с очень высокой скоростью атаки\nПри наборе полной шкалы Бедствия вы можете сменить форму Пандоры\nНажмите правую кнопку мыши для смены формы");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Пандора (Форма 262)");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "'Оружие преисподней, имеющее 666 различных форм'\nВерсия с разблокированным потенциалом\nПулемёт с очень высокой скоростью атаки\nПри наборе полной шкалы Бедствия вы можете сменить форму Пандоры\nНажмите правую кнопку мыши для смены формы");
 
-            DisplayName.AddTranslation(GameCulture.Chinese, "潘多拉 (PF262)");
-			Tooltip.AddTranslation(GameCulture.Chinese, "'来自地狱的武器, 有666种不同的形态'"
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "潘多拉 (PF262)");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "'来自地狱的武器, 有666种不同的形态'"
 			+"\n修复了的潘多拉, 解锁了破坏潜力"
 			+"\n射速极高的机枪"
 			+"\n攻击装填灾厄槽"
@@ -34,35 +34,35 @@ namespace AlchemistNPC.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.ChainGun);
-			item.damage = 66;
-			item.ranged = true;
-			item.knockBack = 3;
-			item.width = 50;
-			item.height = 30;
-			item.useTime = 4;
-			item.useAnimation = 4;
-			item.noMelee = true; //so the item's animation doesn't do damage
-			item.value = 1000000;
-			item.rare = 12;
-			item.autoReuse = true;
-			item.shoot = 10;
-			item.useAmmo = 0;
+			Item.CloneDefaults(ItemID.ChainGun);
+			Item.damage = 66;
+			Item.DamageType = DamageClass.Ranged;
+			Item.knockBack = 3;
+			Item.width = 50;
+			Item.height = 30;
+			Item.useTime = 4;
+			Item.useAnimation = 4;
+			Item.noMelee = true; //so the item's animation doesn't do damage
+			Item.value = 1000000;
+			Item.rare = 11;
+			Item.autoReuse = true;
+			Item.shoot = 10;
+			Item.useAmmo = 0;
 		}
 
 		public override void HoldItem(Player player)
 		{
-		((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).PH = true;
+		((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).PH = true;
 		}
 		
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+		public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).DisasterGauge++;
+			((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).DisasterGauge++;
 			if (player.altFunctionUse != 2)
 			{
-			Projectile.NewProjectile(position.X, position.Y+3+Main.rand.Next(-5,5), speedX, speedY, 638, damage, knockBack, player.whoAmI);
-			Projectile.NewProjectile(position.X, position.Y+Main.rand.Next(-5,5), speedX, speedY, 638, damage, knockBack, player.whoAmI);
-			Projectile.NewProjectile(position.X, position.Y-3+Main.rand.Next(-5,5), speedX, speedY, 638, damage, knockBack, player.whoAmI);
+			Projectile.NewProjectile(source, position.X, position.Y+3+Main.rand.Next(-5,5), velocity.X, velocity.Y, 638, damage, knockback, player.whoAmI);
+			Projectile.NewProjectile(source, position.X, position.Y+Main.rand.Next(-5,5), velocity.X, velocity.Y, 638, damage, knockback, player.whoAmI);
+			Projectile.NewProjectile(source, position.X, position.Y-3+Main.rand.Next(-5,5), velocity.X, velocity.Y, 638, damage, knockback, player.whoAmI);
 			return false;
 			}
 			if (player.altFunctionUse == 2)
@@ -83,14 +83,14 @@ namespace AlchemistNPC.Items.Weapons
 			{
 				return true;
 			}
-			if (player.altFunctionUse == 2 && ((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).DisasterGauge < 500)
+			if (player.altFunctionUse == 2 && ((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).DisasterGauge < 500)
 			{
 				return false;
 			}
-			if (player.altFunctionUse == 2 && ((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).DisasterGauge >= 500)
+			if (player.altFunctionUse == 2 && ((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).DisasterGauge >= 500)
 			{
-				((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).DisasterGauge = 0;
-				item.SetDefaults(mod.ItemType("PandoraPF398"));
+				((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).DisasterGauge = 0;
+				Item.SetDefaults(ModContent.ItemType<Items.Weapons.PandoraPF398>());
 			}
 			return false;
 		}

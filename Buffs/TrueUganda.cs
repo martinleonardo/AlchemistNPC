@@ -28,7 +28,6 @@ using Terraria.UI;
 using Terraria.UI.Chat;
 using Terraria.UI.Gamepad;
 using Terraria.Utilities;
-using Terraria.World.Generation;
 using Terraria;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -39,18 +38,18 @@ namespace AlchemistNPC.Buffs
 {
 	public class TrueUganda : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("True Uganda's Curse");
 			Description.SetDefault("DEW U NO DE WEI?");
 			Main.debuff[Type] = true;
 			Main.pvpBuff[Type] = true;
 			Main.buffNoSave[Type] = false;
-			longerExpertDebuff = true;
-			DisplayName.AddTranslation(GameCulture.Russian, "Истинное Проклятие Уганды");
-			Description.AddTranslation(GameCulture.Russian, "DEW U NO DE WEI?");
-            DisplayName.AddTranslation(GameCulture.Chinese, "乌干达之诅咒");
-            Description.AddTranslation(GameCulture.Chinese, "DEW U NO DE WAY?");
+			LongerExpertDebuff = true;
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Истинное Проклятие Уганды");
+			Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "DEW U NO DE WEI?");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "乌干达之诅咒");
+            Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "DEW U NO DE WAY?");
         }
 
         public override void Update(Player player, ref int buffIndex)

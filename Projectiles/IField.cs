@@ -13,11 +13,11 @@ namespace AlchemistNPC.Projectiles
 	{
 		public override void SetDefaults()
 		{
-			projectile.width = 1920;
-			projectile.height = 1080;
-			projectile.penetrate = -1;
-			projectile.timeLeft = 60;
-			projectile.tileCollide = false;
+			Projectile.width = 1920;
+			Projectile.height = 1080;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 60;
+			Projectile.tileCollide = false;
 		}
 
 		public override void SetStaticDefaults()
@@ -30,10 +30,10 @@ namespace AlchemistNPC.Projectiles
 			for (int k = 0; k < 200; k++)
 			{
 				NPC target = Main.npc[k];
-				if(target.Hitbox.Intersects(projectile.Hitbox) && target.townNPC)
+				if(target.Hitbox.Intersects(Projectile.Hitbox) && target.townNPC)
 				{
-					target.buffImmune[mod.BuffType("IField")] = false;
-					target.AddBuff(mod.BuffType("IField"), 3600);
+					target.buffImmune[ModContent.BuffType<Buffs.IField>()] = false;
+					target.AddBuff(ModContent.BuffType<Buffs.IField>(), 3600);
 				}
 			}
 		}

@@ -8,18 +8,18 @@ namespace AlchemistNPC.Buffs
 {
 	public class Patience : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Patience Paralyzation");
 			Description.SetDefault("Freezes target in place");
 			Main.debuff[Type] = true;
 			Main.pvpBuff[Type] = true;
 			Main.buffNoSave[Type] = false;
-			longerExpertDebuff = true;
-			DisplayName.AddTranslation(GameCulture.Russian, "Парализация Терпения");
-			Description.AddTranslation(GameCulture.Russian, "Обездвиживает цель");
-            DisplayName.AddTranslation(GameCulture.Chinese, "耐力瘫痪");
-            Description.AddTranslation(GameCulture.Chinese, "冻结目标");
+			LongerExpertDebuff = true;
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Парализация Терпения");
+			Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Обездвиживает цель");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "耐力瘫痪");
+            Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "冻结目标");
         }
 
         public override void Update(NPC npc, ref int buffIndex)

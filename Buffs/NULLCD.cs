@@ -11,15 +11,15 @@ namespace AlchemistNPC.Buffs
 {
 	public class NULLCD : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("NULL CD");
 			Description.SetDefault("");
 			Main.debuff[Type] = true;
-			canBeCleared = false;
-			DisplayName.AddTranslation(GameCulture.Russian, "NULL перезарядка");
-			Description.AddTranslation(GameCulture.Russian, "");
-			DisplayName.AddTranslation(GameCulture.Chinese, "NULL 再启");
+			CanBeCleared = false;
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "NULL перезарядка");
+			Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "NULL 再启");
         }
 	}
 }

@@ -16,23 +16,23 @@ namespace AlchemistNPC.Items.Misc
 		{
 			DisplayName.SetDefault("Voodoo Doll");
 			Tooltip.SetDefault("Your very own doll\nWill make you take part of your dealt damage");
-			DisplayName.AddTranslation(GameCulture.Russian, "Кукла Вуду");
-            Tooltip.AddTranslation(GameCulture.Russian, "Ваша кукла\nЗаставляет вас получать часть урона, наносимого боссу");
-			DisplayName.AddTranslation(GameCulture.Chinese, "巫毒娃娃");
-			Tooltip.AddTranslation(GameCulture.Chinese, "你自己的娃娃\n所造成伤害的一部分会施加给自己");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Кукла Вуду");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Ваша кукла\nЗаставляет вас получать часть урона, наносимого боссу");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "巫毒娃娃");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "你自己的娃娃\n所造成伤害的一部分会施加给自己");
         }
 
 		public override void SetDefaults()
 		{
-			item.width = 32;
-			item.height = 32;
-			item.value = 0;
-			item.rare = 5;
+			Item.width = 32;
+			Item.height = 32;
+			Item.value = 0;
+			Item.rare = 5;
 		}
 		
 		public override void UpdateInventory(Player player)
 		{
-		((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).Voodoo = true;
+		((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).Voodoo = true;
 		}
 	}
 }

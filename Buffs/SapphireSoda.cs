@@ -16,16 +16,16 @@ namespace AlchemistNPC.Buffs
 {
 	public class SapphireSoda : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Sapphire Soda");
 			Description.SetDefault("Removes Mana Sickness debuff");
 			Main.debuff[Type] = false;
-			canBeCleared = true;
-			DisplayName.AddTranslation(GameCulture.Russian, "Сапфировая Сода");
-			Description.AddTranslation(GameCulture.Russian, "Убирает дебафф Ослабление Волшебства");
-            DisplayName.AddTranslation(GameCulture.Chinese, "宝蓝苏打加持");
-            Description.AddTranslation(GameCulture.Chinese, "移除魔力病Debuff");
+			CanBeCleared = true;
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Сапфировая Сода");
+			Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Убирает дебафф Ослабление Волшебства");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "宝蓝苏打加持");
+            Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "移除魔力病Debuff");
         }
 		
 		public override void Update(Player player, ref int buffIndex)

@@ -12,7 +12,7 @@ namespace AlchemistNPC.Tiles
 {
 	public class ImmortalityFieldProjector : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileFrameImportant[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
@@ -23,9 +23,9 @@ namespace AlchemistNPC.Tiles
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Immortality Field Projector");
 			AddMapEntry(new Color(190, 230, 190), name);
-			dustType = 11;
-			disableSmartCursor = true;
-			animationFrameHeight = 56;
+			DustType = 11;
+			TileID.Sets.DisableSmartCursor[Type] = true;
+			AnimationFrameHeight = 56;
 		}
 		
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -52,8 +52,8 @@ namespace AlchemistNPC.Tiles
 				{
 					if (npc.active && npc.townNPC)
 					{
-						npc.buffImmune[mod.BuffType("IField")] = false;
-						npc.AddBuff(mod.BuffType("IField"), 3600);
+						npc.buffImmune[ModContent.BuffType<Buffs.IField>()] = false;
+						npc.AddBuff(ModContent.BuffType<Buffs.IField>(), 3600);
 					}
 				}
 			}

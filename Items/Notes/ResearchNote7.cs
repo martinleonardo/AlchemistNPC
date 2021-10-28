@@ -25,10 +25,10 @@ namespace AlchemistNPC.Items.Notes
 			+"\nI am still not sure about source of energy..."
 			+"\nRick used some kind of [c/00FF00:Energy Capsules] as ammo."
 			+"\nI hope I'm able to synthesize it...''");
-			DisplayName.AddTranslation(GameCulture.Russian, "Запись исследования №7");
-            Tooltip.AddTranslation(GameCulture.Russian, "''Однажды я побывала в довольно безумном мире.\nТам я видела старика-учёного, которого звали [c/00FF00:Рик].\nК счастью, я смогла понаблюдать за событиями незамеченной.\nОн сбежал из тюрьмы максимальной безопасности безо всякой помощи снаружи.\nИ в тот же день он уничтожил Галактическую Федерацию.\nМеня очень заинтересовала его Портальная Пушка.\nОн пользовался ей в качестве оружия. Я очень хочу себе такую же...\nКонечно, нам необходима [c/00FF00:Портальная Пушка] Лунного Лорда в качестве основы.\nДля некоторых частей нам потребуется [c/00FF00:Алхимический Набор].\nДля стабилизации порталов нам потребуется [c/00FF00:Посох Лунных Порталов].\nДля варьирования реальностей, нам понадобится [c/00FF00:R.E.K. 3000].\nНо я не уверена насчёт источника энергии...\nРик использовал какие-то [c/00FF00:Капсулы с энергией] в качестве патронов.\nНадеюсь, мне удастся их воссоздать...''");
-			DisplayName.AddTranslation(GameCulture.Chinese, "研究笔记 #7");
-			Tooltip.AddTranslation(GameCulture.Chinese, "''曾经, 我去过一个疯狂的世界"
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Запись исследования №7");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "''Однажды я побывала в довольно безумном мире.\nТам я видела старика-учёного, которого звали [c/00FF00:Рик].\nК счастью, я смогла понаблюдать за событиями незамеченной.\nОн сбежал из тюрьмы максимальной безопасности безо всякой помощи снаружи.\nИ в тот же день он уничтожил Галактическую Федерацию.\nМеня очень заинтересовала его Портальная Пушка.\nОн пользовался ей в качестве оружия. Я очень хочу себе такую же...\nКонечно, нам необходима [c/00FF00:Портальная Пушка] Лунного Лорда в качестве основы.\nДля некоторых частей нам потребуется [c/00FF00:Алхимический Набор].\nДля стабилизации порталов нам потребуется [c/00FF00:Посох Лунных Порталов].\nДля варьирования реальностей, нам понадобится [c/00FF00:R.E.K. 3000].\nНо я не уверена насчёт источника энергии...\nРик использовал какие-то [c/00FF00:Капсулы с энергией] в качестве патронов.\nНадеюсь, мне удастся их воссоздать...''");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "研究笔记 #7");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "''曾经, 我去过一个疯狂的世界"
 			+"\n那儿有个老科学家, 名字叫[c/00FF00:瑞克]."
 			+"\n我很幸运, 能够在没被抓到的情况下看到这一切."
 			+"\n他单凭自己从一所最高安全级别的监狱中逃了出来."
@@ -46,11 +46,11 @@ namespace AlchemistNPC.Items.Notes
 
 		public override void SetDefaults()
 		{
-			item.width = 28;
-			item.height = 36;
-			item.maxStack = 1;
-			item.value = 10000000;
-			item.rare = 10;
+			Item.width = 28;
+			Item.height = 36;
+			Item.maxStack = 1;
+			Item.value = 10000000;
+			Item.rare = 10;
 		}	
 	}
 }

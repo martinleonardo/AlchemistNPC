@@ -14,30 +14,30 @@ namespace AlchemistNPC.Projectiles.Minions
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Ugandan Warrior");
-			Main.projFrames[projectile.type] = 1;
+			Main.projFrames[Projectile.type] = 1;
 		}
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(533);
-			projectile.width = 96;
-			projectile.height = 76;
-			projectile.aiStyle = 66;
-			projectile.minionSlots = 1;
-			aiType = 533;
-			projectile.tileCollide = false;
+			Projectile.CloneDefaults(533);
+			Projectile.width = 96;
+			Projectile.height = 76;
+			Projectile.aiStyle = 66;
+			Projectile.minionSlots = 1;
+			AIType = 533;
+			Projectile.tileCollide = false;
 		}
 		
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)	
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
 		{
 			return false;
 		}
 		
 		public override void ModifyHitNPC (NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			damage += (damage/5) * player.maxMinions;
-			if (target.type == mod.NPCType("BillCipher"))
+			if (target.type == ModContent.NPCType<NPCs.BillCipher>())
 			{
 				damage /= 100;
 			}
@@ -45,17 +45,17 @@ namespace AlchemistNPC.Projectiles.Minions
 			
 		public override void AI()
 		{
-			projectile.tileCollide = false;
-			Player player = Main.player[projectile.owner]; 
-			if (player.dead || !player.HasBuff(mod.BuffType("UgandanWarrior")))
+			Projectile.tileCollide = false;
+			Player player = Main.player[Projectile.owner]; 
+			if (player.dead || !player.HasBuff(ModContent.BuffType<Buffs.UgandanWarrior>()))
 			{
-				projectile.Kill();
+				Projectile.Kill();
 			}
 		}
 		
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			target.immune[projectile.owner] = 1;
+			target.immune[Projectile.owner] = 1;
 		}
 	}
 }

@@ -18,56 +18,57 @@ namespace AlchemistNPC.Projectiles
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(ProjectileID.Bullet);
-			projectile.ranged = false;
-			projectile.width = 34;
-			projectile.height = 34;
-			projectile.penetrate = 999;
-			projectile.timeLeft = 600;
-			aiType = ProjectileID.Bullet;
+			Projectile.CloneDefaults(ProjectileID.Bullet);
+			// Unknown Damage Type
+			//Projectile.ranged = false;
+			Projectile.width = 34;
+			Projectile.height = 34;
+			Projectile.penetrate = 999;
+			Projectile.timeLeft = 600;
+			AIType = ProjectileID.Bullet;
 		}
 		
 		public override void AI()
 		{
 			for (int index1 = 0; index1 < 3; ++index1)
 			{
-				int index2 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0.0f, 0.0f, 100, new Color(), 1.5f);
+				int index2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 31, 0.0f, 0.0f, 100, new Color(), 1.5f);
 				Main.dust[index2].velocity *= 0.99f;
 			}
 			for (int index1 = 0; index1 < 3; ++index1)
 			{
-				int index2 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 6, 0.0f, 0.0f, 100, new Color(), 3.5f);
+				int index2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 6, 0.0f, 0.0f, 100, new Color(), 3.5f);
 				Main.dust[index2].noGravity = true;
 				Main.dust[index2].velocity *= 0.99f;
-				int index3 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 6, 0.0f, 0.0f, 100, new Color(), 1.5f);
+				int index3 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 6, 0.0f, 0.0f, 100, new Color(), 1.5f);
 				Main.dust[index3].velocity *= 0.99f;
 			}
 		}
 		
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			projectile.Kill();
+			Projectile.Kill();
 			return true;
 		}
 		
 		public override void Kill(int timeLeft)
         {
-			Main.PlaySound(2, (int)projectile.position.X, (int)projectile.position.Y, 62);
-			Main.PlaySound(2, (int)projectile.position.X, (int)projectile.position.Y, 89);
+			Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.position.X, (int)Projectile.position.Y, 62);
+			Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.position.X, (int)Projectile.position.Y, 89);
 			for (int index1 = 0; index1 < 60; ++index1)
 			{
-				int index2 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0.0f, 0.0f, 100, new Color(), 1.5f);
+				int index2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 31, 0.0f, 0.0f, 100, new Color(), 1.5f);
 				Main.dust[index2].velocity *= 1.4f;
 			}
 			for (int index1 = 0; index1 < 40; ++index1)
 			{
-				int index2 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 6, 0.0f, 0.0f, 100, new Color(), 3.5f);
+				int index2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 6, 0.0f, 0.0f, 100, new Color(), 3.5f);
 				Main.dust[index2].noGravity = true;
 				Main.dust[index2].velocity *= 7f;
-				int index3 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 6, 0.0f, 0.0f, 100, new Color(), 1.5f);
+				int index3 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 6, 0.0f, 0.0f, 100, new Color(), 1.5f);
 				Main.dust[index3].velocity *= 3f;
 			}
-			Item.NewItem((int)projectile.Center.X, (int)projectile.Center.Y, projectile.width, projectile.height, mod.ItemType("SymbioteMeteorite"));
+			Item.NewItem((int)Projectile.Center.X, (int)Projectile.Center.Y, Projectile.width, Projectile.height, ModContent.ItemType<Items.Misc.SymbioteMeteorite>());
 		}
 	}
 }

@@ -16,33 +16,33 @@ namespace AlchemistNPC.Projectiles
 
 		public override void SetDefaults()
 		{
-		projectile.CloneDefaults(30);
-		projectile.aiStyle = 2;
-		projectile.timeLeft = 180;
-		projectile.scale = 0.8f;
-		aiType = 30;
+		Projectile.CloneDefaults(30);
+		Projectile.aiStyle = 2;
+		Projectile.timeLeft = 180;
+		Projectile.scale = 0.8f;
+		AIType = 30;
 		}
 		
 		public override bool PreKill(int timeLeft)
 		{
-			projectile.type = 338;
+			Projectile.type = 338;
 			return true;
 		}
 		
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			projectile.aiStyle = 16;
+			Projectile.aiStyle = 16;
 			return true;
 		}
 		
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			projectile.Kill();
+			Projectile.Kill();
 		}
 		
 		public override void AI()
 		{
-			projectile.aiStyle = 2;
+			Projectile.aiStyle = 2;
 		}
 		
 		public override void Kill(int timeLeft)
@@ -53,7 +53,7 @@ namespace AlchemistNPC.Projectiles
 				float rand = Main.rand.NextFloat() * 6.283f;
 				vel = vel.RotatedBy(rand);
 				vel *= 5f;
-				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, vel.X, vel.Y, mod.ProjectileType("CursedWasps"), projectile.damage, 0, Main.myPlayer);
+				Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, vel.X, vel.Y, ModContent.ProjectileType<Projectiles.CursedWasps>(), Projectile.damage, 0, Main.myPlayer);
 			}
 		}
 	}

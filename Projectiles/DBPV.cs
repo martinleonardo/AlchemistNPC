@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using System;
 using AlchemistNPC.Items.Weapons;
+using Terraria.GameContent;
 
 namespace AlchemistNPC.Projectiles
 {
@@ -14,42 +15,42 @@ namespace AlchemistNPC.Projectiles
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("DBPV");
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 4;
-			ProjectileID.Sets.TrailingMode[projectile.type] = 0;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 		}
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(ProjectileID.Bullet);
-			projectile.ranged = true;
-			projectile.width = 60;
-			projectile.height = 34;
-			projectile.penetrate = 10;
-			projectile.timeLeft = 300;
-			projectile.tileCollide = false;
-			aiType = ProjectileID.Bullet;
+			Projectile.CloneDefaults(ProjectileID.Bullet);
+			Projectile.DamageType = DamageClass.Ranged;
+			Projectile.width = 60;
+			Projectile.height = 34;
+			Projectile.penetrate = 10;
+			Projectile.timeLeft = 300;
+			Projectile.tileCollide = false;
+			AIType = ProjectileID.Bullet;
 		}
 		
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
         {
-            Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
-            for (int k = 0; k < projectile.oldPos.Length; k++)
+            Vector2 drawOrigin = new Vector2(TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
+            for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
-                Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, projectile.gfxOffY);
-                byte alpha = (byte)(255 *((float)(projectile.oldPos.Length - k) / (float)projectile.oldPos.Length));
+                Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+                byte alpha = (byte)(255 *((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length));
                 Color color = new Color(131, 51, 145, alpha);
-                spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos, null, color, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+                Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             }
             return true;
         }
 		
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			target.immune[projectile.owner] = 3;
-			projectile.penetrate--;
-			if (projectile.penetrate <= 0)
+			target.immune[Projectile.owner] = 3;
+			Projectile.penetrate--;
+			if (Projectile.penetrate <= 0)
 			{
-				projectile.Kill();
+				Projectile.Kill();
 			}
 		}
 	

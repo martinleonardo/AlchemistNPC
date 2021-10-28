@@ -14,35 +14,36 @@ namespace AlchemistNPC.Projectiles
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("DTHL");
-			ProjectileID.Sets.Homing[projectile.type] = true;
+			ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
 		}
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(ProjectileID.Bullet);
-			projectile.ranged = false;
-			projectile.width = 34;
-			projectile.height = 90;
-			projectile.penetrate = 30;
-			projectile.timeLeft = 600;
-			projectile.tileCollide = false;
-			aiType = ProjectileID.Bullet;
+			Projectile.CloneDefaults(ProjectileID.Bullet);
+			// Unknown Damage Type
+			//Projectile.ranged = false;
+			Projectile.width = 34;
+			Projectile.height = 90;
+			Projectile.penetrate = 30;
+			Projectile.timeLeft = 600;
+			Projectile.tileCollide = false;
+			AIType = ProjectileID.Bullet;
 		}
 		
 		public override void AI()
 		{
-			if (projectile.alpha > 70)
+			if (Projectile.alpha > 70)
 			{
-				projectile.alpha -= 15;
-				if (projectile.alpha < 70)
+				Projectile.alpha -= 15;
+				if (Projectile.alpha < 70)
 				{
-					projectile.alpha = 70;
+					Projectile.alpha = 70;
 				}
 			}
-			if (projectile.localAI[0] == 0f)
+			if (Projectile.localAI[0] == 0f)
 			{
-				AdjustMagnitude(ref projectile.velocity);
-				projectile.localAI[0] = 1f;
+				AdjustMagnitude(ref Projectile.velocity);
+				Projectile.localAI[0] = 1f;
 			}
 			Vector2 move = Vector2.Zero;
 			float distance = 400f;
@@ -51,7 +52,7 @@ namespace AlchemistNPC.Projectiles
 			{
 				if (Main.npc[k].active && !Main.npc[k].dontTakeDamage && !Main.npc[k].friendly && Main.npc[k].lifeMax > 5)
 				{
-					Vector2 newMove = Main.npc[k].Center - projectile.Center;
+					Vector2 newMove = Main.npc[k].Center - Projectile.Center;
 					float distanceTo = (float)Math.Sqrt(newMove.X * newMove.X + newMove.Y * newMove.Y);
 					if (distanceTo < distance)
 					{
@@ -64,12 +65,12 @@ namespace AlchemistNPC.Projectiles
 			if (target)
 			{
 				AdjustMagnitude(ref move);
-				projectile.velocity = (10 * projectile.velocity + move) / 11f;
-				AdjustMagnitude(ref projectile.velocity);
+				Projectile.velocity = (10 * Projectile.velocity + move) / 11f;
+				AdjustMagnitude(ref Projectile.velocity);
 			}
-			if (projectile.alpha <= 100)
+			if (Projectile.alpha <= 100)
 			{
-				int dust = Dust.NewDust(projectile.position, projectile.width, projectile.height, mod.DustType("Hate"));
+				int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<Dusts.Hate>());
 				Main.dust[dust].velocity /= 2f;
 			}
 		}
@@ -85,14 +86,14 @@ namespace AlchemistNPC.Projectiles
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			target.immune[projectile.owner] = 1;
+			target.immune[Projectile.owner] = 1;
 			if (Main.rand.Next(4) == 0)
 			{
-			projectile.penetrate--;
+			Projectile.penetrate--;
 			}
-			if (projectile.penetrate <= 0)
+			if (Projectile.penetrate <= 0)
 			{
-				projectile.Kill();
+				Projectile.Kill();
 			}
 		}
 	

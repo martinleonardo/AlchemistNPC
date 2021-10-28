@@ -8,18 +8,18 @@ namespace AlchemistNPC.Buffs
 {
 	public class Banned : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Banned");
 			Description.SetDefault("was banned");
 			Main.debuff[Type] = true;
 			Main.pvpBuff[Type] = true;
 			Main.buffNoSave[Type] = false;
-			longerExpertDebuff = true;
-			DisplayName.AddTranslation(GameCulture.Russian, "Забанен");
-			Description.AddTranslation(GameCulture.Russian, "был забанен");
-			DisplayName.AddTranslation(GameCulture.Chinese, "禁制");
-			Description.AddTranslation(GameCulture.Chinese, "受到禁制");
+			LongerExpertDebuff = true;
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Забанен");
+			Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "был забанен");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "禁制");
+			Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "受到禁制");
         }
 
         public override void Update(NPC npc, ref int buffIndex)

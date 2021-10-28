@@ -26,6 +26,8 @@ namespace AlchemistNPC.Prefixes
 		{
 		}
 
+		// UPDATE TO 1.4
+		/*
 		// Allow multiple prefix autoloading this way (permutations of the same prefix)
 		public override bool Autoload(ref string name)
 		{
@@ -35,6 +37,7 @@ namespace AlchemistNPC.Prefixes
 			}
 			return false;
 		}
+		*/
 
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult,
 		ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
@@ -73,7 +76,8 @@ namespace AlchemistNPC.Prefixes
 		public XenomorphicPrefix()
 		{
 		}
-
+		// UPDATE TO 1.4
+		/*
 		// Allow multiple prefix autoloading this way (permutations of the same prefix)
 		public override bool Autoload(ref string name)
 		{
@@ -83,6 +87,7 @@ namespace AlchemistNPC.Prefixes
 			}
 			return false;
 		}
+		*/
 		
 		public override void Apply(Item item)
 		{
@@ -109,7 +114,8 @@ namespace AlchemistNPC.Prefixes
 		public ShiningPrefix()
 		{
 		}
-
+		// UPDATE TO 1.4
+		/*
 		// Allow multiple prefix autoloading this way (permutations of the same prefix)
 		public override bool Autoload(ref string name)
 		{
@@ -119,6 +125,7 @@ namespace AlchemistNPC.Prefixes
 			}
 			return false;
 		}
+		*/
 
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult,
 		ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
@@ -158,6 +165,8 @@ namespace AlchemistNPC.Prefixes
 		{
 		}
 
+		// UPDATE TO 1.4
+		/*
 		// Allow multiple prefix autoloading this way (permutations of the same prefix)
 		public override bool Autoload(ref string name)
 		{
@@ -167,6 +176,7 @@ namespace AlchemistNPC.Prefixes
 			}
 			return false;
 		}
+		*/
 
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult,
 		ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
@@ -208,6 +218,8 @@ namespace AlchemistNPC.Prefixes
 		{
 		}
 
+		// UPDATE TO 1.4
+		/*
 		// Allow multiple prefix autoloading this way (permutations of the same prefix)
 		public override bool Autoload(ref string name)
 		{
@@ -217,6 +229,7 @@ namespace AlchemistNPC.Prefixes
 			}
 			return false;
 		}
+		*/
 
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult,
 		ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
@@ -257,6 +270,8 @@ namespace AlchemistNPC.Prefixes
 		{
 		}
 
+		// UPDATE TO 1.4
+		/*
 		// Allow multiple prefix autoloading this way (permutations of the same prefix)
 		public override bool Autoload(ref string name)
 		{
@@ -266,6 +281,7 @@ namespace AlchemistNPC.Prefixes
 			}
 			return false;
 		}
+		*/
 
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult,
 		ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
@@ -307,6 +323,8 @@ namespace AlchemistNPC.Prefixes
 		{
 		}
 
+		// UPDATE TO 1.4
+		/*
 		// Allow multiple prefix autoloading this way (permutations of the same prefix)
 		public override bool Autoload(ref string name)
 		{
@@ -316,6 +334,7 @@ namespace AlchemistNPC.Prefixes
 			}
 			return false;
 		}
+		*/
 
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult,
 		ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {

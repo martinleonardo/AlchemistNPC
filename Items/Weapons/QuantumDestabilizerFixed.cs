@@ -16,30 +16,30 @@ namespace AlchemistNPC.Items.Weapons
 			+"\nReleases entity destabilizing beam, which deals extremely high damage"
 			+"\nRequires 1 seconds to charge the shot"
 			+"\nDoes not require any ammo");
-			DisplayName.AddTranslation(GameCulture.Russian, "Исправленный Квантовый Дестабилизатор");
-            Tooltip.AddTranslation(GameCulture.Russian, "Эксперимент №618\nВыпускает луч, дестабилизирующий состояние противника и наносящий очень высокие повреждения\nТребует 1 секунду на заряд\nНе требует патронов");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Исправленный Квантовый Дестабилизатор");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Эксперимент №618\nВыпускает луч, дестабилизирующий состояние противника и наносящий очень высокие повреждения\nТребует 1 секунду на заряд\nНе требует патронов");
 
-            DisplayName.AddTranslation(GameCulture.Chinese, "量子干扰器");
-            Tooltip.AddTranslation(GameCulture.Chinese, "蓝图 #618\n释放出一束物质破坏光束, 能造成极高的伤害\n需要一秒钟充能");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "量子干扰器");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "蓝图 #618\n释放出一束物质破坏光束, 能造成极高的伤害\n需要一秒钟充能");
         }
 
 		public override void SetDefaults()
 		{
-			item.damage = 700;
-			item.noMelee = true;
-			item.ranged = true;
-			item.channel = true;
-			item.rare = 11;
-			item.width = 30;
-			item.height = 30;
-			item.useTime = 20;
-			item.UseSound = SoundID.Item13;
-			item.useStyle = 5;
-			item.shootSpeed = 14f;
-			item.useAnimation = 20;   
-			item.knockBack = 10;			
-			item.shoot = mod.ProjectileType("QuantumDestabilizer");
-			item.value = Item.sellPrice(1, 0, 0, 0);
+			Item.damage = 700;
+			Item.noMelee = true;
+			Item.DamageType = DamageClass.Ranged;
+			Item.channel = true;
+			Item.rare = 11;
+			Item.width = 30;
+			Item.height = 30;
+			Item.useTime = 20;
+			Item.UseSound = SoundID.Item13;
+			Item.useStyle = 5;
+			Item.shootSpeed = 14f;
+			Item.useAnimation = 20;   
+			Item.knockBack = 10;			
+			Item.shoot = ProjectileType<Projectiles.QuantumDestabilizer>();
+			Item.value = Item.sellPrice(1, 0, 0, 0);
 		}
 		
 		public override Vector2? HoldoutOffset()
@@ -49,12 +49,11 @@ namespace AlchemistNPC.Items.Weapons
 		
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "QuantumDestabilizer");
-			recipe.AddIngredient(null, "SupremeEnergyCore");
-			recipe.AddTile(null, "MateriaTransmutator");
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe()
+				.AddIngredient(null, "QuantumDestabilizer")
+				.AddIngredient(null, "SupremeEnergyCore")
+				.AddTile(null, "MateriaTransmutator")
+				.Register();
 		}
 	}
 }

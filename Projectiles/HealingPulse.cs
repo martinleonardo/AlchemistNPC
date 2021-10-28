@@ -13,11 +13,11 @@ namespace AlchemistNPC.Projectiles
 	{
 		public override void SetDefaults()
 		{
-			projectile.width = 1920;
-			projectile.height = 1080;
-			projectile.penetrate = -1;
-			projectile.timeLeft = 1;
-			projectile.tileCollide = false;
+			Projectile.width = 1920;
+			Projectile.height = 1080;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 1;
+			Projectile.tileCollide = false;
 		}
 
 		public override void SetStaticDefaults()
@@ -30,7 +30,7 @@ namespace AlchemistNPC.Projectiles
 			for (int k = 0; k < 200; k++)
 			{
 				NPC target = Main.npc[k];
-				if(target.Hitbox.Intersects(projectile.Hitbox) && target.friendly && target.life != target.lifeMax)
+				if(target.Hitbox.Intersects(Projectile.Hitbox) && target.friendly && target.life != target.lifeMax)
 				{
 						for (int i = 0; i < 10; i++)
 						{

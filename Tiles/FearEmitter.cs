@@ -13,7 +13,7 @@ namespace AlchemistNPC.Tiles
 	public class FearEmitter : ModTile
 	{
 		public static int counter = 0;
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileFrameImportant[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
@@ -24,9 +24,9 @@ namespace AlchemistNPC.Tiles
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Fear Emitter");
 			AddMapEntry(new Color(190, 230, 190), name);
-			dustType = 11;
-			disableSmartCursor = true;
-			animationFrameHeight = 56;
+			DustType = 11;
+			TileID.Sets.DisableSmartCursor[Type] = true;
+			AnimationFrameHeight = 56;
 		}
 		
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -56,12 +56,13 @@ namespace AlchemistNPC.Tiles
 			counter = 0;
 		}
 		
-		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref Color drawColor, ref int nextSpecialDrawIndex) 	
+		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) 	
 		{
 			counter++;
 			if (counter == 30)
 			{
-				Projectile.NewProjectile(i * 16f, j * 16f, 0f, 0f, mod.ProjectileType("FearEm"), 0, 10f, Main.myPlayer, 0f, 0f);
+				// Update for 1.4	
+				//Projectile.NewProjectile(i * 16f, j * 16f, 0f, 0f, ProjectileType<Projectiles.FearEm>(), 0, 10f, Main.myPlayer, 0f, 0f);
 				counter = 0;
 			}
 		}

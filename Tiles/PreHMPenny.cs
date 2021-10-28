@@ -14,7 +14,7 @@ namespace AlchemistNPC.Tiles
 {
 	public class PreHMPenny : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileSolidTop[Type] = false;
 			Main.tileFrameImportant[Type] = true;
@@ -29,11 +29,11 @@ namespace AlchemistNPC.Tiles
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Simple Crafting Penny");
-			name.AddTranslation(GameCulture.Russian, "Простой Крафтовый Пенни");
-            name.AddTranslation(GameCulture.Chinese, "简易手工便士");
+			name.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Простой Крафтовый Пенни");
+            name.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "简易手工便士");
             AddMapEntry(new Color(200, 200, 200), name);
-			disableSmartCursor = true;
-			adjTiles = new int[]
+			TileID.Sets.DisableSmartCursor[Type] = true;
+			AdjTiles =new int[]
 			{
 			TileID.WorkBenches,
 			TileID.Anvils,
@@ -51,8 +51,8 @@ namespace AlchemistNPC.Tiles
 			TileID.TinkerersWorkbench,
 			TileID.HeavyWorkBench,
 			};
-			dustType = mod.DustType("JustitiaPale");
-			animationFrameHeight = 56;
+			DustType = DustType<Dusts.JustitiaPale>();
+			AnimationFrameHeight = 56;
 		}
 		
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -68,7 +68,7 @@ namespace AlchemistNPC.Tiles
 		
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 32, 16, mod.ItemType("PreHMPenny"));
+			Item.NewItem(i * 16, j * 16, 32, 16, ModContent.ItemType<Items.Placeable.PreHMPenny>());
 		}
 	}
 }

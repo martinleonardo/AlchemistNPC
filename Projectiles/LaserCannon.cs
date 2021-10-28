@@ -5,6 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using System;
+using Terraria.GameContent;
 
 namespace AlchemistNPC.Projectiles
 {
@@ -13,24 +14,24 @@ namespace AlchemistNPC.Projectiles
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Laser Cannon");
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 3;
-			ProjectileID.Sets.TrailingMode[projectile.type] = 0;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 		}
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(ProjectileID.Bullet);
-			projectile.width = 12;
-			projectile.height = 12;
-			projectile.timeLeft = 300;
-			aiType = ProjectileID.Bullet;
+			Projectile.CloneDefaults(ProjectileID.Bullet);
+			Projectile.width = 12;
+			Projectile.height = 12;
+			Projectile.timeLeft = 300;
+			AIType = ProjectileID.Bullet;
 		}
 		
 		public override void AI()
 		{
 			for (int i = 0; i < 2; i++)
 				{
-					int dustIndex = Dust.NewDust(projectile.Center, projectile.width, projectile.height, mod.DustType("RainbowDust"));
+					int dustIndex = Dust.NewDust(Projectile.Center, Projectile.width, Projectile.height, ModContent.DustType<Dusts.RainbowDust>());
 					Dust dust = Main.dust[dustIndex];
 					dust.velocity.X = dust.velocity.X + Main.rand.Next(-50, 51) * 0.1f;
 					dust.velocity.Y = dust.velocity.Y + Main.rand.Next(-50, 51) * 0.1f;
@@ -38,10 +39,10 @@ namespace AlchemistNPC.Projectiles
 					dust.noGravity = true;
 				}
 			
-			if (projectile.localAI[0] == 0f)
+			if (Projectile.localAI[0] == 0f)
 			{
-				AdjustMagnitude(ref projectile.velocity);
-				projectile.localAI[0] = 1f;
+				AdjustMagnitude(ref Projectile.velocity);
+				Projectile.localAI[0] = 1f;
 			}
 			Vector2 move = Vector2.Zero;
 			float distance = 300f;
@@ -50,7 +51,7 @@ namespace AlchemistNPC.Projectiles
 			{
 				if (Main.npc[k].active && !Main.npc[k].dontTakeDamage && !Main.npc[k].friendly && Main.npc[k].lifeMax > 5)
 				{
-					Vector2 newMove = Main.npc[k].Center - projectile.Center;
+					Vector2 newMove = Main.npc[k].Center - Projectile.Center;
 					float distanceTo = (float)Math.Sqrt(newMove.X * newMove.X + newMove.Y * newMove.Y);
 					if (distanceTo < distance)
 					{
@@ -63,8 +64,8 @@ namespace AlchemistNPC.Projectiles
 			if (target)
 			{
 				AdjustMagnitude(ref move);
-				projectile.velocity = (10 * projectile.velocity + move) / 5f;
-				AdjustMagnitude(ref projectile.velocity);
+				Projectile.velocity = (10 * Projectile.velocity + move) / 5f;
+				AdjustMagnitude(ref Projectile.velocity);
 			}
 		}
 		
@@ -77,24 +78,24 @@ namespace AlchemistNPC.Projectiles
 			}
 		}
 		
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) {
+		public override bool PreDraw(ref Color lightColor) {
             
-            Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
-            for (int i = 0; i < projectile.oldPos.Length; i++) {
-                Vector2 drawPos = projectile.oldPos[i] - Main.screenPosition + drawOrigin + new Vector2(0f, projectile.gfxOffY);
-                Color color = projectile.GetAlpha(lightColor) * ((float)(projectile.oldPos.Length - i) / (float)projectile.oldPos.Length);
-                spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos, new Rectangle(0, projectile.frame * Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type], Main.projectileTexture[projectile.type].Width, Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type]), color, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+            Vector2 drawOrigin = new Vector2(TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
+            for (int i = 0; i < Projectile.oldPos.Length; i++) {
+                Vector2 drawPos = Projectile.oldPos[i] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+                Color color = Projectile.GetAlpha(lightColor) * ((float)(Projectile.oldPos.Length - i) / (float)Projectile.oldPos.Length);
+                Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, drawPos, new Rectangle(0, Projectile.frame * TextureAssets.Projectile[Projectile.type].Value.Height / Main.projFrames[Projectile.type], TextureAssets.Projectile[Projectile.type].Value.Width, TextureAssets.Projectile[Projectile.type].Value.Height / Main.projFrames[Projectile.type]), color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             }
             return true;
         }
 		
 		public override bool PreKill(int timeLeft)
 		{
-			Main.PlaySound(2, (int)projectile.position.X, (int)projectile.position.Y, 62);
+			Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.position.X, (int)Projectile.position.Y, 62);
 			Vector2 vel = new Vector2(0, -1);
 			vel *= 0f;
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, vel.X, vel.Y, mod.ProjectileType("ExplosionPlasma"), projectile.damage, 0, Main.myPlayer);
-			projectile.type = ProjectileID.Bullet;
+			Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, vel.X, vel.Y, ModContent.ProjectileType<Projectiles.ExplosionPlasma>(), Projectile.damage, 0, Main.myPlayer);
+			Projectile.type = ProjectileID.Bullet;
 			return true;
 		}
 	}

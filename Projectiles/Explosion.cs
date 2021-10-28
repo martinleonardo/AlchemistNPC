@@ -14,54 +14,53 @@ namespace AlchemistNPC.Projectiles
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Explosion");
-			projectile.timeLeft = 150;
-			projectile.light = 0.8f;
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 5;
-			ProjectileID.Sets.TrailingMode[projectile.type] = 0;
-			Main.projFrames[projectile.type] = 7;
+			Projectile.timeLeft = 150;
+			Projectile.light = 0.8f;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+			Main.projFrames[Projectile.type] = 7;
 		}
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(ProjectileID.LaserMachinegunLaser);
-			projectile.magic = false;
-			projectile.ranged = true;
-			projectile.width = 98;
-			projectile.height = 98;
-			projectile.penetrate = 40;
-			projectile.timeLeft = 40;
-			projectile.tileCollide = false;
-			aiType = ProjectileID.LaserMachinegunLaser;
+			Projectile.CloneDefaults(ProjectileID.LaserMachinegunLaser);
+			Projectile.DamageType = DamageClass.Ranged;
+			Projectile.width = 98;
+			Projectile.height = 98;
+			Projectile.penetrate = 40;
+			Projectile.timeLeft = 40;
+			Projectile.tileCollide = false;
+			AIType = ProjectileID.LaserMachinegunLaser;
 		}
 		
 		public override void AI()
 		{
-			if (projectile.frameCounter < 5)
-				projectile.frame = 0;
-			else if (projectile.frameCounter >= 5 && projectile.frameCounter < 10)
-				projectile.frame = 1;
-			else if (projectile.frameCounter >= 10 && projectile.frameCounter < 15)
-				projectile.frame = 2;
-			else if (projectile.frameCounter >= 15 && projectile.frameCounter < 20)
-				projectile.frame = 3;
-			else if (projectile.frameCounter >= 20 && projectile.frameCounter < 25)
-				projectile.frame = 4;
-			else if (projectile.frameCounter >= 25 && projectile.frameCounter < 30)
-				projectile.frame = 5;
-			else if (projectile.frameCounter >= 30 && projectile.frameCounter < 35)
-				projectile.frame = 6;
+			if (Projectile.frameCounter < 5)
+				Projectile.frame = 0;
+			else if (Projectile.frameCounter >= 5 && Projectile.frameCounter < 10)
+				Projectile.frame = 1;
+			else if (Projectile.frameCounter >= 10 && Projectile.frameCounter < 15)
+				Projectile.frame = 2;
+			else if (Projectile.frameCounter >= 15 && Projectile.frameCounter < 20)
+				Projectile.frame = 3;
+			else if (Projectile.frameCounter >= 20 && Projectile.frameCounter < 25)
+				Projectile.frame = 4;
+			else if (Projectile.frameCounter >= 25 && Projectile.frameCounter < 30)
+				Projectile.frame = 5;
+			else if (Projectile.frameCounter >= 30 && Projectile.frameCounter < 35)
+				Projectile.frame = 6;
 			else
-				projectile.frameCounter = 0;
-			projectile.frameCounter++;
+				Projectile.frameCounter = 0;
+			Projectile.frameCounter++;
 		}
 		
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			target.immune[projectile.owner] = 1;
-			projectile.penetrate--;
-			if (projectile.penetrate <= 0)
+			target.immune[Projectile.owner] = 1;
+			Projectile.penetrate--;
+			if (Projectile.penetrate <= 0)
 			{
-				projectile.Kill();
+				Projectile.Kill();
 			}
 		}
 	

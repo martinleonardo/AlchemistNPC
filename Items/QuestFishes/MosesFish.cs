@@ -10,23 +10,23 @@ namespace AlchemistNPC.Items.QuestFishes
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Moses Fish");
-			DisplayName.AddTranslation(GameCulture.Russian, "Рыба-Моисей");
-			DisplayName.AddTranslation(GameCulture.Chinese, "摩西鱼");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Рыба-Моисей");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "摩西鱼");
 		}
 
 		public override void SetDefaults()
 		{
-			item.questItem = true;
-			item.maxStack = 1;
-			item.width = 42;
-			item.height = 42;
-			item.uniqueStack = true;
-			item.rare = -11;		//The rarity of -11 gives the item orange color
+			Item.questItem = true;
+			Item.maxStack = 1;
+			Item.width = 42;
+			Item.height = 42;
+			Item.uniqueStack = true;
+			Item.rare = -11;		//The rarity of -11 gives the item orange color
 		}
 
 		public override void UpdateInventory(Player player)
 		{
-		((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).Manna = true;
+		((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).Manna = true;
 		}
 		
 		public override bool IsQuestFish()

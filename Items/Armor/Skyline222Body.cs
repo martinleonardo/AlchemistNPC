@@ -11,21 +11,21 @@ namespace AlchemistNPC.Items.Armor
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Skyline222's (Noire) shirt");
-            DisplayName.AddTranslation(GameCulture.Russian, "Блузка Нуар");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Блузка Нуар");
             Tooltip.SetDefault("Skyline222's cute shirt");
-            Tooltip.AddTranslation(GameCulture.Russian, "Милая блузка Нуар");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Милая блузка Нуар");
 
-            DisplayName.AddTranslation(GameCulture.Chinese, "Skyline222's (Noire) 的衬衫");
-            Tooltip.AddTranslation(GameCulture.Chinese, "Skyline222的可爱衬衫");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "Skyline222's (Noire) 的衬衫");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "Skyline222的可爱衬衫");
         }
 
 		public override void SetDefaults()
 		{
-			item.width = 20;
-			item.height = 20;
-			item.value = 1650000;
-			item.rare = -11;
-			item.vanity = true;
+			Item.width = 20;
+			Item.height = 20;
+			Item.value = 1650000;
+			Item.rare = -11;
+			Item.vanity = true;
 		}
 	}
 }

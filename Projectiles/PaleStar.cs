@@ -16,14 +16,14 @@ namespace AlchemistNPC.Projectiles
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(ProjectileID.SporeTrap);
-			projectile.magic = true;
-			aiType = ProjectileID.ChlorophyteBullet;
+			Projectile.CloneDefaults(ProjectileID.SporeTrap);
+			Projectile.DamageType = DamageClass.Magic;
+			AIType = ProjectileID.ChlorophyteBullet;
 		}
 		
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			target.immune[projectile.owner] = 1;
+			target.immune[Projectile.owner] = 1;
 		}
 		
 		public override void ModifyHitNPC (NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)

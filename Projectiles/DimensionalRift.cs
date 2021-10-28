@@ -18,33 +18,34 @@ namespace AlchemistNPC.Projectiles
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(261);
-			projectile.width = 32;
-			projectile.height = 32;
-			projectile.magic = false;
-			projectile.damage = 0;
-			projectile.aiStyle = 14;
-			projectile.timeLeft = 300;
-			aiType = 261;
+			Projectile.CloneDefaults(261);
+			Projectile.width = 32;
+			Projectile.height = 32;
+			// Unknown Damage Type
+			//Projectile.magic = false;
+			Projectile.damage = 0;
+			Projectile.aiStyle = 14;
+			Projectile.timeLeft = 300;
+			AIType = 261;
 		}
 		
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			projectile.Kill();
+			Projectile.Kill();
 			return true;
 		}
 		
 		public override void Kill(int timeLeft)
         {
-			Player player = Main.player[projectile.owner];
-			NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("BillCipher"));
+			Player player = Main.player[Projectile.owner];
+			NPC.SpawnOnPlayer(player.whoAmI, ModContent.NPCType<NPCs.BillCipher>());
 			BillCipher.introduction = 0;
 			ModGlobalNPC.bsu = true;
 		}
 		
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			projectile.Kill();
+			Projectile.Kill();
 		}
 	}
 }

@@ -17,25 +17,24 @@ namespace AlchemistNPC.Projectiles
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(503);
-			projectile.melee = false;
-			projectile.magic = true;
-			projectile.aiStyle = 5;
-			aiType = 503;
+			Projectile.CloneDefaults(503);
+			Projectile.DamageType = DamageClass.Magic;
+			Projectile.aiStyle = 5;
+			AIType = 503;
 		}
 		
 		public override bool PreKill(int timeLeft)
 		{
-			projectile.type = 503;
+			Projectile.type = 503;
 			return true;
 		}
 		
 		public override void ModifyHitNPC (NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
-			Player player = Main.player[projectile.owner]; 
+			Player player = Main.player[Projectile.owner]; 
 			player.statMana += 10;
 			player.ManaEffect(10);
-			target.immune[projectile.owner] = 1;
+			target.immune[Projectile.owner] = 1;
 		}
 	}
 }

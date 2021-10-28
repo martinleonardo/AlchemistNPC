@@ -10,6 +10,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using Terraria.UI;
 using AlchemistNPC.Interface;
+using Terraria.GameContent;
 
 namespace AlchemistNPC.Interface
 {
@@ -49,7 +50,7 @@ namespace AlchemistNPC.Interface
 			const int padding = 4;
 			const int chargeSize = barSize - 2 * padding;
 			const int chargeHeight = 20;
-			DynamicSpriteFont font = Main.fontMouseText;
+			DynamicSpriteFont font = FontAssets.MouseText.Value;
 			float Shield = Math.Min(modPlayer.Shield, 150);
 			string chargeText = Shield + "/" + 150;
 			string maxText = "Shield Charge: " + 150 + "/" + 150;
@@ -59,9 +60,9 @@ namespace AlchemistNPC.Interface
 			Main.spriteBatch.DrawString(font, chargeText, new Vector2(anchorX + barSize / 2 + maxTextSize.X / 2f, 42f), textColor, 0f, new Vector2(font.MeasureString(chargeText).X, 0f), 1f, SpriteEffects.None, 0f);
 
 			float fill = Shield / 150;
-			Main.spriteBatch.Draw(mod.GetTexture("Interface/ShieldBar"), new Vector2(anchorX, 64f), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
-			Main.spriteBatch.Draw(mod.GetTexture("Interface/ShieldCharge"), new Vector2(anchorX + padding, 64f + padding), new Rectangle(0, 0, (int)(fill * chargeSize), chargeHeight), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
-			Main.spriteBatch.Draw(mod.GetTexture("Interface/ShieldBarShield"), new Vector2(anchorX + padding, 64f + padding), new Rectangle(0, 0, (int)(fill * chargeSize), chargeHeight), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(mod.Assets.Request<Texture2D>("Interface/ShieldBar").Value, new Vector2(anchorX, 64f), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(mod.Assets.Request<Texture2D>("Interface/ShieldCharge").Value, new Vector2(anchorX + padding, 64f + padding), new Rectangle(0, 0, (int)(fill * chargeSize), chargeHeight), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(mod.Assets.Request<Texture2D>("Interface/ShieldBarShield").Value, new Vector2(anchorX + padding, 64f + padding), new Rectangle(0, 0, (int)(fill * chargeSize), chargeHeight), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 
 			return true;
 		}
@@ -85,7 +86,7 @@ namespace AlchemistNPC.Interface
 			const int padding = 4;
 			const int chargeSize = barSize - 2 * padding;
 			const int chargeHeight = 20;
-			DynamicSpriteFont font = Main.fontMouseText;
+			DynamicSpriteFont font = FontAssets.MouseText.Value;
 			float Gauge = Math.Min(modPlayer.DisasterGauge, 500);
 			string chargeText = Gauge + "/" + 500;
 			string maxText = "Disaster Gauge: " + 500 + "/" + 500;
@@ -95,8 +96,8 @@ namespace AlchemistNPC.Interface
 			Main.spriteBatch.DrawString(font, chargeText, new Vector2(anchorX + barSize / 2 + maxTextSize.X / 2f, 42f), textColor, 0f, new Vector2(font.MeasureString(chargeText).X, 0f), 1f, SpriteEffects.None, 0f);
 
 			float fill = Gauge / 500;
-			Main.spriteBatch.Draw(mod.GetTexture("Interface/DisasterBar"), new Vector2(anchorX, 64f), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
-			Main.spriteBatch.Draw(mod.GetTexture("Interface/DisasterCharge"), new Vector2(anchorX + padding, 64f + padding), new Rectangle(0, 0, (int)(fill * chargeSize), chargeHeight), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(mod.Assets.Request<Texture2D>("Interface/DisasterBar").Value, new Vector2(anchorX, 64f), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(mod.Assets.Request<Texture2D>("Interface/DisasterCharge").Value, new Vector2(anchorX + padding, 64f + padding), new Rectangle(0, 0, (int)(fill * chargeSize), chargeHeight), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 
 			return true;
 		}

@@ -8,8 +8,8 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using Terraria.ModLoader.IO;
 using Terraria.Localization;
-using Terraria.World.Generation;
 using AlchemistNPC;
+using Terraria.DataStructures;
 
 namespace AlchemistNPC.Items.Weapons
 {
@@ -20,33 +20,33 @@ namespace AlchemistNPC.Items.Weapons
 			DisplayName.SetDefault("Mordenkainen's Sword");
 			Tooltip.SetDefault("Immaterial sword created by Mordenkainen"
 			+ "\nSlashes enemies from the distance");
-			DisplayName.AddTranslation(GameCulture.Russian, "Меч Морденкайнена");
-            Tooltip.AddTranslation(GameCulture.Russian, "Нематериальный клинок, созданный Морденкайненом\nМожет ранить врага на значительном расстоянии");
-			DisplayName.AddTranslation(GameCulture.Chinese, "魔邓肯之剑");
-			Tooltip.AddTranslation(GameCulture.Chinese, "魔邓肯制作的无形之剑"
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Меч Морденкайнена");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Нематериальный клинок, созданный Морденкайненом\nМожет ранить врага на значительном расстоянии");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "魔邓肯之剑");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "魔邓肯制作的无形之剑"
 			+ "\n远程斩杀敌人");
         }
 
 		public override void SetDefaults()
 		{
-			item.melee = true;
-			item.damage = 56;
-			item.width = 32;
-			item.height = 32;
-			item.useTime = 30;
-			item.useAnimation = 39;
-			item.useStyle = 1;
-			item.noUseGraphic = true;
-			item.noMelee = true;
-			item.value = 10000000;
-			item.rare = 11;
-            item.knockBack = 8;
-            item.autoReuse = true;
-			item.UseSound = SoundID.Item1;
-			item.shoot = mod.ProjectileType("MordenkainenSword");
+			Item.DamageType = DamageClass.Melee;
+			Item.damage = 56;
+			Item.width = 32;
+			Item.height = 32;
+			Item.useTime = 30;
+			Item.useAnimation = 39;
+			Item.useStyle = 1;
+			Item.noUseGraphic = true;
+			Item.noMelee = true;
+			Item.value = 10000000;
+			Item.rare = 11;
+            Item.knockBack = 8;
+            Item.autoReuse = true;
+			Item.UseSound = SoundID.Item1;
+			Item.shoot = ProjectileType<Projectiles.MordenkainenSword>();
 		}
 		
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+		public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
 			Vector2 SPos = Main.screenPosition + new Vector2(Main.mouseX, Main.mouseY);
 			position = SPos;
@@ -55,13 +55,12 @@ namespace AlchemistNPC.Items.Weapons
 		
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.Excalibur);
-			recipe.AddIngredient(ItemID.MagnetSphere);
-			recipe.AddIngredient(ItemID.Ectoplasm, 10);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe()
+				.AddIngredient(ItemID.Excalibur)
+				.AddIngredient(ItemID.MagnetSphere)
+				.AddIngredient(ItemID.Ectoplasm, 10)
+				.AddTile(TileID.MythrilAnvil)
+				.Register();
 		}
 	}
 }

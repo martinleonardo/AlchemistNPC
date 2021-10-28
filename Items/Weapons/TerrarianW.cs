@@ -4,6 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using Terraria.Localization;
+using Terraria.DataStructures;
 
 namespace AlchemistNPC.Items.Weapons
 {
@@ -13,16 +14,16 @@ namespace AlchemistNPC.Items.Weapons
 		{
 			DisplayName.SetDefault("Terrarian-W (V-05-516)");
 			Tooltip.SetDefault("''Angela's actions have rewritten the very understandment of souls''\n[c/FF0000:EGO weapon]\nLeft click to shoot burst of lasers\nRight click to shoot burst of bullets\n33% chance not to consume ammo");
-			DisplayName.AddTranslation(GameCulture.Russian, "Terrarian-W (V-05-516)");
-            Tooltip.AddTranslation(GameCulture.Russian, "''Действия Анджелы переписали само понимание душ''\n[c/FF0000:Оружие Э.П.О.С.]\nЛевая кнопка мыши выстреливает очередью из лазеров\nПравая кнопка мыши выстреливает очередью из пуль\n33% шанс не потратить патроны");
-			DisplayName.AddTranslation(GameCulture.Chinese, "Terrarian-W (V-05-516)");
-			Tooltip.AddTranslation(GameCulture.Chinese, "''Angela的行为改写了对灵魂本身的理解''\n[c/FF0000:EGO 武器]\n左键发射爆裂激光\n右键发射爆裂弹\n33%概率不消耗弹药");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Terrarian-W (V-05-516)");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "''Действия Анджелы переписали само понимание душ''\n[c/FF0000:Оружие Э.П.О.С.]\nЛевая кнопка мыши выстреливает очередью из лазеров\nПравая кнопка мыши выстреливает очередью из пуль\n33% шанс не потратить патроны");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "Terrarian-W (V-05-516)");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "''Angela的行为改写了对灵魂本身的理解''\n[c/FF0000:EGO 武器]\n左键发射爆裂激光\n右键发射爆裂弹\n33%概率不消耗弹药");
 		}
 
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.LaserRifle);
-			item.damage = 25;
+			Item.CloneDefaults(ItemID.LaserRifle);
+			Item.damage = 25;
 		}
 
 		public override bool AltFunctionUse(Player player)
@@ -34,61 +35,59 @@ namespace AlchemistNPC.Items.Weapons
 		{
 			if (player.altFunctionUse == 2)
 			{
-				item.UseSound = SoundID.Item31;
-				item.mana = 0;
-				item.useAnimation = 12;
-				item.useTime = 4;
-				item.reuseDelay = 14;
-				item.shoot = 10;
-				item.useAmmo = AmmoID.Bullet;
-				item.magic = false;
-				item.ranged = true;
-				item.damage = 18;
-				if (((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).ParadiseLost == true)
+				Item.UseSound = SoundID.Item31;
+				Item.mana = 0;
+				Item.useAnimation = 12;
+				Item.useTime = 4;
+				Item.reuseDelay = 14;
+				Item.shoot = 10;
+				Item.useAmmo = AmmoID.Bullet;
+				Item.DamageType = DamageClass.Ranged;
+				Item.damage = 18;
+				if (((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).ParadiseLost == true)
 				{
-					item.damage = 36;
+					Item.damage = 36;
 				}
 			}
 			else
 			{
-				item.UseSound = SoundID.Item12;
-				item.mana = 5;
-				item.useAnimation = 18;
-				item.useTime = 6;
-				item.reuseDelay = 20;
-				item.shoot = 88;
-				item.useAmmo = 0;
-				item.ranged = false;
-				item.magic = true;
-				item.damage = 25;
-				if (((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).ParadiseLost == true)
+				Item.UseSound = SoundID.Item12;
+				Item.mana = 5;
+				Item.useAnimation = 18;
+				Item.useTime = 6;
+				Item.reuseDelay = 20;
+				Item.shoot = 88;
+				Item.useAmmo = 0;
+				Item.DamageType = DamageClass.Magic;
+				Item.damage = 25;
+				if (((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).ParadiseLost == true)
 				{
-					item.damage = 100;
+					Item.damage = 100;
 				}
 			}
 			return base.CanUseItem(player);
 		}
 		
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+		public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			if (((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).ParadiseLost == true)
+			if (((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).ParadiseLost == true)
 			{
 				if (player.altFunctionUse == 2)
 				{
-				Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage*2, knockBack, player.whoAmI);
-				Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage*2, knockBack, player.whoAmI);
+				Projectile.NewProjectile(source, position.X, position.Y, velocity.X, velocity.Y, type, damage*2, knockback, player.whoAmI);
+				Projectile.NewProjectile(source, position.X, position.Y, velocity.X, velocity.Y, type, damage*2, knockback, player.whoAmI);
 				}
 				else
 				{
-					Projectile.NewProjectile(position.X, position.Y-6, speedX, speedY, type, damage*2, knockBack, player.whoAmI);
-					Projectile.NewProjectile(position.X, position.Y+6, speedX, speedY, type, damage*2, knockBack, player.whoAmI);
+					Projectile.NewProjectile(source, position.X, position.Y-6, velocity.X, velocity.Y, type, damage*2, knockback, player.whoAmI);
+					Projectile.NewProjectile(source, position.X, position.Y+6, velocity.X, velocity.Y, type, damage*2, knockback, player.whoAmI);
 				}
 			}
-			if (((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).ParadiseLost == false)
+			if (((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).ParadiseLost == false)
 			{
 				if (player.altFunctionUse == 2)
 				{
-				Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI);
+				Projectile.NewProjectile(source, position.X, position.Y, velocity.X, velocity.Y, type, damage, knockback, player.whoAmI);
 				}
 				else
 				{
@@ -97,7 +96,7 @@ namespace AlchemistNPC.Items.Weapons
 			return true;
 		}
 
-		public override bool ConsumeAmmo(Player player)
+		public override bool CanConsumeAmmo(Player player)
 		{
 			return Main.rand.NextFloat() >= .33f;
 		}
@@ -109,13 +108,12 @@ namespace AlchemistNPC.Items.Weapons
 		
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.Starfury);
-			recipe.AddIngredient(ItemID.ClockworkAssaultRifle);
-			recipe.AddIngredient(ItemID.CrystalShard, 30);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe()
+				.AddIngredient(ItemID.Starfury)
+				.AddIngredient(ItemID.ClockworkAssaultRifle)
+				.AddIngredient(ItemID.CrystalShard, 30)
+				.AddTile(TileID.MythrilAnvil)
+				.Register();
 		}
 	}
 }

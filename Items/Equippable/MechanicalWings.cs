@@ -4,6 +4,7 @@ using System.Linq;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+using Terraria.DataStructures;
 
 namespace AlchemistNPC.Items.Equippable
 {
@@ -15,25 +16,30 @@ namespace AlchemistNPC.Items.Equippable
 			DisplayName.SetDefault("Mechanical Wings");
 			Tooltip.SetDefault("Allows you to fly"
 			+ "\nShoots deadly lasers at nearby enemies ");
-			DisplayName.AddTranslation(GameCulture.Russian, "Механические Крылья");
-            Tooltip.AddTranslation(GameCulture.Russian, "Позволяют летать\nСтреляют в ближайших противников лазерами");
-            DisplayName.AddTranslation(GameCulture.Chinese, "机械翅膀");
-            Tooltip.AddTranslation(GameCulture.Chinese, "允许飞行\n发射致命激光攻击附近敌人");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Механические Крылья");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Позволяют летать\nСтреляют в ближайших противников лазерами");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "机械翅膀");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "允许飞行\n发射致命激光攻击附近敌人");
+
+            int     wingTimeMax = 120;
+            float   speed = 9f;
+            float   acceleration = 2f;
+
+            ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(wingTimeMax, speed, acceleration);
         }
 
 		public override void SetDefaults()
 		{
-			item.width = 22;
-			item.height = 20;
-			item.value = 1000000;
-			item.rare = 8;
-			item.accessory = true;
+			Item.width = 22;
+			Item.height = 20;
+			Item.value = 1000000;
+			Item.rare = 8;
+			Item.accessory = true;
 		}
 		
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			player.wingTimeMax = 120;
-			player.AddBuff(mod.BuffType("LaserBattery"), 2);
+			player.AddBuff(ModContent.BuffType<Buffs.LaserBattery>(), 2);
 		}
 
 		public override void VerticalWingSpeeds(Player player, ref float ascentWhenFalling, ref float ascentWhenRising,
@@ -45,26 +51,19 @@ namespace AlchemistNPC.Items.Equippable
 			maxAscentMultiplier = 4f;
 			constantAscend = 0.135f;
 		}
-		
-		public override void HorizontalWingSpeeds(Player player, ref float speed, ref float acceleration)
-		{
-			speed = 9f;
-			acceleration *= 2f;
-		}
 
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.SteampunkWings);
-			recipe.AddIngredient(ItemID.MechanicalBatteryPiece);
-			recipe.AddIngredient(ItemID.XenoStaff);
-			recipe.AddIngredient(ItemID.HallowedBar, 12);
-			recipe.AddIngredient(ItemID.SoulofFright, 10);
-			recipe.AddIngredient(ItemID.SoulofSight, 10);
-			recipe.AddIngredient(ItemID.SoulofMight, 10);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe()
+				.AddIngredient(ItemID.SteampunkWings)
+				.AddIngredient(ItemID.MechanicalBatteryPiece)
+				.AddIngredient(ItemID.XenoStaff)
+				.AddIngredient(ItemID.HallowedBar, 12)
+				.AddIngredient(ItemID.SoulofFright, 10)
+				.AddIngredient(ItemID.SoulofSight, 10)
+				.AddIngredient(ItemID.SoulofMight, 10)
+				.AddTile(TileID.MythrilAnvil)
+				.Register();
 		}
 	}
 }

@@ -16,18 +16,18 @@ namespace AlchemistNPC.Items.Misc
 		{
 			DisplayName.SetDefault("Screaming Head");
 			Tooltip.SetDefault("Someone's screaming head\nBreaks concentration");
-			DisplayName.AddTranslation(GameCulture.Russian, "Кричащая голова");
-            Tooltip.AddTranslation(GameCulture.Russian, "Чья-то кричащая голова\nНарушает концентрацию");
-			DisplayName.AddTranslation(GameCulture.Chinese, "尖啸之颅");
-			Tooltip.AddTranslation(GameCulture.Chinese, "某人的尖叫的脑袋\n使你精神不集中");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Кричащая голова");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Чья-то кричащая голова\nНарушает концентрацию");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "尖啸之颅");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "某人的尖叫的脑袋\n使你精神不集中");
         }
 
 		public override void SetDefaults()
 		{
-			item.width = 32;
-			item.height = 32;
-			item.value = 0;
-			item.rare = 5;
+			Item.width = 32;
+			Item.height = 32;
+			Item.value = 0;
+			Item.rare = 5;
 		}
 		
 		public override void UpdateInventory(Player player)

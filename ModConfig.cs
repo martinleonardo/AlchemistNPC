@@ -140,7 +140,7 @@ namespace AlchemistNPC
 			string message = "";
 			string messagech = "";
 			
-			if(Language.ActiveCulture == GameCulture.Chinese)
+			if(Language.ActiveCulture == GameCulture.FromCultureName(GameCulture.CultureName.Chinese))
 			{
 				messageline = messagech;
 			}

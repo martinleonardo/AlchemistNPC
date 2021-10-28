@@ -15,25 +15,24 @@ namespace AlchemistNPC.Projectiles
 		
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(ProjectileID.ToxicFlask);
-			projectile.damage = 350;
-			aiType = ProjectileID.ToxicFlask;
-			projectile.magic = false;
-			projectile.thrown = true;
+			Projectile.CloneDefaults(ProjectileID.ToxicFlask);
+			Projectile.damage = 350;
+			AIType = ProjectileID.ToxicFlask;
+			Projectile.DamageType = DamageClass.Throwing;
 		}
 
 		public override bool PreKill(int timeLeft)
 		{
-			projectile.type = ProjectileID.ToxicFlask;
+			Projectile.type = ProjectileID.ToxicFlask;
 			return true;
 		}
 
 		public override void Kill(int timeLeft)
 		{
-			Player player = Main.player[projectile.owner];
-			Main.PlaySound(2, (int)projectile.position.X, (int)projectile.position.Y, 107);
-			Gore.NewGore(projectile.position, -projectile.oldVelocity * 0.2f, 704, 1f);
-			if (projectile.owner == Main.myPlayer)
+			Player player = Main.player[Projectile.owner];
+			Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.position.X, (int)Projectile.position.Y, 107);
+			Gore.NewGore(Projectile.position, -Projectile.oldVelocity * 0.2f, 704, 1f);
+			if (Projectile.owner == Main.myPlayer)
 			{
 				int num220 = Main.rand.Next(20, 31);
 				for (int num221 = 0; num221 < num220; num221++)
@@ -41,15 +40,15 @@ namespace AlchemistNPC.Projectiles
 					Vector2 value17 = new Vector2(Main.rand.Next(-100, 101), Main.rand.Next(-100, 101));
 					value17.Normalize();
 					value17 *= Main.rand.Next(20, 402) * 0.01f;
-					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, value17.X, value17.Y, mod.ProjectileType("CorrosiveFlaskCloud"), projectile.damage, 1f, projectile.owner, 0f, Main.rand.Next(-30, 2));
+					Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, value17.X, value17.Y, ModContent.ProjectileType<Projectiles.CorrosiveFlaskCloud>(), Projectile.damage, 1f, Projectile.owner, 0f, Main.rand.Next(-30, 2));
 				}
 			}
 		}
 		
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 			{
-				target.AddBuff(mod.BuffType("Corrosion"), 300);
-				target.immune[projectile.owner] = 1;
+				target.AddBuff(ModContent.BuffType<Buffs.Corrosion>(), 300);
+				target.immune[Projectile.owner] = 1;
 			}
 	}
 }

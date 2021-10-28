@@ -7,6 +7,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using Terraria.ID;
 using Terraria.Enums;
+using Terraria.GameContent;
 
 namespace AlchemistNPC.Projectiles
 {
@@ -18,34 +19,34 @@ namespace AlchemistNPC.Projectiles
 
 		public float Distance
 		{
-			get { return projectile.ai[0]; }
-			set { projectile.ai[0] = value; }
+			get { return Projectile.ai[0]; }
+			set { Projectile.ai[0] = value; }
 		}
 
 		public float Charge
 		{
-			get { return projectile.localAI[0]; }
-			set { projectile.localAI[0] = value; }
+			get { return Projectile.localAI[0]; }
+			set { Projectile.localAI[0] = value; }
 		}
 
 		public override void SetDefaults()
 		{
-			projectile.width = 8;
-			projectile.height = 8;
-			projectile.friendly = true;
-			projectile.penetrate = -1;
-			projectile.tileCollide = false;
-			projectile.ranged = true;
-			projectile.hide = true;
+			Projectile.width = 8;
+			Projectile.height = 8;
+			Projectile.friendly = true;
+			Projectile.penetrate = -1;
+			Projectile.tileCollide = false;
+			Projectile.DamageType = DamageClass.Ranged;
+			Projectile.hide = true;
 		}
 
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			if (Charge == MAX_CHARGE)
 			{
-				Vector2 unit = projectile.velocity;
-				DrawLaser(spriteBatch, Main.projectileTexture[projectile.type], 
-					Main.player[projectile.owner].Center, unit, 10, projectile.damage, 
+				Vector2 unit = Projectile.velocity;
+				DrawLaser(TextureAssets.Projectile[Projectile.type].Value, 
+					Main.player[Projectile.owner].Center, unit, 10, Projectile.damage, 
 					-1.57f, 1f, 1000f, Color.White, (int)MOVE_DISTANCE);
 			}
 			return false;
@@ -55,7 +56,7 @@ namespace AlchemistNPC.Projectiles
 		/// <summary>
 		/// The core function of drawing a laser
 		/// </summary>
-		public void DrawLaser(SpriteBatch spriteBatch, Texture2D texture, Vector2 start, Vector2 unit, float step, int damage, float rotation = 0f, float scale = 1f, float maxDist = 2000f, Color color = default(Color), int transDist = 50)
+		public void DrawLaser(Texture2D texture, Vector2 start, Vector2 unit, float step, int damage, float rotation = 0f, float scale = 1f, float maxDist = 2000f, Color color = default(Color), int transDist = 50)
 		{
 			Vector2 origin = start;
 			float r = unit.ToRotation() + rotation;
@@ -65,19 +66,19 @@ namespace AlchemistNPC.Projectiles
 			{
 				Color c = Color.White;
 				origin = start + i * unit;
-				spriteBatch.Draw(texture, origin - Main.screenPosition,
+				Main.EntitySpriteDraw(texture, origin - Main.screenPosition,
 					new Rectangle(0, 26, 28, 26), i < transDist ? Color.Transparent : c, r,
 					new Vector2(28 / 2, 26 / 2), scale, 0, 0);
 			}
 			#endregion
 
 			#region Draw laser tail
-			spriteBatch.Draw(texture, start + unit * (transDist - step) - Main.screenPosition,
+			Main.EntitySpriteDraw(texture, start + unit * (transDist - step) - Main.screenPosition,
 				new Rectangle(0, 0, 28, 26), Color.White, r, new Vector2(28 / 2, 26 / 2), scale, 0, 0);
 			#endregion
 
 			#region Draw laser head
-			spriteBatch.Draw(texture, start + (Distance + step) * unit - Main.screenPosition,
+			Main.EntitySpriteDraw(texture, start + (Distance + step) * unit - Main.screenPosition,
 				new Rectangle(0, 52, 28, 26), Color.White, r, new Vector2(28 / 2, 26 / 2), scale, 0, 0);
 			#endregion
 		}
@@ -89,8 +90,8 @@ namespace AlchemistNPC.Projectiles
 		{
 			if (Charge == MAX_CHARGE)
 			{
-				Player p = Main.player[projectile.owner];
-				Vector2 unit = projectile.velocity;
+				Player p = Main.player[Projectile.owner];
+				Vector2 unit = Projectile.velocity;
 				float point = 0f;
 				if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), p.Center, p.Center + unit * Distance, 22, ref point))
 				{
@@ -105,12 +106,12 @@ namespace AlchemistNPC.Projectiles
 		/// </summary>
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			target.immune[projectile.owner] = 1;
-			target.AddBuff(mod.BuffType("Patience"), 120);
-			Main.PlaySound(SoundID.Item12, projectile.position);
+			target.immune[Projectile.owner] = 1;
+			target.AddBuff(ModContent.BuffType<Buffs.Patience>(), 120);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item12, Projectile.position);
 			Vector2 vel = new Vector2(0, -1);
 			vel *= 0f;
-			Projectile.NewProjectile(target.position.X, target.position.Y, vel.X, vel.Y, mod.ProjectileType("ExplosionDummyQD"), projectile.damage, 0, Main.myPlayer);
+			Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), target.position.X, target.position.Y, vel.X, vel.Y, ModContent.ProjectileType<Projectiles.ExplosionDummyQD>(), Projectile.damage, 0, Main.myPlayer);
 		}
 
 		/// <summary>
@@ -120,41 +121,41 @@ namespace AlchemistNPC.Projectiles
 		{
 
 			Vector2 mousePos = Main.MouseWorld;
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 
 			#region Set projectile position
-			if (projectile.owner == Main.myPlayer) // Multiplayer support
+			if (Projectile.owner == Main.myPlayer) // Multiplayer support
 			{
 				Vector2 diff = mousePos - player.Center;
 				diff.Normalize();
-				projectile.velocity = diff;
-				projectile.direction = Main.MouseWorld.X > player.position.X ? 1 : -1;
-				projectile.netUpdate = true;
+				Projectile.velocity = diff;
+				Projectile.direction = Main.MouseWorld.X > player.position.X ? 1 : -1;
+				Projectile.netUpdate = true;
 			}
-			projectile.position = player.Center + projectile.velocity * MOVE_DISTANCE;
-			projectile.timeLeft = 2;
-			int dir = projectile.direction;
+			Projectile.position = player.Center + Projectile.velocity * MOVE_DISTANCE;
+			Projectile.timeLeft = 2;
+			int dir = Projectile.direction;
 			player.ChangeDir(dir);
-			player.heldProj = projectile.whoAmI;
+			player.heldProj = Projectile.whoAmI;
 			player.itemTime = 2;
 			player.itemAnimation = 2;
-			player.itemRotation = (float)Math.Atan2(projectile.velocity.Y * dir,
-				projectile.velocity.X * dir);
+			player.itemRotation = (float)Math.Atan2(Projectile.velocity.Y * dir,
+				Projectile.velocity.X * dir);
 			#endregion
 
 			#region Charging process
 			// Kill the projectile if the player stops channeling
 			if (!player.channel)
 			{
-				projectile.Kill();
+				Projectile.Kill();
 			}
 			else
 			{
 				if (Main.time % 10 < 1 && !player.CheckMana(player.inventory[player.selectedItem].mana, true))
 				{
-					projectile.Kill();
+					Projectile.Kill();
 				}
-				Vector2 offset = projectile.velocity;
+				Vector2 offset = Projectile.velocity;
 				offset *= MOVE_DISTANCE - 20;
 				Vector2 pos = player.Center + offset - new Vector2(10, 10);
 				if (Charge < MAX_CHARGE)
@@ -163,13 +164,13 @@ namespace AlchemistNPC.Projectiles
 				}
 				int chargeFact = (int)(Charge / 20f);
 				Vector2 dustVelocity = Vector2.UnitX * 18f;
-				dustVelocity = dustVelocity.RotatedBy(projectile.rotation - 1.57f, default(Vector2));
-				Vector2 spawnPos = projectile.Center + dustVelocity;
+				dustVelocity = dustVelocity.RotatedBy(Projectile.rotation - 1.57f, default(Vector2));
+				Vector2 spawnPos = Projectile.Center + dustVelocity;
 				for (int k = 0; k < chargeFact + 1; k++)
 				{
 					Vector2 spawn = spawnPos + ((float)Main.rand.NextDouble() * 6.28f).ToRotationVector2() * (12f - (chargeFact * 2));
-					Dust dust = Main.dust[Dust.NewDust(pos, 20, 20, mod.DustType("Electrocute"), projectile.velocity.X / 2f,
-						projectile.velocity.Y / 2f, 0, default(Color), 1f)];
+					Dust dust = Main.dust[Dust.NewDust(pos, 20, 20, ModContent.DustType<Dusts.Electrocute>(), Projectile.velocity.X / 2f,
+						Projectile.velocity.Y / 2f, 0, default(Color), 1f)];
 					dust.velocity = Vector2.Normalize(spawnPos - spawn) * 1.5f * (10f - chargeFact * 2f) / 10f;
 					dust.noGravity = true;
 					dust.scale = Main.rand.Next(10, 20) * 0.05f;
@@ -181,11 +182,11 @@ namespace AlchemistNPC.Projectiles
 			#region Set laser tail position and dusts
 			if (Charge < MAX_CHARGE) return;
 			Vector2 start = player.Center;
-			Vector2 unit = projectile.velocity;
+			Vector2 unit = Projectile.velocity;
 			unit *= -1;
 			for (Distance = MOVE_DISTANCE; Distance <= 2200f; Distance += 5f)
 			{
-				start = player.Center + projectile.velocity * Distance;
+				start = player.Center + Projectile.velocity * Distance;
 				if (!Collision.CanHit(player.Center, 1, 1, start, 1, 1))
 				{
 					Distance -= 5f;
@@ -193,32 +194,32 @@ namespace AlchemistNPC.Projectiles
 				}
 			}
 
-			Vector2 dustPos = player.Center + projectile.velocity * Distance;
+			Vector2 dustPos = player.Center + Projectile.velocity * Distance;
 			//Imported dust code from source because I'm lazy
 			for (int i = 0; i < 2; ++i)
 			{
-				float num1 = projectile.velocity.ToRotation() + (Main.rand.Next(2) == 1 ? -1.0f : 1.0f) * 1.57f;
+				float num1 = Projectile.velocity.ToRotation() + (Main.rand.Next(2) == 1 ? -1.0f : 1.0f) * 1.57f;
 				float num2 = (float)(Main.rand.NextDouble() * 0.8f + 1.0f);
 				Vector2 dustVel = new Vector2((float)Math.Cos(num1) * num2, (float)Math.Sin(num1) * num2);
-				Dust dust = Main.dust[Dust.NewDust(dustPos, 0, 0, mod.DustType("Electrocute"), dustVel.X, dustVel.Y, 0, new Color(), 1f)];
+				Dust dust = Main.dust[Dust.NewDust(dustPos, 0, 0, ModContent.DustType<Dusts.Electrocute>(), dustVel.X, dustVel.Y, 0, new Color(), 1f)];
 				dust.noGravity = true;
 				dust.scale = 1.2f;
 				// At this part, I was messing with the dusts going across the laser beam very fast, but only really works properly horizontally now
-				dust = Main.dust[Dust.NewDust(Main.player[projectile.owner].Center + unit * 5f, 0, 0, mod.DustType("Electrocute"), unit.X, unit.Y, 0, new Color(), 1f)];
+				dust = Main.dust[Dust.NewDust(Main.player[Projectile.owner].Center + unit * 5f, 0, 0, ModContent.DustType<Dusts.Electrocute>(), unit.X, unit.Y, 0, new Color(), 1f)];
 				dust.fadeIn = 0f;
 				dust.noGravity = true;
 				dust.scale = 0.88f;
 			}
 			if (Main.rand.Next(5) == 0)
 			{
-				Vector2 offset = projectile.velocity.RotatedBy(1.57f, new Vector2()) * ((float)Main.rand.NextDouble() - 0.5f) * projectile.width;
-				Dust dust = Main.dust[Dust.NewDust(dustPos + offset - Vector2.One * 4f, 8, 8, mod.DustType("Electrocute"), 0.0f, 0.0f, 100, new Color(), 1.5f)];
+				Vector2 offset = Projectile.velocity.RotatedBy(1.57f, new Vector2()) * ((float)Main.rand.NextDouble() - 0.5f) * Projectile.width;
+				Dust dust = Main.dust[Dust.NewDust(dustPos + offset - Vector2.One * 4f, 8, 8, ModContent.DustType<Dusts.Electrocute>(), 0.0f, 0.0f, 100, new Color(), 1.5f)];
 				dust.velocity = dust.velocity * 0.5f;
 				dust.velocity.Y = -Math.Abs(dust.velocity.Y);
 
-				unit = dustPos - Main.player[projectile.owner].Center;
+				unit = dustPos - Main.player[Projectile.owner].Center;
 				unit.Normalize();
-				dust = Main.dust[Dust.NewDust(Main.player[projectile.owner].Center + 55 * unit, 8, 8, mod.DustType("Electrocute"), 0.0f, 0.0f, 100, new Color(), 1.5f)];
+				dust = Main.dust[Dust.NewDust(Main.player[Projectile.owner].Center + 55 * unit, 8, 8, ModContent.DustType<Dusts.Electrocute>(), 0.0f, 0.0f, 100, new Color(), 1.5f)];
 				dust.velocity = dust.velocity * 0.5f;
 				dust.velocity.Y = -Math.Abs(dust.velocity.Y);
 			}
@@ -226,7 +227,7 @@ namespace AlchemistNPC.Projectiles
 
 			//Add lights
 			DelegateMethods.v3_1 = new Vector3(0.8f, 0.8f, 1f);
-			Utils.PlotTileLine(projectile.Center, projectile.Center + projectile.velocity * (Distance - MOVE_DISTANCE), 26, new Utils.PerLinePoint(DelegateMethods.CastLight));
+			Utils.PlotTileLine(Projectile.Center, Projectile.Center + Projectile.velocity * (Distance - MOVE_DISTANCE), 26, DelegateMethods.CastLight);
 			if (MAX_CHARGE >= 60)
 			{
 				maxcount++;			
@@ -234,9 +235,9 @@ namespace AlchemistNPC.Projectiles
 			if (maxcount >= 10)
 			{
 				maxcount = 0;
-				projectile.Kill();
+				Projectile.Kill();
 			}
-			Main.PlaySound(SoundID.Item12, projectile.position);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item12, Projectile.position);
 		}
 
 		public override bool ShouldUpdatePosition()

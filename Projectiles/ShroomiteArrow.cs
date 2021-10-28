@@ -15,33 +15,33 @@ namespace AlchemistNPC.Projectiles
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(ProjectileID.IchorArrow);
-			aiType = ProjectileID.IchorArrow;
+			Projectile.CloneDefaults(ProjectileID.IchorArrow);
+			AIType = ProjectileID.IchorArrow;
 		}
 
 		public override void AI()
 		{
-			projectile.velocity *= 1.02f;
+			Projectile.velocity *= 1.02f;
 			if (Main.rand.Next(2) == 0)
 				{
-					Dust dust = Dust.NewDustDirect(projectile.position, projectile.height, projectile.width, mod.DustType("JustitiaPale"),
-						projectile.velocity.X * .2f, projectile.velocity.Y * .2f, 200, Scale: 1.2f);
+					Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.height, Projectile.width, ModContent.DustType<Dusts.JustitiaPale>(),
+						Projectile.velocity.X * .2f, Projectile.velocity.Y * .2f, 200, Scale: 1.2f);
 					dust.noGravity = true;
-					dust.velocity += projectile.velocity * 0.3f;
+					dust.velocity += Projectile.velocity * 0.3f;
 					dust.velocity *= 0.2f;
 				}
 		}
 		
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			projectile.penetrate--;
-			if (projectile.penetrate <= 0)
+			Projectile.penetrate--;
+			if (Projectile.penetrate <= 0)
 			{
-			projectile.Kill();
-			Main.PlaySound(SoundID.Item94.WithVolume(.9f), projectile.position);
+			Projectile.Kill();
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item94.WithVolume(.9f), Projectile.position);
 			Vector2 vel = new Vector2(0, 0);
 			vel *= 0f;
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, vel.X, vel.Y, mod.ProjectileType("ExplosionShroom"), projectile.damage, 0, Main.myPlayer);
+			Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, vel.X, vel.Y, ModContent.ProjectileType<Projectiles.ExplosionShroom>(), Projectile.damage, 0, Main.myPlayer);
 			}
 			return false;
 		}
@@ -49,10 +49,10 @@ namespace AlchemistNPC.Projectiles
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			target.AddBuff(189, 600);
-			Main.PlaySound(SoundID.Item94.WithVolume(.9f), projectile.position);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item94.WithVolume(.9f), Projectile.position);
 			Vector2 vel = new Vector2(0, 0);
 			vel *= 0f;
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, vel.X, vel.Y, mod.ProjectileType("ExplosionShroom"), projectile.damage, 0, Main.myPlayer);
+			Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, vel.X, vel.Y, ModContent.ProjectileType<Projectiles.ExplosionShroom>(), Projectile.damage, 0, Main.myPlayer);
 		}
 	}
 }

@@ -11,31 +11,33 @@ namespace AlchemistNPC.Buffs
 {
 	public class TwilightBoost : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Twilight Boost");
 			Description.SetDefault("You are immune to damage and deal 3x damage");
 			Main.debuff[Type] = false;
-			canBeCleared = true;
-			DisplayName.AddTranslation(GameCulture.Russian, "Сумеречное Усиление");
-			Description.AddTranslation(GameCulture.Russian, "Вы неуязвимы и наносите трёхкратный урон");
-            DisplayName.AddTranslation(GameCulture.Chinese, "蕾蒂希娅增强");
-            Description.AddTranslation(GameCulture.Chinese, "免疫伤害, 造成3倍伤害");
+			CanBeCleared = true;
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Сумеречное Усиление");
+			Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Вы неуязвимы и наносите трёхкратный урон");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "蕾蒂希娅增强");
+            Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "免疫伤害, 造成3倍伤害");
         }
 		
 		public override void Update(Player player, ref int buffIndex)
 		{
-			if (player.HeldItem.type != mod.ItemType("Twilight"))
+			// IMPLEMENT WHEN WEAKREFERENCES FIXED
+			/*
+			if (player.HeldItem.type != ModContent.ItemType<Items.Twilight>())
 			{
 				player.DelBuff(buffIndex);
 				buffIndex--;
 			}
 			player.immune = true;
-			player.thrownDamage += 3f;
-			player.meleeDamage += 3f;
-			player.rangedDamage += 3f;
-			player.magicDamage += 3f;
-			player.minionDamage += 3f;
+			player.GetDamage(DamageClass.Thrown) += 3f;
+			player.GetDamage(DamageClass.Melee) += 3f;
+			player.GetDamage(DamageClass.Ranged) += 3f;
+			player.GetDamage(DamageClass.Magic) += 3f;
+			player.GetDamage(DamageClass.Minion) += 3f;
 			if (ModLoader.GetMod("ThoriumMod") != null)
 			{
 				ThoriumBoosts(player);
@@ -49,19 +51,23 @@ namespace AlchemistNPC.Buffs
 			{
 				Calamity.Call("AddRogueDamage", player, 300);
 			}
+			*/
 		}
 		
+		// IMPLEMENT WHEN WEAKREFERENCES FIXED
+		/*
 		private void RedemptionBoost(Player player)
         {
 			Redemption.Items.DruidDamageClass.DruidDamagePlayer RedemptionPlayer = player.GetModPlayer<Redemption.Items.DruidDamageClass.DruidDamagePlayer>();
-			RedemptionPlayer.druidDamage += 3f;
+			Redemptionplayer.GetDamage(DamageClass.Druid) += 3f;
         }
 		
 		private void ThoriumBoosts(Player player)
         {
             ThoriumMod.ThoriumPlayer ThoriumPlayer = player.GetModPlayer<ThoriumMod.ThoriumPlayer>();
-            ThoriumPlayer.symphonicDamage += 3f;
+            Thoriumplayer.GetDamage(DamageClass.Symphonic) += 3f;
 			ThoriumPlayer.radiantBoost += 3f;
         }
+		*/
 	}
 }

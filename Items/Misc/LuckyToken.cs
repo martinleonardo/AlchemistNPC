@@ -18,18 +18,18 @@ namespace AlchemistNPC.Items.Misc
 			Tooltip.SetDefault("While this is in your inventory, your next accessory reforge would be ''Lucky''"
 			+"\nReforging priorities: Menacing->Lucky->Violent->Warding"
 			+"\nConsumes in process");
-			DisplayName.AddTranslation(GameCulture.Russian, "Значок Удачи");
-            Tooltip.AddTranslation(GameCulture.Russian, "Если находится в инвентаре, ваше следующая перековка аксессуара будет ''Удачный''\nБудет потрачен в процессе");
-			DisplayName.AddTranslation(GameCulture.Chinese, "幸运重铸币");
-			Tooltip.AddTranslation(GameCulture.Chinese, "放置于物品栏时, 饰品下一次重铸时词缀变为'幸运'\n重铸优先级: 险恶->幸运->暴力->护佑\n在过程中将会被消耗");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Значок Удачи");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Если находится в инвентаре, ваше следующая перековка аксессуара будет ''Удачный''\nБудет потрачен в процессе");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "幸运重铸币");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "放置于物品栏时, 饰品下一次重铸时词缀变为'幸运'\n重铸优先级: 险恶->幸运->暴力->护佑\n在过程中将会被消耗");
         }
 
 		public override void SetDefaults()
 		{
-			item.width = 32;
-			item.height = 32;
-			item.value = 250000;
-			item.rare = 7;
+			Item.width = 32;
+			Item.height = 32;
+			Item.value = 250000;
+			Item.rare = 7;
 		}
 	}
 }

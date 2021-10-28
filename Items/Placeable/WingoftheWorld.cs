@@ -12,38 +12,36 @@ namespace AlchemistNPC.Items.Placeable
 			DisplayName.SetDefault("Wing of the World");
 			Tooltip.SetDefault("Needed to craft EGO equipment"
 			+"\nCounts as table, chair and light source");
-			DisplayName.AddTranslation(GameCulture.Russian, "Крыло Мира");
-            Tooltip.AddTranslation(GameCulture.Russian, "Необходимо для создания Э.П.О.С экипировки\nСчитается за стол, стул и источник света");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Крыло Мира");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Необходимо для создания Э.П.О.С экипировки\nСчитается за стол, стул и источник света");
 
-            DisplayName.AddTranslation(GameCulture.Chinese, "世界之翼");
-            Tooltip.AddTranslation(GameCulture.Chinese, "用来制作EGO装备\n可视为桌子, 椅子和光源");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "世界之翼");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "用来制作EGO装备\n可视为桌子, 椅子和光源");
         }
 
 		public override void SetDefaults()
 		{
-			item.width = 48;
-			item.height = 60;
-			item.maxStack = 99;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 10;
-			item.useStyle = 1;
-			item.consumable = true;
-			item.value = 100000;
-			item.createTile = mod.TileType("WingoftheWorld");
+			Item.width = 48;
+			Item.height = 60;
+			Item.maxStack = 99;
+			Item.useTurn = true;
+			Item.autoReuse = true;
+			Item.useAnimation = 15;
+			Item.useTime = 10;
+			Item.useStyle = 1;
+			Item.consumable = true;
+			Item.value = 100000;
+			Item.createTile = TileType<Tiles.WingoftheWorld>();
 		}
 
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.Wood, 25);
-			recipe.anyWood = true;
-			recipe.AddIngredient(ItemID.Book, 1);
-			recipe.AddRecipeGroup("AlchemistNPC:EvilComponent", 15);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe()
+				.AddRecipeGroup("Wood", 25)
+				.AddIngredient(ItemID.Book, 1)
+				.AddRecipeGroup("AlchemistNPC:EvilComponent", 15)
+				.AddTile(TileID.Anvils)
+				.Register();
 		}
 	}
 }

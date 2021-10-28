@@ -22,31 +22,31 @@ namespace AlchemistNPC.Items.Equippable
 				+ "\nYour melee attacks have a chance to release red damaging wave"
 				+ "\nYour magic attacks have a chance to release swarm of homing magic missiles"
 				+ "\nRegenerates life rapidly while standing still");
-				DisplayName.AddTranslation(GameCulture.Russian, "Руна Дельта");
-            Tooltip.AddTranslation(GameCulture.Russian, "Увеличивает магический/ближний урон и шанс критического удара на 10%\nУвеличивает защиту на 10\nУвеличивает стойкость на 10%\nДаёт шанс выпустить красную волну, наносящую урон при взмахе оружием ближнего боя\nДаёт шанс выпустить рой магических снарядов при магической атаке\nБыстро восстанавливает здоровье, пока стоишь на месте");
-            DisplayName.AddTranslation(GameCulture.Chinese, "三角符文");
-            Tooltip.AddTranslation(GameCulture.Chinese, "增加10%近战/魔法伤害和暴击率\n增加10%伤害减免\n近战攻击概率释放红色破坏波\n魔法攻击概率释放追踪魔法飞弹\n站立不动时快速恢复生命");
+				DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Руна Дельта");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Увеличивает магический/ближний урон и шанс критического удара на 10%\nУвеличивает защиту на 10\nУвеличивает стойкость на 10%\nДаёт шанс выпустить красную волну, наносящую урон при взмахе оружием ближнего боя\nДаёт шанс выпустить рой магических снарядов при магической атаке\nБыстро восстанавливает здоровье, пока стоишь на месте");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "三角符文");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "增加10%近战/魔法伤害和暴击率\n增加10%伤害减免\n近战攻击概率释放红色破坏波\n魔法攻击概率释放追踪魔法飞弹\n站立不动时快速恢复生命");
         }
 	
 		public override void SetDefaults()
 		{
-			item.stack = 1;
-			item.width = 64;
-			item.height = 60;
-			item.value = 1000000;
-			item.rare = 11;
-			item.accessory = true;
-			item.defense = 10;
+			Item.stack = 1;
+			Item.width = 64;
+			Item.height = 60;
+			Item.value = 1000000;
+			Item.rare = 11;
+			Item.accessory = true;
+			Item.defense = 10;
 		}
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).DeltaRune = true;
-			A = 50 * ((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).LifeElixir;
-            player.meleeDamage += 0.1f;
-            player.magicDamage += 0.1f;
-			player.meleeCrit += 10;
-            player.magicCrit += 10;
+			((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).DeltaRune = true;
+			A = 50 * ((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).LifeElixir;
+            player.GetDamage(DamageClass.Melee) += 0.1f;
+            player.GetDamage(DamageClass.Magic) += 0.1f;
+			player.GetCritChance(DamageClass.Melee) += 10;
+            player.GetCritChance(DamageClass.Magic) += 10;
 			player.endurance += 0.1f;
 			if (player.statLife < (player.statLifeMax2 + A) && player.velocity.X == 0f && player.velocity.Y == 0f)
 			{
@@ -62,37 +62,43 @@ namespace AlchemistNPC.Items.Equippable
 		
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.SorcererEmblem);
-			recipe.AddIngredient(ItemID.WarriorEmblem);
-			recipe.AddIngredient(ItemID.EyeoftheGolem);
-			recipe.AddIngredient(ItemID.ShinyStone);
-			recipe.AddIngredient(mod.ItemType("SoulEssence"), 3);
-			recipe.AddIngredient(mod.ItemType("ChromaticCrystal"), 5);
-			recipe.AddIngredient(mod.ItemType("SunkroveraCrystal"), 5);
-			recipe.AddIngredient(mod.ItemType("NyctosythiaCrystal"), 5);
+			CreateRecipe()
+				.AddIngredient(ItemID.SorcererEmblem)
+				.AddIngredient(ItemID.WarriorEmblem)
+				.AddIngredient(ItemID.EyeoftheGolem)
+				.AddIngredient(ItemID.ShinyStone)
+				.AddIngredient(ModContent.ItemType<Items.Materials.SoulEssence>(), 3)
+				.AddIngredient(ModContent.ItemType<Items.Materials.ChromaticCrystal>(), 5)
+				.AddIngredient(ModContent.ItemType<Items.Materials.SunkroveraCrystal>(), 5)
+				.AddIngredient(ModContent.ItemType<Items.Materials.NyctosythiaCrystal>(), 5)
+			// IMPLEMENT WHEN WEAKREFERENCES FIXED
+			/*
 			if (ModLoader.GetMod("CalamityMod") != null)
 			{
-				recipe.AddIngredient((ModLoader.GetMod("CalamityMod").ItemType("NightmareFuel")), 15);
-				recipe.AddIngredient((ModLoader.GetMod("CalamityMod").ItemType("EndothermicEnergy")), 15);
+					.AddIngredient((ModLoader.GetMod("CalamityMod").ItemType("NightmareFuel")), 15)
+					.AddIngredient((ModLoader.GetMod("CalamityMod").ItemType("EndothermicEnergy")), 15)
 			}
 			if (ModLoader.GetMod("ThoriumMod") != null)
 			{
-				recipe.AddIngredient((ModLoader.GetMod("ThoriumMod").ItemType("OceanEssence")), 3);
-				recipe.AddIngredient((ModLoader.GetMod("ThoriumMod").ItemType("DeathEssence")), 3);
-				recipe.AddIngredient((ModLoader.GetMod("ThoriumMod").ItemType("InfernoEssence")), 3);
+					.AddIngredient((ModLoader.GetMod("ThoriumMod").ItemType("OceanEssence")), 3)
+					.AddIngredient((ModLoader.GetMod("ThoriumMod").ItemType("DeathEssence")), 3)
+					.AddIngredient((ModLoader.GetMod("ThoriumMod").ItemType("InfernoEssence")), 3)
 			}
-			recipe.AddIngredient(mod.ItemType("EmagledFragmentation"), 150);
 			if (ModLoader.GetMod("CalamityMod") == null)
 			{
-				recipe.AddTile(mod.TileType("MateriaTransmutator"));
+					.AddTile(TileType<Tiles.MateriaTransmutator>())
 			}
 			if (ModLoader.GetMod("CalamityMod") != null)
 			{
-				recipe.AddTile(mod.TileType("MateriaTransmutatorMK2"));
+					.AddTile(TileType<Tiles.MateriaTransmutatorMK2>())
 			}
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			*/
+
+			// Delete next line once commented code is implemented
+				.AddTile(TileType<Tiles.MateriaTransmutator>())
+
+				.AddIngredient(ModContent.ItemType<Items.Materials.EmagledFragmentation>(), 150)
+				.Register();
 		}
 	}
 	

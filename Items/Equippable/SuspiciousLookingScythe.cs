@@ -15,28 +15,28 @@ namespace AlchemistNPC.Items.Equippable
 		{
 			DisplayName.SetDefault("Suspicious Looking Scythe");
 			Tooltip.SetDefault("Summons your own Grim Reaper. Increases your crits moderately.");
-			DisplayName.AddTranslation(GameCulture.Russian, "Подозрительно Выглядящая Коса");
-            Tooltip.AddTranslation(GameCulture.Russian, "Призывает вашего личного Жнеца. Увеличивает ваш шанс критического удара.");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Подозрительно Выглядящая Коса");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Призывает вашего личного Жнеца. Увеличивает ваш шанс критического удара.");
 
-            DisplayName.AddTranslation(GameCulture.Chinese, "可疑镰刀");
-            Tooltip.AddTranslation(GameCulture.Chinese, "召唤你自己的死神. 适度提高你的爆击.");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "可疑镰刀");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "召唤你自己的死神. 适度提高你的爆击.");
         }    
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.Carrot);
-			item.width = 34;
-			item.height = 34;
-			item.value = 15000000;
-			item.shoot = mod.ProjectileType("GrimReaper");
-			item.buffType = mod.BuffType("GrimReaper");	//The buff added to player after used the item
-			item.expert = true;
+			Item.CloneDefaults(ItemID.Carrot);
+			Item.width = 34;
+			Item.height = 34;
+			Item.value = 15000000;
+			Item.shoot = ProjectileType<Projectiles.GrimReaper>();
+			Item.buffType = ModContent.BuffType<Buffs.GrimReaper>();	//The buff added to player after used the item
+			Item.expert = true;
 		}
 
-		public override void UseStyle(Player player)
+		public override void UseStyle(Player player, Rectangle rectangle)
 		{
 			if (player.whoAmI == Main.myPlayer && player.itemTime == 0)
 			{
-				player.AddBuff(item.buffType, 3600, true);
+				player.AddBuff(Item.buffType, 3600, true);
 			}
 		}
 	}

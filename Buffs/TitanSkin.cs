@@ -7,16 +7,16 @@ namespace AlchemistNPC.Buffs
 {
 	public class TitanSkin : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Titan Skin");
 			Description.SetDefault("You are immune to some annoying debuffs");
 			Main.debuff[Type] = false;
-			canBeCleared = true;
-			DisplayName.AddTranslation(GameCulture.Russian, "Кожа Титана");
-			Description.AddTranslation(GameCulture.Russian, "Иммунитет к некоторым надоедливым дебаффам");
-            DisplayName.AddTranslation(GameCulture.Chinese, "泰坦皮肤");
-            Description.AddTranslation(GameCulture.Chinese, "免疫一些烦人的Debuff");
+			CanBeCleared = true;
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Кожа Титана");
+			Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Иммунитет к некоторым надоедливым дебаффам");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "泰坦皮肤");
+            Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "免疫一些烦人的Debuff");
         }
 		public override void Update(Player player, ref int buffIndex)
 		{

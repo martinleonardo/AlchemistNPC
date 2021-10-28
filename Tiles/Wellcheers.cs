@@ -14,7 +14,7 @@ namespace AlchemistNPC.Tiles
 	public class Wellcheers : ModTile
 	{
 		public static int counter = 0;
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileLighted[Type] = true;
 			Main.tileFrameImportant[Type] = true;
@@ -26,11 +26,11 @@ namespace AlchemistNPC.Tiles
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Wellcheers");
-			name.AddTranslation(GameCulture.Russian, "Торговый автомат 'Wellcheers'");
-            name.AddTranslation(GameCulture.Chinese, "韦尔奇乐自动售货机");
+			name.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Торговый автомат 'Wellcheers'");
+            name.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "韦尔奇乐自动售货机");
             AddMapEntry(new Color(200, 200, 200), name);
-			disableSmartCursor = true;
-			adjTiles = new int[]{ TileID.Books };
+			TileID.Sets.DisableSmartCursor[Type] = true;
+			AdjTiles =new int[]{ TileID.Books };
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -49,7 +49,7 @@ namespace AlchemistNPC.Tiles
 			}
 		}
 		
-		public override bool NewRightClick(int i, int j)
+		public override bool RightClick(int i, int j)
 		{
 			for (int k = 0; k < 255; k++)
 			{
@@ -61,30 +61,33 @@ namespace AlchemistNPC.Tiles
 					switch (Main.rand.Next(4))
 						{
 							case 0:						
-							player.QuickSpawnItem(mod.ItemType("CrimsonCherrySoda"));
+							player.QuickSpawnItem(ModContent.ItemType<Items.CrimsonCherrySoda>());
 							counter++;
 							break;
 							case 1:
-							player.QuickSpawnItem(mod.ItemType("SapphireBlueberrySoda"));
+							player.QuickSpawnItem(ModContent.ItemType<Items.SapphireBlueberrySoda>());
 							counter++;
 							break;
 							case 2:
-							player.QuickSpawnItem(mod.ItemType("PinkGoldStrawberrySoda"));
+							player.QuickSpawnItem(ModContent.ItemType<Items.PinkGoldStrawberrySoda>());
 							counter++;
 							break;
 							case 3:
-							player.QuickSpawnItem(mod.ItemType("OnyxGrapeSoda"));
+							player.QuickSpawnItem(ModContent.ItemType<Items.OnyxGrapeSoda>());
 							counter++;
 							break;
 						}
 					}
 					if (counter == 10 && !Main.dayTime)
 					{
+						// IMPLEMENT WHEN WEAKREFERENCES FIXED
+						/*
 						Mod ALIB = ModLoader.GetMod("AchievementLib");
 						if(ALIB != null)
 						{
 							ALIB.Call("UnlockGlobal", "AlchemistNPC", "The snack that smiles back");
 						}
+						*/
 						if (Main.netMode == 0)
 						{
 							switch (Main.rand.Next(3))
@@ -106,7 +109,7 @@ namespace AlchemistNPC.Tiles
 						}
 						if(Main.netMode != 0)
 						{
-						Main.player[Main.myPlayer].AddBuff(mod.BuffType("EvilPresence"), 1);
+						Main.player[Main.myPlayer].AddBuff(ModContent.BuffType<Buffs.EvilPresence>(), 1);
 						counter = 0;
 						}
 					}
@@ -117,7 +120,7 @@ namespace AlchemistNPC.Tiles
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 16, 32, mod.ItemType("Wellcheers"));
+			Item.NewItem(i * 16, j * 16, 16, 32, ModContent.ItemType<Items.Placeable.Wellcheers>());
 		}
 		
 		public override void MouseOver(int i, int j)
@@ -125,8 +128,8 @@ namespace AlchemistNPC.Tiles
 			int whoAmI = 0;
 			Player player = Main.player[whoAmI];
 			player.noThrow = 2;
-			player.showItemIcon = true;
-			player.showItemIcon2 = mod.ItemType("Wellcheers");
+			player.cursorItemIconEnabled = true;
+			player.cursorItemIconID = ModContent.ItemType<Items.Placeable.Wellcheers>();
 		}
 	}
 }

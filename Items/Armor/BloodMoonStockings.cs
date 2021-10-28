@@ -15,17 +15,17 @@ namespace AlchemistNPC.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Blood Moon stockings and boots");
-			DisplayName.AddTranslation(GameCulture.Russian, "Колготки и сапожки Кровавой Луны");
-            DisplayName.AddTranslation(GameCulture.Chinese, "血月长袜和靴子");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Колготки и сапожки Кровавой Луны");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "血月长袜和靴子");
         }
 
 		public override void SetDefaults()
 		{
-			item.width = 18;
-			item.height = 18;
-			item.value = 1650000;
-			item.rare = -11;
-			item.vanity = true;
+			Item.width = 18;
+			Item.height = 18;
+			Item.value = 1650000;
+			Item.rare = -11;
+			Item.vanity = true;
 		}
 	}
 }

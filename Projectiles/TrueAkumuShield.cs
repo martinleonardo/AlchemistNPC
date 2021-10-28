@@ -14,45 +14,45 @@ namespace AlchemistNPC.Projectiles
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("True Akumu Shield");
-			projectile.light = 0.2f;
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 5;
-			ProjectileID.Sets.TrailingMode[projectile.type] = 0;
-			Main.projFrames[projectile.type] = 6;
+			Projectile.light = 0.2f;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+			Main.projFrames[Projectile.type] = 6;
 		}
 
 		public override void SetDefaults()
 		{
-			projectile.width = 72;
-			projectile.height = 72;
-			projectile.penetrate = 200;
-			projectile.timeLeft = 9999;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
-			projectile.friendly = false;
-			projectile.alpha = 50;
+			Projectile.width = 72;
+			Projectile.height = 72;
+			Projectile.penetrate = 200;
+			Projectile.timeLeft = 9999;
+			Projectile.tileCollide = false;
+			Projectile.hostile = false;
+			Projectile.friendly = false;
+			Projectile.alpha = 50;
 		}
 		public override void AI()
 		{
-			Player player = Main.player[projectile.owner];
-			projectile.Center = player.Center;
-			if (++projectile.frameCounter >= 10)
+			Player player = Main.player[Projectile.owner];
+			Projectile.Center = player.Center;
+			if (++Projectile.frameCounter >= 10)
             {
-                projectile.frameCounter = 0;
-                if (++projectile.frame >= 6)
+                Projectile.frameCounter = 0;
+                if (++Projectile.frame >= 6)
                 {
-                    projectile.frame = 0;
+                    Projectile.frame = 0;
                 }
             }
 			
 			if (player.statLife > player.statLifeMax2*0.35f || player.dead || player.GetModPlayer<AlchemistNPCPlayer>().Akumu == false)
 			{
-				projectile.Kill();
+				Projectile.Kill();
 			}
 			for(int i = 0; i < 1000; ++i)
 			{
-				if(Main.projectile[i].active && i != projectile.whoAmI )
+				if(Main.projectile[i].active && i != Projectile.whoAmI )
 				{
-					if(Main.projectile[i].Hitbox.Intersects(projectile.Hitbox) && !Main.projectile[i].friendly)
+					if(Main.projectile[i].Hitbox.Intersects(Projectile.Hitbox) && !Main.projectile[i].friendly)
 					{
 					ReflectProjectile(Main.projectile[i]);
 					}

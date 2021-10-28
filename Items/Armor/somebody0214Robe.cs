@@ -11,31 +11,34 @@ namespace AlchemistNPC.Items.Armor
         {
             DisplayName.SetDefault("somebody0214's Robe");
             Tooltip.SetDefault("Great for impersonating a Sun Praiser!");
-            DisplayName.AddTranslation(GameCulture.Russian, "Роба somebody0214");
-            Tooltip.AddTranslation(GameCulture.Russian, "Отлично подходит для подражания Молящемуся Солнцу");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Роба somebody0214");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Отлично подходит для подражания Молящемуся Солнцу");
 
-            DisplayName.AddTranslation(GameCulture.Chinese, "somebody0214的长袍");
-            Tooltip.AddTranslation(GameCulture.Chinese, "非常适合扮演太阳歌颂者!");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "somebody0214的长袍");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "非常适合扮演太阳歌颂者!");
         }
 		
 		public override void SetDefaults()
 		{
-			item.width = 18;
-			item.height = 14;
-			item.rare = -11;
-			item.value = 2500000;
-			item.vanity = true;
+			Item.width = 18;
+			Item.height = 14;
+			Item.rare = -11;
+			Item.value = 2500000;
+			Item.vanity = true;
 		}
 
 		public override void SetMatch(bool male, ref int equipSlot, ref bool robes)
 		{
 			robes = true;
-			equipSlot = mod.GetEquipSlot("somebody0214Robe_Legs", EquipType.Legs);
+			equipSlot = Mod.GetEquipSlot("somebody0214Robe_Legs", EquipType.Legs);
 		}
 		
+		//Fix when implemented
+		/*
 		public override void DrawHands(ref bool drawHands, ref bool drawArms)
 		{
 			drawHands = true;
 		}
+		*/
 	}
 }

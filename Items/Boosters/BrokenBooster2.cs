@@ -14,18 +14,18 @@ namespace AlchemistNPC.Items.Boosters
 		{
 			DisplayName.SetDefault("Broken Booster (2)");
 			Tooltip.SetDefault("Can be fixed if use certain materials");
-			DisplayName.AddTranslation(GameCulture.Russian, "Сломанный усилитель (2)");
-			Tooltip.AddTranslation(GameCulture.Russian, "Может быть починен если найти необходимые материалы");
-			DisplayName.AddTranslation(GameCulture.Chinese, "破损的增益容器(2)");
-			Tooltip.AddTranslation(GameCulture.Chinese, "使用某些材料可以修复");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Сломанный усилитель (2)");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Может быть починен если найти необходимые материалы");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "破损的增益容器(2)");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "使用某些材料可以修复");
         }
 
 		public override void SetDefaults()
 		{
-			item.width = 32;
-			item.height = 32;
-			item.value = 0;
-			item.rare = 4;
+			Item.width = 32;
+			Item.height = 32;
+			Item.value = 0;
+			Item.rare = 4;
 		}
 	}
 }

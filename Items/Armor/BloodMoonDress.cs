@@ -15,25 +15,25 @@ namespace AlchemistNPC.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Blood Moon Dress");
-			DisplayName.AddTranslation(GameCulture.Russian, "Платье Кровавой Луны");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Платье Кровавой Луны");
 			Tooltip.SetDefault("Changes player's gender to female");
-            Tooltip.AddTranslation(GameCulture.Russian, "Меняет пол игрока на женский");
-            DisplayName.AddTranslation(GameCulture.Chinese, "血月裙子");
-            Tooltip.AddTranslation(GameCulture.Chinese, "将玩家性别变为女性");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Меняет пол игрока на женский");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "血月裙子");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "将玩家性别变为女性");
         }
 
-		public override void UpdateVanity(Player player, EquipType type)
+		public override void UpdateVanity(Player player)
 		{
 			player.Male = false;
 		}
 		
 		public override void SetDefaults()
 		{
-			item.width = 18;
-			item.height = 18;
-			item.value = 1650000;
-			item.rare = -11;
-			item.vanity = true;
+			Item.width = 18;
+			Item.height = 18;
+			Item.value = 1650000;
+			Item.rare = -11;
+			Item.vanity = true;
 		}
 	}
 }

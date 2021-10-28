@@ -15,35 +15,33 @@ namespace AlchemistNPC.Items.Materials
 		{
 			DisplayName.SetDefault("Divine Lava");
 			Tooltip.SetDefault("Ichor & Lava, combined together by magic");
-			DisplayName.AddTranslation(GameCulture.Russian, "Вечная Лава");
-			Tooltip.AddTranslation(GameCulture.Russian, "Лава и Ихор, слитые воедино магией");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Вечная Лава");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Лава и Ихор, слитые воедино магией");
 
-            DisplayName.AddTranslation(GameCulture.Chinese, "奇异岩浆");
-            Tooltip.AddTranslation(GameCulture.Chinese, "用法力把灵液和岩浆相结合");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "奇异岩浆");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "用法力把灵液和岩浆相结合");
         }    
 		public override void SetDefaults()
 		{
-			item.width = 32;
-			item.height = 32;
-			item.maxStack = 999;
-			item.value = 5000;
-			item.rare = 5;
+			Item.width = 32;
+			Item.height = 32;
+			Item.maxStack = 999;
+			Item.value = 5000;
+			Item.rare = 5;
 		}
 
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.Ichor);
-			recipe.AddIngredient(ItemID.LavaBucket);
-			recipe.AddTile(TileID.CrystalBall);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
-			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.Ichor);
-			recipe.AddTile(TileID.CrystalBall);
-			recipe.needLava = true;
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
+			CreateRecipe()
+				.AddIngredient(ItemID.Ichor)
+				.AddIngredient(ItemID.LavaBucket)
+				.AddTile(TileID.CrystalBall)
+				.Register();
+			CreateRecipe()
+				.AddIngredient(ItemID.Ichor)
+				.AddTile(TileID.CrystalBall)
+				.AddCondition(Recipe.Condition.NearLava)
+				.Register();
 		}
 	}
 }

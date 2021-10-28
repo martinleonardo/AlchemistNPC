@@ -19,23 +19,23 @@ namespace AlchemistNPC.Items.Misc
 			+"\nOpens up healing interface after respawn"
 			+"\nThis effect is global for all players in this world"
 			+"\nWould work only if Nurse is alive");
-			DisplayName.AddTranslation(GameCulture.Russian, "Диплом Врача");
-            Tooltip.AddTranslation(GameCulture.Russian, "Примените для постоянного улучшения Медсестры\nОткрывает интерфейс лечения после возрождения\nЭффект глобален для всех игроков этого мира\nРаботает только в том случае, если Медсестра жива");
-			DisplayName.AddTranslation(GameCulture.Chinese, "博士学位证书");
-			Tooltip.AddTranslation(GameCulture.Chinese, "使用来永久升级你的护士\n重生后打开治疗界面\n该效果作用于本世界所有玩家\n只有在护士活着时起作用");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Диплом Врача");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Примените для постоянного улучшения Медсестры\nОткрывает интерфейс лечения после возрождения\nЭффект глобален для всех игроков этого мира\nРаботает только в том случае, если Медсестра жива");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "博士学位证书");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "使用来永久升级你的护士\n重生后打开治疗界面\n该效果作用于本世界所有玩家\n只有在护士活着时起作用");
         }
 
 		public override void SetDefaults()
 		{
-			item.width = 32;
-			item.height = 32;
-			item.value = 500000;
-			item.rare = 5;
-			item.useAnimation = 20;
-            item.useTime = 20;
-            item.useStyle = 4;
-			item.UseSound = SoundID.Item4;
-			item.consumable = true;
+			Item.width = 32;
+			Item.height = 32;
+			Item.value = 500000;
+			Item.rare = 5;
+			Item.useAnimation = 20;
+            Item.useTime = 20;
+            Item.useStyle = 4;
+			Item.UseSound = SoundID.Item4;
+			Item.consumable = true;
 		}
 		
 		public override bool CanUseItem(Player player)
@@ -47,7 +47,7 @@ namespace AlchemistNPC.Items.Misc
 			return true;
 		}
 		
-		public override bool UseItem(Player player)
+		public override bool? UseItem(Player player)
         {
 			AlchemistNPCWorld.foundPHD = true;
 			return true;

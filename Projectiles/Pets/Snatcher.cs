@@ -13,13 +13,13 @@ namespace AlchemistNPC.Projectiles.Pets
 		public static int c2 = 0;
 		public override void SetDefaults()
 		{
-			Main.projFrames[projectile.type] = 8;
-			projectile.width = 56;
-			projectile.height = 58;
-			Main.projPet[projectile.type] = true;
-			projectile.hostile = false;
-			projectile.friendly = false;
-			projectile.tileCollide = false;
+			Main.projFrames[Projectile.type] = 8;
+			Projectile.width = 56;
+			Projectile.height = 58;
+			Main.projPet[Projectile.type] = true;
+			Projectile.hostile = false;
+			Projectile.friendly = false;
+			Projectile.tileCollide = false;
 		}
 
 		public override void SetStaticDefaults()
@@ -29,88 +29,88 @@ namespace AlchemistNPC.Projectiles.Pets
 
 		public override void AI()
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			AlchemistNPCPlayer modPlayer = player.GetModPlayer<AlchemistNPCPlayer>();
-			if (player.dead || !player.HasBuff(mod.BuffType("Snatcher")))
+			if (player.dead || !player.HasBuff(ModContent.BuffType<Buffs.Snatcher>()))
 			{
 				modPlayer.snatcher = false;
 			}
 			if (modPlayer.snatcher)
 			{
-				projectile.timeLeft = 2;
+				Projectile.timeLeft = 2;
 			}
 			
 			if (player.direction == 1)
 			{
-				projectile.spriteDirection = 1;
-				projectile.position.X = player.position.X - 60;
+				Projectile.spriteDirection = 1;
+				Projectile.position.X = player.position.X - 60;
 				
 			}
 			if (player.direction == -1)
 			{
-				projectile.spriteDirection = -1;
-				projectile.position.X = player.position.X + 25;
+				Projectile.spriteDirection = -1;
+				Projectile.position.X = player.position.X + 25;
 			}
 			if (c1 < 75)
 			{
 				c1++;
 				c2++;
-				projectile.position.Y = player.position.Y - 80 + c1/5;
+				Projectile.position.Y = player.position.Y - 80 + c1/5;
 			}
 			if (c1 >= 75)
 			{
 				c2--;
-				projectile.position.Y = player.position.Y - 80 + c2/5;
+				Projectile.position.Y = player.position.Y - 80 + c2/5;
 			}
 			if (c2 == 0)
 			{
 				c1 = 0;
-				projectile.position.Y = player.position.Y - 80;
+				Projectile.position.Y = player.position.Y - 80;
 			}
 			
-			if (player.velocity.Y == 0f && player.velocity.X == 0f && projectile.frame != 0)
+			if (player.velocity.Y == 0f && player.velocity.X == 0f && Projectile.frame != 0)
 			{
-				if (++projectile.frameCounter > 3)
+				if (++Projectile.frameCounter > 3)
 				{
-					if (projectile.frame > 0)
+					if (Projectile.frame > 0)
 					{
-						projectile.frame--;
-						projectile.frameCounter = 0;
+						Projectile.frame--;
+						Projectile.frameCounter = 0;
 					}
 				}
 			}
 			
-			if (player.velocity.Y == 0f && player.velocity.X == 0f && projectile.frame == 2)
+			if (player.velocity.Y == 0f && player.velocity.X == 0f && Projectile.frame == 2)
 			{
-				projectile.frame = 0;
+				Projectile.frame = 0;
 			}
 			
-			if ((player.velocity.Y != 0f || player.velocity.X != 0f) && projectile.frame != 7)
+			if ((player.velocity.Y != 0f || player.velocity.X != 0f) && Projectile.frame != 7)
 			{
-				if (++projectile.frameCounter > 1)
+				if (++Projectile.frameCounter > 1)
 				{
-					if (projectile.frame < 7)
+					if (Projectile.frame < 7)
 					{
-						projectile.frame++;
-						projectile.frameCounter = 0;
+						Projectile.frame++;
+						Projectile.frameCounter = 0;
 					}
 				}
 			}
 			
 			if (modPlayer.SnatcherCounter >= 15000)
 			{
-				projectile.ai[0]++;
+				Projectile.ai[0]++;
 				for (int i = 0; i < 200; i++)
 				{
 					NPC target = Main.npc[i];
 
-					float shootToX = target.position.X + target.width * 0.5f - projectile.Center.X;
-					float shootToY = target.position.Y + target.height * 0.5f - projectile.Center.Y;
+					float shootToX = target.position.X + target.width * 0.5f - Projectile.Center.X;
+					float shootToY = target.position.Y + target.height * 0.5f - Projectile.Center.Y;
 					float distance = (float)Math.Sqrt(shootToX * shootToX + shootToY * shootToY);
 
 					if (distance < 500f && target.catchItem == 0 && !target.dontTakeDamage && !target.friendly && target.active)
 					{
-						if (projectile.ai[0] > 60f)
+						if (Projectile.ai[0] > 60f)
 						{
 							int dmg = 1;
 							if (player.HeldItem.damage < 50)
@@ -127,7 +127,7 @@ namespace AlchemistNPC.Projectiles.Pets
 							}
 							Vector2 vel = new Vector2(0, -1);
 							vel *= 10f;
-							Main.PlaySound(SoundID.DD2_ExplosiveTrapExplode.WithVolume(.8f), projectile.position);
+							Terraria.Audio.SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode.WithVolume(.8f), Projectile.position);
 							for (int j = 0; j < 2; j++)
 							{
 								Vector2 perturbedSpeed = new Vector2(vel.X, vel.Y).RotatedByRandom(MathHelper.ToRadians(10));
@@ -135,13 +135,13 @@ namespace AlchemistNPC.Projectiles.Pets
 								Vector2 perturbedSpeed2 = new Vector2(vel.X, vel.Y).RotatedByRandom(MathHelper.ToRadians(10));
 								Vector2 perturbedSpeed3 = new Vector2(vel.X, vel.Y).RotatedByRandom(MathHelper.ToRadians(10));
 								Vector2 perturbedSpeed4 = new Vector2(vel.X, vel.Y).RotatedByRandom(MathHelper.ToRadians(10));
-								Projectile.NewProjectile(target.Center.X, target.Center.Y+48, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType("ShadowBurst"), dmg, 0, Main.myPlayer, 0f, 0f);
-								Projectile.NewProjectile(target.Center.X, target.Center.Y+48, perturbedSpeed1.X, perturbedSpeed1.Y, mod.ProjectileType("ShadowBurst"), dmg, 0, Main.myPlayer, 0f, 0f);
-								Projectile.NewProjectile(target.Center.X, target.Center.Y+48, perturbedSpeed2.X, perturbedSpeed2.Y, mod.ProjectileType("ShadowBurst"), dmg, 0, Main.myPlayer, 0f, 3f);
-								Projectile.NewProjectile(target.Center.X, target.Center.Y+48, perturbedSpeed3.X, perturbedSpeed3.Y, mod.ProjectileType("ShadowBurst"), dmg, 0, Main.myPlayer, 0f, 3f);
-								Projectile.NewProjectile(target.Center.X, target.Center.Y+48, perturbedSpeed4.X, perturbedSpeed4.Y, mod.ProjectileType("ShadowBurst"), dmg, 0, Main.myPlayer, 0f, 0f);
+								Projectile.NewProjectile(target.GetProjectileSpawnSource(), target.Center.X, target.Center.Y+48, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<Projectiles.ShadowBurst>(), dmg, 0, Main.myPlayer, 0f, 0f);
+								Projectile.NewProjectile(target.GetProjectileSpawnSource(), target.Center.X, target.Center.Y+48, perturbedSpeed1.X, perturbedSpeed1.Y, ModContent.ProjectileType<Projectiles.ShadowBurst>(), dmg, 0, Main.myPlayer, 0f, 0f);
+								Projectile.NewProjectile(target.GetProjectileSpawnSource(), target.Center.X, target.Center.Y+48, perturbedSpeed2.X, perturbedSpeed2.Y, ModContent.ProjectileType<Projectiles.ShadowBurst>(), dmg, 0, Main.myPlayer, 0f, 3f);
+								Projectile.NewProjectile(target.GetProjectileSpawnSource(), target.Center.X, target.Center.Y+48, perturbedSpeed3.X, perturbedSpeed3.Y, ModContent.ProjectileType<Projectiles.ShadowBurst>(), dmg, 0, Main.myPlayer, 0f, 3f);
+								Projectile.NewProjectile(target.GetProjectileSpawnSource(), target.Center.X, target.Center.Y+48, perturbedSpeed4.X, perturbedSpeed4.Y, ModContent.ProjectileType<Projectiles.ShadowBurst>(), dmg, 0, Main.myPlayer, 0f, 0f);
 							}
-							projectile.ai[0] = 0f;
+							Projectile.ai[0] = 0f;
 						}
 					}
 				}

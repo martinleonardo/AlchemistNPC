@@ -17,54 +17,55 @@ namespace AlchemistNPC.Projectiles
 		}
 
 		public override void SetDefaults() {
-			projectile.width = 16;               //The width of projectile hitbox
-			projectile.height = 20;              //The height of projectile hitbox
-			projectile.aiStyle = 1;             //The ai style of the projectile, please reference the source code of Terraria
-			projectile.friendly = true;         //Can the projectile deal damage to enemies?
-			projectile.hostile = false;         //Can the projectile deal damage to the player?
-			projectile.ranged = true;           //Is the projectile shoot by a ranged weapon?
-			projectile.penetrate = -1;           //How many monsters the projectile can penetrate. (OnTileCollide below also decrements penetrate for bounces as well)
-			projectile.timeLeft = 300;          //The live time for the projectile (60 = 1 second, so 600 is 10 seconds)
-			projectile.alpha = 255;             //The transparency of the projectile, 255 for completely transparent. (aiStyle 1 quickly fades the projectile in) Make sure to delete this if you aren't using an aiStyle that fades in. You'll wonder why your projectile is invisible.
-			projectile.light = 0.5f;            //How much light emit around the projectile
-			projectile.ignoreWater = true;          //Does the projectile's speed be influenced by water?
-			projectile.tileCollide = true;          //Can the projectile collide with tiles?
-			projectile.extraUpdates = 1;            //Set to above 0 if you want the projectile to update multiple time in a frame
-			aiType = ProjectileID.Bullet;           //Act exactly like default Bullet
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = -1;
+			Projectile.width = 16;               //The width of projectile hitbox
+			Projectile.height = 20;              //The height of projectile hitbox
+			Projectile.aiStyle = 1;             //The ai style of the projectile, please reference the source code of Terraria
+			Projectile.friendly= true;        //Can the projectile deal damage to enemies?
+			Projectile.hostile = false;         //Can the projectile deal damage to the player?
+			Projectile.DamageType = DamageClass.Ranged;           //Is the projectile shoot by a ranged weapon?
+			Projectile.penetrate = -1;           //How many monsters the projectile can penetrate. (OnTileCollide below also decrements penetrate for bounces as well)
+			Projectile.timeLeft = 300;          //The live time for the projectile (60 = 1 second, so 600 is 10 seconds)
+			Projectile.alpha = 255;             //The transparency of the projectile, 255 for completely transparent. (aiStyle 1 quickly fades the projectile in) Make sure to delete this if you aren't using an aiStyle that fades in. You'll wonder why your projectile is invisible.
+			Projectile.light = 0.5f;            //How much light emit around the projectile
+			Projectile.ignoreWater = true;         //Does the projectile's speed be influenced by water?
+			Projectile.tileCollide = true;          //Can the projectile collide with tiles?
+			Projectile.extraUpdates = 1;            //Set to above 0 if you want the projectile to update multiple time in a frame
+			AIType = ProjectileID.Bullet;           //Act exactly like default Bullet
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = -1;
 		}
 
 		public override bool OnTileCollide(Vector2 oldVelocity) {
-				Collision.HitTiles(projectile.position + projectile.velocity, projectile.velocity, projectile.width, projectile.height);
-				projectile.velocity.X = 0f;
-				projectile.velocity.Y = 0f;
-				rot = projectile.rotation;
-				projectile.friendly = false;
+				Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
+				Projectile.velocity.X = 0f;
+				Projectile.velocity.Y = 0f;
+				rot = Projectile.rotation;
+				Projectile.friendly = false;
 			return false;
 		}
 		
-		public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI) {
+		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) 
+		{
 			// If attached to an NPC, draw behind tiles (and the npc) if that NPC is behind tiles, otherwise just behind the NPC.
-			if (projectile.ai[0] == 1f) // or if(isStickingToTarget) since we made that helper method.
+			if (Projectile.ai[0] == 1f) // or if(isStickingToTarget) since we made that helper method.
 			{
-				int npcIndex = (int)projectile.ai[1];
+				int npcIndex = (int)Projectile.ai[1];
 				if (npcIndex >= 0 && npcIndex < 200 && Main.npc[npcIndex].active) {
 					if (Main.npc[npcIndex].behindTiles) {
-						drawCacheProjsBehindNPCsAndTiles.Add(index);
+						behindNPCsAndTiles.Add(index);
 					}
 					else {
-						drawCacheProjsBehindNPCs.Add(index);
+						behindNPCs.Add(index);
 					}
 
 					return;
 				}
 			}
 			// Since we aren't attached, add to this list
-			drawCacheProjsBehindProjectiles.Add(index);
+			behindProjectiles.Add(index);
 		}
 
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough) {
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
 			// For going through platforms and such, javelins use a tad smaller size
 			width = height = 10; // notice we set the width to the height, the height to 10. so both are 10
 			return true;
@@ -72,13 +73,13 @@ namespace AlchemistNPC.Projectiles
 		
 		public override void AI()
         {
-			if (projectile.velocity.X != 0f && projectile.velocity.Y != 0f)
+			if (Projectile.velocity.X != 0f && Projectile.velocity.Y != 0f)
 			{
-				projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
+				Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
 			}
 			else
 			{
-				projectile.rotation = rot;
+				Projectile.rotation = rot;
 			}
 						
 			UpdateAlpha();
@@ -90,32 +91,32 @@ namespace AlchemistNPC.Projectiles
 
 		public override void Kill(int timeLeft)
 		{
-			Collision.HitTiles(projectile.position + projectile.velocity, projectile.velocity, projectile.width, projectile.height);
+			Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
 		}
 		
 		public bool IsStickingToTarget {
-			get => projectile.ai[0] == 1f;
-			set => projectile.ai[0] = value ? 1f : 0f;
+			get => Projectile.ai[0] == 1f;
+			set => Projectile.ai[0] = value ? 1f : 0f;
 		}
 
 		// Index of the current target
 		public int TargetWhoAmI {
-			get => (int)projectile.ai[1];
-			set => projectile.ai[1] = value;
+			get => (int)Projectile.ai[1];
+			set => Projectile.ai[1] = value;
 		}
 
 		private const int MAX_STICKY_JAVELINS = 100; // This is the max. amount of javelins being able to attach
 		private readonly Point[] _stickingJavelins = new Point[MAX_STICKY_JAVELINS]; // The point array holding for sticking javelins
 
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
-			rot = projectile.rotation;
+			rot = Projectile.rotation;
 			IsStickingToTarget = true; // we are sticking to a target
 			TargetWhoAmI = target.whoAmI; // Set the target whoAmI
-			if (!target.boss && !target.noTileCollide) target.velocity = projectile.velocity;
-			projectile.velocity =
-				(target.Center - projectile.Center) *
+			if (!target.boss && !target.noTileCollide) target.velocity = Projectile.velocity;
+			Projectile.velocity =
+				(target.Center - Projectile.Center) *
 				0.75f; // Change velocity based on delta center of targets (difference between entity centers)
-			projectile.netUpdate = true; // netUpdate this javelin
+			Projectile.netUpdate = true; // netUpdate this javelin
 
 			// It is recommended to split your code into separate methods to keep code clean and clear
 			UpdateStickyJavelins(target);
@@ -131,11 +132,11 @@ namespace AlchemistNPC.Projectiles
 			for (int i = 0; i < Main.maxProjectiles; i++) // Loop all projectiles
 			{
 				Projectile currentProjectile = Main.projectile[i];
-				if (i != projectile.whoAmI // Make sure the looped projectile is not the current javelin
+				if (i != Projectile.whoAmI // Make sure the looped projectile is not the current javelin
 				    && currentProjectile.active // Make sure the projectile is active
 				    && currentProjectile.owner == Main.myPlayer // Make sure the projectile's owner is the client's player
-				    && currentProjectile.type == projectile.type // Make sure the projectile is of the same type as this javelin
-				    && currentProjectile.modProjectile is Bolt javelinProjectile // Use a pattern match cast so we can access the projectile like an ExampleJavelinProjectile
+				    && currentProjectile.type == Projectile.type // Make sure the projectile is of the same type as this javelin
+				    && currentProjectile.ModProjectile is Bolt javelinProjectile // Use a pattern match cast so we can access the projectile like an ExampleJavelinProjectile
 				    && javelinProjectile.IsStickingToTarget // the previous pattern match allows us to use our properties
 				    && javelinProjectile.TargetWhoAmI == target.whoAmI) {
 
@@ -167,13 +168,13 @@ namespace AlchemistNPC.Projectiles
 		private void UpdateAlpha()
 		{
 			// Slowly remove alpha as it is present
-			if (projectile.alpha > 0) {
-				projectile.alpha -= ALPHA_REDUCTION;
+			if (Projectile.alpha > 0) {
+				Projectile.alpha -= ALPHA_REDUCTION;
 			}
 
 			// If alpha gets lower than 0, set it to 0
-			if (projectile.alpha < 0) {
-				projectile.alpha = 0;
+			if (Projectile.alpha < 0) {
+				Projectile.alpha = 0;
 			}
 		}
 
@@ -184,20 +185,20 @@ namespace AlchemistNPC.Projectiles
 
 		private void StickyAI()
 		{
-			projectile.friendly = false;
+			Projectile.friendly = false;
 			// These 2 could probably be moved to the ModifyNPCHit hook, but in vanilla they are present in the AI
-			projectile.ignoreWater = true; // Make sure the projectile ignores water
-			projectile.tileCollide = false; // Make sure the projectile doesn't collide with tiles anymore
-			projectile.localAI[0] += 1f;
+			Projectile.ignoreWater = true;// Make sure the projectile ignores water
+			Projectile.tileCollide = false; // Make sure the projectile doesn't collide with tiles anymore
+			Projectile.localAI[0] += 1f;
 
 			// Every 30 ticks, the javelin will perform a hit effect
 			int projTargetIndex = (int)TargetWhoAmI;
-			if (!Main.npc[projTargetIndex].boss && !Main.npc[projTargetIndex].noTileCollide && projectile.localAI[0] >= 30f && projectile.velocity.Y != 0f)
+			if (!Main.npc[projTargetIndex].boss && !Main.npc[projTargetIndex].noTileCollide && Projectile.localAI[0] >= 30f && Projectile.velocity.Y != 0f)
 			{
 				Main.npc[projTargetIndex].velocity.X *= 0.9f;
 				Main.npc[projTargetIndex].velocity.Y += 2f;
 			}
-			if (!Main.npc[projTargetIndex].boss && !Main.npc[projTargetIndex].noTileCollide && projectile.localAI[0] >= 30f && projectile.velocity.Y == 0f)
+			if (!Main.npc[projTargetIndex].boss && !Main.npc[projTargetIndex].noTileCollide && Projectile.localAI[0] >= 30f && Projectile.velocity.Y == 0f)
 			{
 				Main.npc[projTargetIndex].velocity.X *= 0.5f;
 				Main.npc[projTargetIndex].velocity.Y = 0f;
@@ -205,8 +206,8 @@ namespace AlchemistNPC.Projectiles
 			
 			if (Main.npc[projTargetIndex].active && !Main.npc[projTargetIndex].dontTakeDamage) { // If the target is active and can take damage
 				// Set the projectile's position relative to the target's center
-				projectile.Center = Main.npc[projTargetIndex].Center - projectile.velocity * 2f;
-				projectile.gfxOffY = Main.npc[projTargetIndex].gfxOffY;
+				Projectile.Center = Main.npc[projTargetIndex].Center - Projectile.velocity * 2f;
+				Projectile.gfxOffY = Main.npc[projTargetIndex].gfxOffY;
 				}
 		}
 	}

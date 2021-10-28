@@ -14,33 +14,33 @@ namespace AlchemistNPC.Projectiles
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Globe199");
-			projectile.light = 0.5f;
-			Main.projFrames[projectile.type] = 12;
+			Projectile.light = 0.5f;
+			Main.projFrames[Projectile.type] = 12;
 		}
 
 		public override void SetDefaults()
 		{
-			projectile.width = 48;
-			projectile.height = 48;
-			projectile.penetrate = -1;
-			projectile.timeLeft = 3600;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
-			projectile.friendly = false;
-			projectile.extraUpdates = 0;
+			Projectile.width = 48;
+			Projectile.height = 48;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 3600;
+			Projectile.tileCollide = false;
+			Projectile.hostile = false;
+			Projectile.friendly = false;
+			Projectile.extraUpdates = 0;
 		}
 		
 		public override void AI()
 		{
-			Player player = Main.player[projectile.owner];
-			projectile.Center = player.Center;
-			projectile.position.Y = player.Center.Y-116;
-			if (++projectile.frameCounter >= 6)
+			Player player = Main.player[Projectile.owner];
+			Projectile.Center = player.Center;
+			Projectile.position.Y = player.Center.Y-116;
+			if (++Projectile.frameCounter >= 6)
             {
-                projectile.frameCounter = 0;
-                if (++projectile.frame >= 12)
+                Projectile.frameCounter = 0;
+                if (++Projectile.frame >= 12)
                 {
-                    projectile.frame = 0;
+                    Projectile.frame = 0;
                 }
             }
 			if (ProjCounter.counter == 0)
@@ -48,7 +48,7 @@ namespace AlchemistNPC.Projectiles
 				for (int i = 0; i < 25; i++)
 				{
 					int dustType = 193;
-					int dustIndex = Dust.NewDust(projectile.position, 96, 96, dustType);
+					int dustIndex = Dust.NewDust(Projectile.position, 96, 96, dustType);
 					Dust dust = Main.dust[dustIndex];
 					dust.velocity.X = dust.velocity.X + Main.rand.Next(-10, 10) * 0.5f;
 					dust.velocity.Y = dust.velocity.Y + Main.rand.Next(-10, 10) * 0.5f;
@@ -56,9 +56,9 @@ namespace AlchemistNPC.Projectiles
 					dust.noGravity = true;
 				}
 			}
-			if (player.dead || !player.HasBuff(mod.BuffType("ProjCounter")))
+			if (player.dead || !player.HasBuff(ModContent.BuffType<Buffs.ProjCounter>()))
 			{
-				projectile.Kill();
+				Projectile.Kill();
 			}
 		}
 	}

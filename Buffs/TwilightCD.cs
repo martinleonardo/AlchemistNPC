@@ -11,16 +11,16 @@ namespace AlchemistNPC.Buffs
 {
 	public class TwilightCD : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Twilight Cooldown");
 			Description.SetDefault("You cannot use Twilight's special ability yet");
 			Main.debuff[Type] = true;
-			canBeCleared = false;
-			DisplayName.AddTranslation(GameCulture.Russian, "Сумеречная Перезарядка");
-			Description.AddTranslation(GameCulture.Russian, "Вы пока не можете использовать специальную способность Сумерек");
-            DisplayName.AddTranslation(GameCulture.Chinese, "蕾蒂希娅冷却");
-            Description.AddTranslation(GameCulture.Chinese, "无法使用蕾蒂希娅的特殊能力");
+			CanBeCleared = false;
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Сумеречная Перезарядка");
+			Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Вы пока не можете использовать специальную способность Сумерек");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "蕾蒂希娅冷却");
+            Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "无法使用蕾蒂希娅的特殊能力");
         }
 	}
 }

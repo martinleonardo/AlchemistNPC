@@ -17,11 +17,10 @@ namespace AlchemistNPC.Projectiles
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(511);
-			projectile.magic = false;
-			projectile.thrown = true;
-			projectile.aiStyle = 92;
-			aiType = 511;
+			Projectile.CloneDefaults(511);
+			Projectile.DamageType = DamageClass.Throwing;
+			Projectile.aiStyle = 92;
+			AIType = 511;
 		}
 		
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -36,7 +35,7 @@ namespace AlchemistNPC.Projectiles
 			}
 			if (NPC.downedMoonlord)
 			{
-			target.AddBuff(mod.BuffType("Corrorion"), 180);
+			target.AddBuff(ModContent.BuffType<Buffs.Corrosion>(), 180);
 			}
 		}
 	}

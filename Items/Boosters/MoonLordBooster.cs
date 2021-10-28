@@ -14,20 +14,20 @@ namespace AlchemistNPC.Items.Boosters
 		{
 			DisplayName.SetDefault("Moon Lord booster");
 			Tooltip.SetDefault("You emit aura which weakens enemies around");
-			DisplayName.AddTranslation(GameCulture.Russian, "Усилитель Лунного Лорда");
-			Tooltip.AddTranslation(GameCulture.Russian, "Вы испускаете ослабляющую ауру вокруг себя");
-			DisplayName.AddTranslation(GameCulture.Chinese, "月球领主增益容器");
-			Tooltip.AddTranslation(GameCulture.Chinese, "你产生能弱化周围敌人的光环");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Усилитель Лунного Лорда");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Вы испускаете ослабляющую ауру вокруг себя");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "月球领主增益容器");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "你产生能弱化周围敌人的光环");
         }
 
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.LifeFruit);
-			item.consumable = false;
-			item.value = 100000;
+			Item.CloneDefaults(ItemID.LifeFruit);
+			Item.consumable = false;
+			Item.value = 100000;
 		}
 
-		public override bool UseItem(Player player)
+		public override bool? UseItem(Player player)
         {
 			if (player.GetModPlayer<AlchemistNPCPlayer>().MoonLordBooster == 0)
 			{

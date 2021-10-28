@@ -181,20 +181,20 @@ namespace AlchemistNPC.Items
 				for (int y = 0; y < Main.maxTilesY; y += 16)
 				{
 					if (Main.tile[x, y] == null) continue;
-					if (Main.tile[x, y].liquid != 255) continue;
-					if (Main.tile[x, y].liquid == 255) 
+					if (Main.tile[x, y].LiquidAmount != 255) continue;
+					if (Main.tile[x, y].LiquidAmount == 255) 
 					{
 						do
 						{
 							x -= 16;
-						} while (Main.tile[x, y].liquid == 255);
+						} while (Main.tile[x, y].LiquidAmount == 255);
 					}
-					if (Main.tile[x, y] != null && Main.tile[x, y].liquid == 0 && Main.tile[x, y].active()) 
+					if (Main.tile[x, y] != null && Main.tile[x, y].LiquidAmount == 0 && Main.tile[x, y].IsActive) 
 							{
 								do 
 								{
 									y -= 16;
-								} while (Main.tile[x, y] != null && Main.tile[x, y].liquid == 0 && Main.tile[x, y].active());
+								} while (Main.tile[x, y] != null && Main.tile[x, y].LiquidAmount == 0 && Main.tile[x, y].IsActive);
 							}
 					pos = new Vector2((x) * 16, (y-2) * 16);
 					break;
@@ -214,20 +214,20 @@ namespace AlchemistNPC.Items
 				for (int y = 0; y < Main.maxTilesY; y += 16)
 				{
 					if (Main.tile[x, y] == null) continue;
-					if (Main.tile[x, y].liquid != 255) continue;
-					if (Main.tile[x, y].liquid == 255) 
+					if (Main.tile[x, y].LiquidAmount != 255) continue;
+					if (Main.tile[x, y].LiquidAmount == 255) 
 					{
 						do
 						{
 							x += 16;
-						} while (Main.tile[x, y].liquid == 255);
+						} while (Main.tile[x, y].LiquidAmount == 255);
 					}
-					if (Main.tile[x, y] != null && Main.tile[x, y].liquid == 0 && Main.tile[x, y].active()) 
+					if (Main.tile[x, y] != null && Main.tile[x, y].LiquidAmount == 0 && Main.tile[x, y].IsActive) 
 							{
 								do 
 								{
 									y -= 16;
-								} while (Main.tile[x, y] != null && Main.tile[x, y].liquid == 0 && Main.tile[x, y].active());
+								} while (Main.tile[x, y] != null && Main.tile[x, y].LiquidAmount == 0 && Main.tile[x, y].IsActive);
 							}
 					pos = new Vector2((x) * 16, (y-2) * 16);
 					break;
@@ -312,7 +312,7 @@ namespace AlchemistNPC.Items
 				for (int y = 0; y < Main.tile.GetLength(1); ++y)
 				{
 					if (Main.tile[x, y] == null) continue;
-					if (Main.tile[x, y].type != mod.TileType("Beacon")) continue;
+					if (Main.tile[x, y].type != TileType<Tiles.Beacon>()) continue;
 					pos = new Vector2((x-1) * 16, (y-2) * 16);
 					break;
 				}

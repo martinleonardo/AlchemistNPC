@@ -14,20 +14,20 @@ namespace AlchemistNPC.Items.Boosters
 		{
 			DisplayName.SetDefault("Betsy Booster");
 			Tooltip.SetDefault("Your attacks inflict Daybroken, flight abilities are increased");
-			DisplayName.AddTranslation(GameCulture.Russian, "Усилитель Бетси");
-			Tooltip.AddTranslation(GameCulture.Russian, "Ваши атаки накладывают Солнечное Пламя, улучшает способности к полёту");
-			DisplayName.AddTranslation(GameCulture.Chinese, "贝特西增益容器");
-			Tooltip.AddTranslation(GameCulture.Chinese, "你的攻击造成破晓，飞行能力提升");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Усилитель Бетси");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Ваши атаки накладывают Солнечное Пламя, улучшает способности к полёту");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "贝特西增益容器");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "你的攻击造成破晓，飞行能力提升");
         }
 
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.LifeFruit);
-			item.consumable = false;
-			item.value = 100000;
+			Item.CloneDefaults(ItemID.LifeFruit);
+			Item.consumable = false;
+			Item.value = 100000;
 		}
 
-		public override bool UseItem(Player player)
+		public override bool? UseItem(Player player)
         {
 			if (player.GetModPlayer<AlchemistNPCPlayer>().BetsyBooster == 0)
 			{

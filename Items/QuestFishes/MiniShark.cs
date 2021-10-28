@@ -10,23 +10,23 @@ namespace AlchemistNPC.Items.QuestFishes
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Mini Shark");
-			DisplayName.AddTranslation(GameCulture.Russian, "Мини Акула");
-			DisplayName.AddTranslation(GameCulture.Chinese, "迷你鲨");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Мини Акула");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "迷你鲨");
 		}
 
 		public override void SetDefaults()
 		{
-			item.questItem = true;
-			item.maxStack = 1;
-			item.width = 26;
-			item.height = 26;
-			item.uniqueStack = true;
-			item.rare = -11;
+			Item.questItem = true;
+			Item.maxStack = 1;
+			Item.width = 26;
+			Item.height = 26;
+			Item.uniqueStack = true;
+			Item.rare = -11;
 		}
 
 		public override void UpdateInventory(Player player)
 		{
-		((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).MiniShark = true;
+		((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).MiniShark = true;
 		}
 		
 		public override bool IsQuestFish()

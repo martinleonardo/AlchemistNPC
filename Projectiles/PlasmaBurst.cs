@@ -13,14 +13,14 @@ namespace AlchemistNPC.Projectiles
 	{
 		public override void SetDefaults()
 		{
-			projectile.ranged = true;
-			projectile.width = 8;
-			projectile.height = 8;
-			projectile.friendly = true;
-			projectile.ignoreWater = true;
-			projectile.penetrate = -1;
-			projectile.extraUpdates = 3;
-			projectile.timeLeft = 120;
+			Projectile.DamageType = DamageClass.Ranged;
+			Projectile.width = 8;
+			Projectile.height = 8;
+			Projectile.friendly = true;
+			Projectile.ignoreWater = true;
+			Projectile.penetrate = -1;
+			Projectile.extraUpdates = 3;
+			Projectile.timeLeft = 120;
 		}
 
 		public override void SetStaticDefaults()
@@ -31,33 +31,33 @@ namespace AlchemistNPC.Projectiles
 
 		public override void AI()
 		{
-			Lighting.AddLight(projectile.Center, ((255 - projectile.alpha) * 0.25f) / 255f, ((255 - projectile.alpha) * 0.05f) / 255f, ((255 - projectile.alpha) * 0.05f) / 255f);
-			if (projectile.timeLeft > 90)
+			Lighting.AddLight(Projectile.Center, ((255 - Projectile.alpha) * 0.25f) / 255f, ((255 - Projectile.alpha) * 0.05f) / 255f, ((255 - Projectile.alpha) * 0.05f) / 255f);
+			if (Projectile.timeLeft > 90)
 			{
-				projectile.timeLeft = 90;
+				Projectile.timeLeft = 90;
 			}
-			if (projectile.ai[0] > 7f)
+			if (Projectile.ai[0] > 7f)
 			{
 				float num296 = 1f;
-				if (projectile.ai[0] == 8f)
+				if (Projectile.ai[0] == 8f)
 				{
 					num296 = 0.1f;
 				}
-				else if (projectile.ai[0] == 9f)
+				else if (Projectile.ai[0] == 9f)
 				{
 					num296 = 0.2f;
 				}
-				else if (projectile.ai[0] == 10f)
+				else if (Projectile.ai[0] == 10f)
 				{
 					num296 = 0.3f;
 				}
-				projectile.ai[0] += 1f;
+				Projectile.ai[0] += 1f;
 				int num297 = 74;
 				if (Main.rand.NextBool(2))
 				{
 					for (int num298 = 0; num298 < 1; num298++)
 					{
-						int num299 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, num297, projectile.velocity.X * 0.2f, projectile.velocity.Y * 0.2f, 100, default(Color), 1f);
+						int num299 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, num297, Projectile.velocity.X * 0.2f, Projectile.velocity.Y * 0.2f, 100, default(Color), 1f);
 						if ((num297 == 235 && Main.rand.NextBool(3)))
 						{
 							Main.dust[num299].noGravity = true;
@@ -78,7 +78,7 @@ namespace AlchemistNPC.Projectiles
 						Main.dust[num299].scale *= num296;
 						if (num297 == 75)
 						{
-							Main.dust[num299].velocity += projectile.velocity;
+							Main.dust[num299].velocity += Projectile.velocity;
 							if (!Main.dust[num299].noGravity)
 							{
 								Main.dust[num299].velocity *= 0.5f;
@@ -89,37 +89,37 @@ namespace AlchemistNPC.Projectiles
 			}
 			else
 			{
-				projectile.ai[0] += 1f;
+				Projectile.ai[0] += 1f;
 			}
-			projectile.rotation += 0.3f * projectile.direction;
+			Projectile.rotation += 0.3f * Projectile.direction;
 		}
 		
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			projectile.penetrate--;
-			if (projectile.penetrate <= 0)
+			Projectile.penetrate--;
+			if (Projectile.penetrate <= 0)
 			{
-				projectile.Kill();
+				Projectile.Kill();
 			}
 			else
 			{
-				projectile.ai[0] += 0.1f;
-				if (projectile.velocity.X != oldVelocity.X)
+				Projectile.ai[0] += 0.1f;
+				if (Projectile.velocity.X != oldVelocity.X)
 				{
-					projectile.velocity.X = -oldVelocity.X;
+					Projectile.velocity.X = -oldVelocity.X;
 				}
-				if (projectile.velocity.Y != oldVelocity.Y)
+				if (Projectile.velocity.Y != oldVelocity.Y)
 				{
-					projectile.velocity.Y = -oldVelocity.Y;
+					Projectile.velocity.Y = -oldVelocity.Y;
 				}
-				projectile.velocity *= 0.75f;
+				Projectile.velocity *= 0.75f;
 			}
 			return false;
 		}
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			target.immune[projectile.owner] = 3;
+			target.immune[Projectile.owner] = 3;
 			target.AddBuff(BuffID.OnFire, 300);
 		}
 	}

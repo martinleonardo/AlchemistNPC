@@ -13,58 +13,57 @@ namespace AlchemistNPC.Projectiles.Minions
     {
         public override void SetDefaults()
         {
-			projectile.CloneDefaults(533);
-			projectile.aiStyle = 66;
-			aiType = 533;
-            projectile.width = 78;
-            projectile.height = 86;  
-            projectile.ignoreWater = true; 
-            projectile.timeLeft = 36000;
-            projectile.penetrate = -1; 
-            projectile.tileCollide = false; 
-            projectile.minion = true;
-			projectile.minionSlots = 1;
+			Projectile.CloneDefaults(533);
+			Projectile.aiStyle = 66;
+			AIType = 533;
+            Projectile.width = 78;
+            Projectile.height = 86;  
+            Projectile.ignoreWater = true; 
+            Projectile.timeLeft = 36000;
+            Projectile.penetrate = -1; 
+            Projectile.tileCollide = false; 
+            Projectile.minion = true;
+			Projectile.minionSlots = 1;
         }
 
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Devilsknife");
-			Main.projFrames[projectile.type] = 1;
-			ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
+			Main.projFrames[Projectile.type] = 1;
+			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
 		}
 		
-				
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)	
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
 		{
 			return false;
 		}
 		
 		public override void AI()
 		{
-			projectile.tileCollide = false;
-			Player player = Main.player[projectile.owner];
+			Projectile.tileCollide = false;
+			Player player = Main.player[Projectile.owner];
 			AlchemistNPCPlayer modPlayer = player.GetModPlayer<AlchemistNPCPlayer>();
-			if (player.dead || !player.HasBuff(mod.BuffType("Devilsknife")))
+			if (player.dead || !player.HasBuff(ModContent.BuffType<Buffs.Devilsknife>()))
 			{
 				modPlayer.devilsknife = false;
 			}
 			if (modPlayer.devilsknife)
 			{
-				projectile.timeLeft = 2;
+				Projectile.timeLeft = 2;
 			}
 			if (player.direction == 1)
 			{
-				projectile.spriteDirection = -1;
+				Projectile.spriteDirection = -1;
 			}
 			if (player.direction == -1)
 			{
-				projectile.spriteDirection = 1;
+				Projectile.spriteDirection = 1;
 			}
 		}
 		
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			target.immune[projectile.owner] = 6;
+			target.immune[Projectile.owner] = 6;
 		}
 	}
 }

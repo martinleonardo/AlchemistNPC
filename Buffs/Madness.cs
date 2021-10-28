@@ -7,16 +7,16 @@ namespace AlchemistNPC.Buffs
 {
 	public class Madness : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Madness Unleashed");
 			Description.SetDefault("Pure madness");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
-			DisplayName.AddTranslation(GameCulture.Russian, "Выпущенное безумие");
-			Description.AddTranslation(GameCulture.Russian, "Чистое безумие");
-            DisplayName.AddTranslation(GameCulture.Chinese, "疯狂释放");
-            Description.AddTranslation(GameCulture.Chinese, "纯粹的疯狂");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Выпущенное безумие");
+			Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Чистое безумие");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "疯狂释放");
+            Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "纯粹的疯狂");
         }
 
 		public override void Update(Player player, ref int buffIndex)

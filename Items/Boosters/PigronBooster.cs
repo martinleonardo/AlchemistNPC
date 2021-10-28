@@ -14,20 +14,20 @@ namespace AlchemistNPC.Items.Boosters
 		{
 			DisplayName.SetDefault("Pigron Booster");
 			Tooltip.SetDefault("Provides Well Fed");
-			DisplayName.AddTranslation(GameCulture.Russian, "Усилитель Ледяного Голема");
-			Tooltip.AddTranslation(GameCulture.Russian, "Даёт постоянную Сытость");
-			DisplayName.AddTranslation(GameCulture.Chinese, "猪龙增益容器");
-			Tooltip.AddTranslation(GameCulture.Chinese, "吃得饱!");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Усилитель Ледяного Голема");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Даёт постоянную Сытость");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "猪龙增益容器");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "吃得饱!");
         }
 
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.LifeFruit);
-			item.consumable = false;
-			item.value = 100000;
+			Item.CloneDefaults(ItemID.LifeFruit);
+			Item.consumable = false;
+			Item.value = 100000;
 		}
 
-		public override bool UseItem(Player player)
+		public override bool? UseItem(Player player)
         {
 			if (player.GetModPlayer<AlchemistNPCPlayer>().PigronBooster == 0)
 			{

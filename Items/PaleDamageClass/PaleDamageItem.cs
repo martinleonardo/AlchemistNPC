@@ -23,27 +23,33 @@ namespace AlchemistNPC.Items.PaleDamageClass
 		public sealed override void SetDefaults()
 		{
 			SafeSetDefaults();
+			// UPDATE TO 1.4
+			/*
 			// all vanilla damage types must be false for custom damage types to work
-			item.melee = false;
-			item.ranged = false;
-			item.magic = false;
-			item.thrown = false;
-			item.summon = false;
+			Item.DamageType = DamageClass.PaleDamageClass;
+			Item.melee = false;
+			Item.ranged = false;
+			Item.magic = false;
+			Item.thrown = false;
+			Item.summon = false;
+			*/
 		}
 
 		// As a modder, you could also opt to make these overrides also sealed. Up to the modder
-		public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat) {
-			add += PaleDamagePlayer.ModPlayer(player).paleDamageAdd;
-			mult *= PaleDamagePlayer.ModPlayer(player).paleDamageMult;
+		//public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat) {
+		public override void ModifyWeaponDamage(Player player, ref StatModifier damage, ref float flat)
+		{
+			damage += PaleDamagePlayer.ModPlayer(player).paleDamageAdd;
+			damage *= PaleDamagePlayer.ModPlayer(player).paleDamageMult;
 		}
 
-		public override void GetWeaponKnockback(Player player, ref float knockback)
+		public override void ModifyWeaponKnockback(Player player, ref StatModifier knockback, ref float flat)
 		{
 			// Adds knockback bonuses
-			knockback = knockback + PaleDamagePlayer.ModPlayer(player).paleKnockback;
+			flat += PaleDamagePlayer.ModPlayer(player).paleKnockback;
 		}
 
-		public override void GetWeaponCrit(Player player, ref int crit)
+		public override void ModifyWeaponCrit(Player player, ref int crit)
 		{
 			// Adds crit bonuses
 			crit = crit + PaleDamagePlayer.ModPlayer(player).paleCrit;

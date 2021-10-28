@@ -13,27 +13,27 @@ namespace AlchemistNPC.Items.Weapons
 			DisplayName.SetDefault("Plasma Round");
 			Tooltip.SetDefault("Contains raw energy inside"
 			+"\nRequired for using Tritantrum");
-			DisplayName.AddTranslation(GameCulture.Russian, "Плазменный заряд");
-            Tooltip.AddTranslation(GameCulture.Russian, "Содержит чистую энергию внутри\nНеобходима для использования Тритантрума");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Плазменный заряд");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Содержит чистую энергию внутри\nНеобходима для использования Тритантрума");
 
-            DisplayName.AddTranslation(GameCulture.Chinese, "等离子体");
-            Tooltip.AddTranslation(GameCulture.Chinese, "里面包含原始能量\n是三项之怒的弹药");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "等离子体");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "里面包含原始能量\n是三项之怒的弹药");
         }
 		
 		public override void SetDefaults()
 		{
-			item.damage = 15;
-			item.ranged = true;
-			item.width = 16;
-			item.height = 16;
-			item.maxStack = 999;
-			item.consumable = true;
-			item.knockBack = 4;
-			item.value = Item.sellPrice(0, 0, 5, 0);
-			item.rare = 10;
-			item.shoot = mod.ProjectileType("PlasmaRound");
-			item.shootSpeed = 32f; 
-			item.ammo = item.type; //
+			Item.damage = 15;
+			Item.DamageType = DamageClass.Ranged;
+			Item.width = 16;
+			Item.height = 16;
+			Item.maxStack = 999;
+			Item.consumable = true;
+			Item.knockBack = 4;
+			Item.value = Item.sellPrice(0, 0, 5, 0);
+			Item.rare = 10;
+			Item.shoot = ProjectileType<Projectiles.PlasmaRound>();
+			Item.shootSpeed = 32f; 
+			Item.ammo = Item.type; //
 		}
 	}
 }

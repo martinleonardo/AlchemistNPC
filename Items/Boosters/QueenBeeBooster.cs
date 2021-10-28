@@ -14,20 +14,20 @@ namespace AlchemistNPC.Items.Boosters
 		{
 			DisplayName.SetDefault("Queen Bee booster");
 			Tooltip.SetDefault("Hostile bees do less damage and your regeneration is increased by 6, immunity to poisons");
-			DisplayName.AddTranslation(GameCulture.Russian, "Усилитель Королевы Пчёл");
-			Tooltip.AddTranslation(GameCulture.Russian, "Враждебные пчёлы наносят меньше урона и ваша регенерация увеличена на 6, иммунитет к ядам");
-			DisplayName.AddTranslation(GameCulture.Chinese, "蜂后增益容器");
-			Tooltip.AddTranslation(GameCulture.Chinese, "敌方蜜蜂的伤害降低并且你的生命再生速度增加6，免疫中毒");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Усилитель Королевы Пчёл");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Враждебные пчёлы наносят меньше урона и ваша регенерация увеличена на 6, иммунитет к ядам");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "蜂后增益容器");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "敌方蜜蜂的伤害降低并且你的生命再生速度增加6，免疫中毒");
         }
 
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.LifeFruit);
-			item.consumable = false;
-			item.value = 100000;
+			Item.CloneDefaults(ItemID.LifeFruit);
+			Item.consumable = false;
+			Item.value = 100000;
 		}
 
-		public override bool UseItem(Player player)
+		public override bool? UseItem(Player player)
         {
 			if (player.GetModPlayer<AlchemistNPCPlayer>().QueenBeeBooster == 0)
 			{

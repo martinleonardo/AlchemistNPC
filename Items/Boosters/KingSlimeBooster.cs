@@ -14,20 +14,20 @@ namespace AlchemistNPC.Items.Boosters
 		{
 			DisplayName.SetDefault("King Slime booster");
 			Tooltip.SetDefault("Increases jump height and safe fall distance greatly");
-			DisplayName.AddTranslation(GameCulture.Russian, "Усилитель Короля Слизней");
-			Tooltip.AddTranslation(GameCulture.Russian, "Увеличивает высоту прыжка и увеличивает расстояние безопасного падения");
-			DisplayName.AddTranslation(GameCulture.Chinese, "冰巨人增益容器");
-			Tooltip.AddTranslation(GameCulture.Chinese, "极大提升跳跃高度和安全坠落距离");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Усилитель Короля Слизней");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Увеличивает высоту прыжка и увеличивает расстояние безопасного падения");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "冰巨人增益容器");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "极大提升跳跃高度和安全坠落距离");
         }
 
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.LifeFruit);
-			item.consumable = false;
-			item.value = 100000;
+			Item.CloneDefaults(ItemID.LifeFruit);
+			Item.consumable = false;
+			Item.value = 100000;
 		}
 
-		public override bool UseItem(Player player)
+		public override bool? UseItem(Player player)
         {
 			if (player.GetModPlayer<AlchemistNPCPlayer>().KingSlimeBooster == 0)
 			{

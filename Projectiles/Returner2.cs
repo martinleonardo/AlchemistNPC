@@ -13,14 +13,14 @@ namespace AlchemistNPC.Projectiles
 	{
 		public override void SetDefaults()
 		{
-			projectile.friendly = true;
-			projectile.width = 64;
-			projectile.height = 64;
-			projectile.penetrate = -1;
-			projectile.timeLeft = 1;
-			projectile.tileCollide = false;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = -1;
+			Projectile.friendly = true;
+			Projectile.width = 64;
+			Projectile.height = 64;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 1;
+			Projectile.tileCollide = false;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = -1;
 		}
 
 		public override void SetStaticDefaults()

@@ -13,7 +13,7 @@ namespace AlchemistNPC.Tiles
 {
 	public class HoloprojectorDungeon : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileFrameImportant[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
@@ -23,11 +23,11 @@ namespace AlchemistNPC.Tiles
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Holoprojector ''Dungeon''");
-			name.AddTranslation(GameCulture.Russian, "Голопроектор ''Данж''");
+			name.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Голопроектор ''Данж''");
 			AddMapEntry(new Color(190, 230, 190), name);
-			dustType = 11;
-			disableSmartCursor = true;
-			animationFrameHeight = 56;
+			DustType = 11;
+			TileID.Sets.DisableSmartCursor[Type] = true;
+			AnimationFrameHeight = 56;
 			Main.tileLighted[Type] = true;
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLavaDeath[Type] = true;
@@ -61,13 +61,13 @@ namespace AlchemistNPC.Tiles
 			{
 				Player player = Main.player[Main.myPlayer];
 				if (!player.dead)
-				player.AddBuff(mod.BuffType("HoloprojectorDungeon"), 180);
+				player.AddBuff(ModContent.BuffType<Buffs.HoloprojectorDungeon>(), 180);
 			}
 		}
 		
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 16, 32, mod.ItemType("HoloprojectorDungeon"));
+			Item.NewItem(i * 16, j * 16, 16, 32, ModContent.ItemType<Items.Placeable.HoloprojectorDungeon>());
 		}
 	}
 }

@@ -19,10 +19,10 @@ namespace AlchemistNPC.Items
 			+"\nContains the spell ''Cloak of Fear''"
 			+"\nMakes nearby non-boss enemies change their movement direction"
 			+"\nExhausts player for 30 seconds after effect ends, making him unable to use magic");
-			DisplayName.AddTranslation(GameCulture.Russian, "Свиток ''Плащ Страха''");
-            Tooltip.AddTranslation(GameCulture.Russian, "Одноразовый предмет\nЭтот свиток содержит заклинание ''Плащ Страха''\nЗаставляет противников вблизи игрока изменять направление движения\nИстощает игрока на 30 секунд после окончания действия, не позволяя ему использовать магию");
-			DisplayName.AddTranslation(GameCulture.Chinese, "卷轴 ''恐惧之袍''");
-			Tooltip.AddTranslation(GameCulture.Chinese, "一次性物品"
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Свиток ''Плащ Страха''");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Одноразовый предмет\nЭтот свиток содержит заклинание ''Плащ Страха''\nЗаставляет противников вблизи игрока изменять направление движения\nИстощает игрока на 30 секунд после окончания действия, не позволяя ему использовать магию");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "卷轴 ''恐惧之袍''");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "一次性物品"
 			+"\n包含着 ''恐惧之袍''法术"
 			+"\n使附近的非Boss敌人改变移动方向"
 			+"\n使玩家精疲力尽1分钟, 期间无法使用魔法");
@@ -30,29 +30,29 @@ namespace AlchemistNPC.Items
 		
 		public override void SetDefaults()
         {
-            item.UseSound = SoundID.Item123;
-            item.useStyle = 2;
-            item.useTurn = true;
-            item.useAnimation = 20;
-            item.useTime = 20;
-            item.maxStack = 99;
-            item.consumable = true;
-            item.width = 18;
-            item.height = 28;
-            item.value = Item.sellPrice(1, 0, 0, 0);
-            item.rare = 11;
-			item.mana = 200;
+            Item.UseSound = SoundID.Item123;
+            Item.useStyle = 2;
+            Item.useTurn = true;
+            Item.useAnimation = 20;
+            Item.useTime = 20;
+            Item.maxStack = 99;
+            Item.consumable = true;
+            Item.width = 18;
+            Item.height = 28;
+            Item.value = Item.sellPrice(1, 0, 0, 0);
+            Item.rare = 11;
+			Item.mana = 200;
         }
 		
-		public override bool UseItem(Player player)
+		public override bool? UseItem(Player player)
 		{
-			player.AddBuff(mod.BuffType("CloakOfFear"), 10800);
+			player.AddBuff(ModContent.BuffType<Buffs.CloakOfFear>(), 10800);
 			return true;
 		}
 		
 		public override bool CanUseItem(Player player)
 		{
-			if (!player.HasBuff(mod.BuffType("Exhausted")) && !player.HasBuff(mod.BuffType("ExecutionersEyes")) && !player.HasBuff(mod.BuffType("CloakOfFear")))
+			if (!player.HasBuff(ModContent.BuffType<Buffs.Exhausted>()) && !player.HasBuff(ModContent.BuffType<Buffs.ExecutionersEyes>()) && !player.HasBuff(ModContent.BuffType<Buffs.CloakOfFear>()))
 			{
 				return true;
 			}

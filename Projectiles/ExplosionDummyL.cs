@@ -17,16 +17,16 @@ namespace AlchemistNPC.Projectiles
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(ProjectileID.LaserMachinegunLaser);
-			projectile.magic = true;
-			projectile.width = 96;
-			projectile.height = 96;
-			projectile.penetrate = -1;
-			projectile.timeLeft = 1;
-			projectile.tileCollide = false;
-			aiType = ProjectileID.LaserMachinegunLaser;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = -1;
+			Projectile.CloneDefaults(ProjectileID.LaserMachinegunLaser);
+			Projectile.DamageType = DamageClass.Magic;
+			Projectile.width = 96;
+			Projectile.height = 96;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 1;
+			Projectile.tileCollide = false;
+			AIType = ProjectileID.LaserMachinegunLaser;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = -1;
 		}
 	}
 }

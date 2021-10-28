@@ -14,38 +14,38 @@ namespace AlchemistNPC.Projectiles
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Akumu");
-			projectile.light = 0.5f;
-			Main.projFrames[projectile.type] = 1;
+			Projectile.light = 0.5f;
+			Main.projFrames[Projectile.type] = 1;
 		}
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(533);
-			projectile.width = 24;
-			projectile.height = 24;
-			projectile.aiStyle = 66;
-			aiType = 533;
-			projectile.tileCollide = false;
+			Projectile.CloneDefaults(533);
+			Projectile.width = 24;
+			Projectile.height = 24;
+			Projectile.aiStyle = 66;
+			AIType = 533;
+			Projectile.tileCollide = false;
 		}
 		
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)	
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
 		{
 			return false;
 		}
 			
 		public override void AI()
 		{
-			projectile.tileCollide = false;
-			Player player = Main.player[projectile.owner]; 
-			if (player.statLife < player.statLifeMax2*0.35f || player.dead || !player.HasBuff(mod.BuffType("TrueAkumuAttack")))
+			Projectile.tileCollide = false;
+			Player player = Main.player[Projectile.owner]; 
+			if (player.statLife < player.statLifeMax2*0.35f || player.dead || !player.HasBuff(ModContent.BuffType<Buffs.TrueAkumuAttack>()))
 			{
-				projectile.Kill();
+				Projectile.Kill();
 			}
 		}
 		
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			target.immune[projectile.owner] = 3;
+			target.immune[Projectile.owner] = 3;
 		}
 	}
 }

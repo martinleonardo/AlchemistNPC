@@ -6,6 +6,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using Terraria.Localization;
+using Terraria.DataStructures;
 
 namespace AlchemistNPC.Items.Weapons
 {
@@ -19,42 +20,42 @@ namespace AlchemistNPC.Items.Weapons
 			+ "\nShoots 2 times in one use"
 			+ "\nBullets set enemies ablaze"
 			+ "\n25% chance not to consume ammo");
-			DisplayName.AddTranslation(GameCulture.Russian, "Клюв (O-02-56)");
-            Tooltip.AddTranslation(GameCulture.Russian, "Размер не имеет значения, пока он переполнен силой.\n[c/FF0000:Оружие Э.П.О.С.]\nВыстреливает по 2 пули\nПули поджигают противника\n25% шанс не потратить патроны");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Клюв (O-02-56)");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Размер не имеет значения, пока он переполнен силой.\n[c/FF0000:Оружие Э.П.О.С.]\nВыстреливает по 2 пули\nПули поджигают противника\n25% шанс не потратить патроны");
 
-            DisplayName.AddTranslation(GameCulture.Chinese, "小喙 (O-02-56)");
-            Tooltip.AddTranslation(GameCulture.Chinese, "'虽然这只鸟的身材娇小, 可它有着很恐怖的嘴巴.'\n[c/FF0000:EGO 武器]\n一次射出两发子弹\n子弹会点燃敌人\n25%几率不消耗弹药");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "小喙 (O-02-56)");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "'虽然这只鸟的身材娇小, 可它有着很恐怖的嘴巴.'\n[c/FF0000:EGO 武器]\n一次射出两发子弹\n子弹会点燃敌人\n25%几率不消耗弹药");
         }
 
 		public override void SetDefaults()
 		{
-			item.damage = 12;
-			item.useAnimation = 20;
-			item.useTime = 10;
-			item.reuseDelay = 20;
-			item.ranged = true;
-			item.width = 40;
-			item.height = 20;
-			item.useStyle = 5;
-			item.noMelee = true;
-			item.knockBack = 4;
-			item.value = 100000;
-			item.rare = 3;
-			item.UseSound = SoundID.Item11;
-			item.autoReuse = true;
-			item.shoot = 10;
-			item.shootSpeed = 16f;
-			item.useAmmo = AmmoID.Bullet;
+			Item.damage = 12;
+			Item.useAnimation = 20;
+			Item.useTime = 10;
+			Item.reuseDelay = 20;
+			Item.DamageType = DamageClass.Ranged;
+			Item.width = 40;
+			Item.height = 20;
+			Item.useStyle = 5;
+			Item.noMelee = true;
+			Item.knockBack = 4;
+			Item.value = 100000;
+			Item.rare = 3;
+			Item.UseSound = SoundID.Item11;
+			Item.autoReuse = true;
+			Item.shoot = 10;
+			Item.shootSpeed = 16f;
+			Item.useAmmo = AmmoID.Bullet;
 		}
 
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+		public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage/2, knockBack, player.whoAmI);
-			type = mod.ProjectileType("BB");
+			Projectile.NewProjectile(source, position.X, position.Y, velocity.X, velocity.Y, type, damage/2, knockback, player.whoAmI);
+			type = ProjectileType<Projectiles.BB>();
 			return true;
 		}
 		
-		public override bool ConsumeAmmo(Player player)
+		public override bool CanConsumeAmmo(Player player)
 		{
 			return Main.rand.NextFloat() >= .25;
 		}
@@ -66,33 +67,32 @@ namespace AlchemistNPC.Items.Weapons
 		
 		public override bool CanUseItem(Player player)
 		{
-			if (((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).ParadiseLost == true)
+			if (((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).ParadiseLost == true)
 					{
-					item.damage = 150;
-					item.useAnimation = 12;
-					item.useTime = 6;
-					item.reuseDelay = 6;
+					Item.damage = 150;
+					Item.useAnimation = 12;
+					Item.useTime = 6;
+					Item.reuseDelay = 6;
 					}
 					else
 					{
-					item.damage = 12;
-					item.useAnimation = 20;
-					item.useTime = 10;
-					item.reuseDelay = 20;
+					Item.damage = 12;
+					Item.useAnimation = 20;
+					Item.useTime = 10;
+					Item.reuseDelay = 20;
 					}
 			return base.CanUseItem(player);
 		}
 		
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddRecipeGroup("AlchemistNPC:EvilBar", 12);
-			recipe.AddRecipeGroup("AlchemistNPC:EvilComponent", 10);
-			recipe.AddRecipeGroup("AlchemistNPC:EvilMush", 5);
-			recipe.AddIngredient(ItemID.Wood, 10);
-			recipe.AddTile(null, "WingoftheWorld");
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe()
+				.AddRecipeGroup("AlchemistNPC:EvilBar", 12)
+				.AddRecipeGroup("AlchemistNPC:EvilComponent", 10)
+				.AddRecipeGroup("AlchemistNPC:EvilMush", 5)
+				.AddIngredient(ItemID.Wood, 10)
+				.AddTile(null, "WingoftheWorld")
+				.Register();
 		}
 	}
 }

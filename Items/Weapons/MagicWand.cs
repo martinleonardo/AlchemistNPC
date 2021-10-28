@@ -12,31 +12,31 @@ namespace AlchemistNPC.Items.Weapons
 		{
 			Tooltip.SetDefault("Royal Magic Wand"
 			+"\nShoots a laser beam that can eliminate everything on its way.");
-			DisplayName.AddTranslation(GameCulture.Russian, "Волшебная Палочка");
-            Tooltip.AddTranslation(GameCulture.Russian, "Королевская Волшебная Палочка\nИспускает лазерный луч, который способен уничтожить всё на своём пути.");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Волшебная Палочка");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Королевская Волшебная Палочка\nИспускает лазерный луч, который способен уничтожить всё на своём пути.");
 
-            DisplayName.AddTranslation(GameCulture.Chinese, "魔杖");
-            Tooltip.AddTranslation(GameCulture.Chinese, "皇家魔杖\n发射一束能消灭一切的激光束");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "魔杖");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "皇家魔杖\n发射一束能消灭一切的激光束");
         }
 
 		public override void SetDefaults()
 		{
-			item.damage = 135;
-			item.noMelee = true;
-			item.magic = true;
-			item.channel = true;                            //Channel so that you can held the weapon [Important]
-			item.mana = 15;
-			item.rare = 11;
-			item.width = 30;
-			item.height = 30;
-			item.useTime = 20;
-			item.UseSound = SoundID.Item13;
-			item.useStyle = 5;
-			item.shootSpeed = 14f;
-			item.useAnimation = 20;   
-			item.knockBack = 1;			
-			item.shoot = mod.ProjectileType("MagicWand");
-			item.value = Item.sellPrice(1, 0, 0, 0);
+			Item.damage = 135;
+			Item.noMelee = true;
+			Item.DamageType = DamageClass.Magic;
+			Item.channel = true;                            //Channel so that you can held the weapon [Important]
+			Item.mana = 15;
+			Item.rare = 11;
+			Item.width = 30;
+			Item.height = 30;
+			Item.useTime = 20;
+			Item.UseSound = SoundID.Item13;
+			Item.useStyle = 5;
+			Item.shootSpeed = 14f;
+			Item.useAnimation = 20;   
+			Item.knockBack = 1;			
+			Item.shoot = ProjectileType<Projectiles.MagicWand>();
+			Item.value = Item.sellPrice(1, 0, 0, 0);
 		}
 	}
 }

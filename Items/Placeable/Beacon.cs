@@ -12,50 +12,48 @@ namespace AlchemistNPC.Items.Placeable
 			DisplayName.SetDefault("Beacon");
 			Tooltip.SetDefault("Can be used as target for Beacon Teleporter potion while placed"
 			+"\nCannot be placed if another one is already placed in the world");
-			DisplayName.AddTranslation(GameCulture.Russian, "Маяк");
-            Tooltip.AddTranslation(GameCulture.Russian, "Может быть использован в качестве цели для Телепортатора к Маяку, когда размещён\nНе может быть установлен, если он уже есть в мире");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Маяк");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Может быть использован в качестве цели для Телепортатора к Маяку, когда размещён\nНе может быть установлен, если он уже есть в мире");
 
-            DisplayName.AddTranslation(GameCulture.Chinese, "信标");
-            Tooltip.AddTranslation(GameCulture.Chinese, "放置后可以用来作为信标传送药剂的目标\n在已经放置了一个信标的情况下无法放置第二个");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "信标");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "放置后可以用来作为信标传送药剂的目标\n在已经放置了一个信标的情况下无法放置第二个");
         }
 
 		public override void SetDefaults()
 		{
-			item.width = 12;
-			item.height = 30;
-			item.maxStack = 99;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 10;
-			item.useStyle = 1;
-			item.consumable = true;
-			item.value = 150;
-			item.createTile = mod.TileType("Beacon");
+			Item.width = 12;
+			Item.height = 30;
+			Item.maxStack = 99;
+			Item.useTurn = true;
+			Item.autoReuse = true;
+			Item.useAnimation = 15;
+			Item.useTime = 10;
+			Item.useStyle = 1;
+			Item.consumable = true;
+			Item.value = 150;
+			Item.createTile = TileType<Tiles.Beacon>();
 		}
 
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.CrystalBall);
-			recipe.AddIngredient(ItemID.CrystalShard, 15);
-			recipe.AddIngredient(ItemID.CursedFlame, 15);
-			recipe.AddIngredient(ItemID.SoulofLight, 10);
-			recipe.AddIngredient(ItemID.SoulofNight, 10);
-			recipe.AddRecipeGroup("AlchemistNPC:Tier3Bar", 15);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
-			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.CrystalBall);
-			recipe.AddIngredient(ItemID.CrystalShard, 15);
-			recipe.AddIngredient(ItemID.Ichor, 15);
-			recipe.AddIngredient(ItemID.SoulofLight, 10);
-			recipe.AddIngredient(ItemID.SoulofNight, 10);
-			recipe.AddRecipeGroup("AlchemistNPC:Tier3Bar", 15);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe()
+				.AddIngredient(ItemID.CrystalBall)
+				.AddIngredient(ItemID.CrystalShard, 15)
+				.AddIngredient(ItemID.CursedFlame, 15)
+				.AddIngredient(ItemID.SoulofLight, 10)
+				.AddIngredient(ItemID.SoulofNight, 10)
+				.AddRecipeGroup("AlchemistNPC:Tier3Bar", 15)
+				.AddTile(TileID.MythrilAnvil)
+				.Register();
+			CreateRecipe()
+				.AddIngredient(ItemID.CrystalBall)
+				.AddIngredient(ItemID.CrystalShard, 15)
+				.AddIngredient(ItemID.Ichor, 15)
+				.AddIngredient(ItemID.SoulofLight, 10)
+				.AddIngredient(ItemID.SoulofNight, 10)
+				.AddRecipeGroup("AlchemistNPC:Tier3Bar", 15)
+				.AddTile(TileID.MythrilAnvil)
+				.Register();
 		}
 	}
 }

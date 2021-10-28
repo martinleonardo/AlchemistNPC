@@ -12,15 +12,15 @@ namespace AlchemistNPC.Projectiles
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Bleeding Bullet");     //The English name of the projectile
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 5;    //The length of old position to be recorded
-			ProjectileID.Sets.TrailingMode[projectile.type] = 0;        //The recording mode
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;    //The length of old position to be recorded
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;        //The recording mode
 		}
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(ProjectileID.Bullet);
-			projectile.timeLeft = 300;
-			aiType = ProjectileID.Bullet;           //Act exactly like default Bullet
+			Projectile.CloneDefaults(ProjectileID.Bullet);
+			Projectile.timeLeft = 300;
+			AIType = ProjectileID.Bullet;           //Act exactly like default Bullet
 		}
 		
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

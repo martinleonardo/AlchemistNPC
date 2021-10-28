@@ -17,11 +17,11 @@ namespace AlchemistNPC.Projectiles
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(261);
-			projectile.width = 30;
-			projectile.height = 28;
-			projectile.aiStyle = 14;
-			aiType = 261;
+			Projectile.CloneDefaults(261);
+			Projectile.width = 30;
+			Projectile.height = 28;
+			Projectile.aiStyle = 14;
+			AIType = 261;
 		}
 		
 		public override void AI()
@@ -30,25 +30,25 @@ namespace AlchemistNPC.Projectiles
 		
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			projectile.Kill();
+			Projectile.Kill();
 			return true;
 		}
 		
 		public override void Kill(int timeLeft)
         {
-			Player player = Main.player[projectile.owner];
-			Main.PlaySound(2, (int)projectile.position.X, (int)projectile.position.Y, 62);
+			Player player = Main.player[Projectile.owner];
+			Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.position.X, (int)Projectile.position.Y, 62);
 			for (int index1 = 0; index1 < 60; ++index1)
 			{
-				int index2 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0.0f, 0.0f, 100, Color.Purple, 1.5f);
+				int index2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 31, 0.0f, 0.0f, 100, Color.Purple, 1.5f);
 				Main.dust[index2].velocity *= 1f;
 			}
 		}
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			target.immune[projectile.owner] = 1;
-			projectile.Kill();
+			target.immune[Projectile.owner] = 1;
+			Projectile.Kill();
 		}
 	}
 }

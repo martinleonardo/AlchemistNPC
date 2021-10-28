@@ -20,10 +20,10 @@ namespace AlchemistNPC.Items.Weapons
 			+"\n25% to take only half of the damage from debuffed enemy"
 			+"\n[c/00FF00:Stats are growing up through progression]"
 			+"\nBoosted stats will be shown after the first swing");
-			DisplayName.AddTranslation(GameCulture.Russian, "''Сера Сумат'', Святой Мститель");
-            Tooltip.AddTranslation(GameCulture.Russian, "[c/00FF00:Легендарный Меч] Старого Графа Эхлда\nОслабляет противников при ударе\nПротивники получают на 20% больше урона\n25% шанс получить половину урона от ослабленных противников\n[c/00FF00:Показатели увеличивается по мере прохождения]");
-			DisplayName.AddTranslation(GameCulture.Chinese, "''塞拉苏门'', 神圣复仇者");
-			Tooltip.AddTranslation(GameCulture.Chinese, "老公爵埃尔德的[c/00FF00:传奇之剑]"
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "''Сера Сумат'', Святой Мститель");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "[c/00FF00:Легендарный Меч] Старого Графа Эхлда\nОслабляет противников при ударе\nПротивники получают на 20% больше урона\n25% шанс получить половину урона от ослабленных противников\n[c/00FF00:Показатели увеличивается по мере прохождения]");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "''塞拉苏门'', 神圣复仇者");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "老公爵埃尔德的[c/00FF00:传奇之剑]"
 			+"\n纯近战剑"
 			+"\n造成诅咒之光Debuff"
 			+"\n来自玩家的攻击对敌人多造成20%伤害"
@@ -35,83 +35,83 @@ namespace AlchemistNPC.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.Muramasa);
-			item.damage = 14;
-			item.melee = true;
-			item.width = 78;
-			item.height = 78;
-			item.useTime = 15;
-			item.useAnimation = 15;
-			item.useStyle = 1;
-			item.knockBack = 6;
-			item.value = Item.buyPrice(platinum: 1);
-			item.rare = 11;
-			item.UseSound = SoundID.Item1;
-			item.autoReuse = true;
+			Item.CloneDefaults(ItemID.Muramasa);
+			Item.damage = 14;
+			Item.DamageType = DamageClass.Melee;
+			Item.width = 78;
+			Item.height = 78;
+			Item.useTime = 15;
+			Item.useAnimation = 15;
+			Item.useStyle = 1;
+			Item.knockBack = 6;
+			Item.value = Item.buyPrice(platinum: 1);
+			Item.rare = 11;
+			Item.UseSound = SoundID.Item1;
+			Item.autoReuse = true;
 		}
 
 		public override bool CanUseItem(Player player)
 		{
 			if (!Main.hardMode)
 			{
-				item.autoReuse = false;
+				Item.autoReuse = false;
 			}
-			item.useTime = 15;
-			item.useAnimation = 15;
+			Item.useTime = 15;
+			Item.useAnimation = 15;
 			if (NPC.downedSlimeKing)
 			{
-				item.damage = 16;
+				Item.damage = 16;
 			}
 			if (NPC.downedBoss1)
 			{
-				item.damage = 18;
+				Item.damage = 18;
 			}
 			if (NPC.downedBoss2)
 			{
-				item.damage = 22;
+				Item.damage = 22;
 			}
 			if (NPC.downedQueenBee)
 			{
-				item.damage = 26;
+				Item.damage = 26;
 			}
 			if (NPC.downedBoss3)
 			{
-				item.damage = 30;
+				Item.damage = 30;
 			}
 			if (Main.hardMode)
 			{
-				item.damage = 36;
-				item.useTime = 10;
-				item.useAnimation = 10;
-				item.autoReuse = true;
+				Item.damage = 36;
+				Item.useTime = 10;
+				Item.useAnimation = 10;
+				Item.autoReuse = true;
 			}
 			if (NPC.downedMechBossAny)
 			{
-				item.damage = 44;
+				Item.damage = 44;
 			}
 			if (NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
 			{
-				item.damage = 52;
+				Item.damage = 52;
 			}
 			if (NPC.downedPlantBoss)
 			{
-				item.damage = 64;
+				Item.damage = 64;
 			}
 			if (NPC.downedGolemBoss)
 			{
-				item.damage = 72;
+				Item.damage = 72;
 			}
 			if (NPC.downedFishron)
 			{
-				item.damage = 81;
+				Item.damage = 81;
 			}
 			if (NPC.downedAncientCultist)
 			{
-				item.damage = 90;
+				Item.damage = 90;
 			}
 			if (NPC.downedMoonlord)
 			{
-				item.damage = 100;
+				Item.damage = 100;
 			}
 			return true;
 		}
@@ -120,7 +120,7 @@ namespace AlchemistNPC.Items.Weapons
 		{
 			if (Main.rand.Next(3) == 0)
 			{
-				Dust.NewDust(new Vector2(hitbox.X, hitbox.Y), hitbox.Width, hitbox.Height, mod.DustType("JustitiaPale"));
+				Dust.NewDust(new Vector2(hitbox.X, hitbox.Y), hitbox.Width, hitbox.Height, DustType<Dusts.JustitiaPale>());
 			}
 		}
 
@@ -131,25 +131,25 @@ namespace AlchemistNPC.Items.Weapons
 		
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)
 		{
-			target.buffImmune[mod.BuffType("CurseOfLight")] = false;
-			target.AddBuff(mod.BuffType("CurseOfLight"), 300);
+			target.buffImmune[ModContent.BuffType<Buffs.CurseOfLight>()] = false;
+			target.AddBuff(ModContent.BuffType<Buffs.CurseOfLight>(), 300);
 			if (Main.hardMode && !NPC.downedMechBossAny)
 			{
 				Vector2 vel1 = new Vector2(0, 0);
 				vel1 *= 0f;
-				Projectile.NewProjectile(target.position.X, target.position.Y, vel1.X, vel1.Y, mod.ProjectileType("ExplosionAvenger"), damage/4, 0, Main.myPlayer);
+				Projectile.NewProjectile(target.GetProjectileSpawnSource(), target.position.X, target.position.Y, vel1.X, vel1.Y, ProjectileType<Projectiles.ExplosionAvenger>(), damage/4, 0, Main.myPlayer);
 			}
 			if (Main.hardMode && NPC.downedMechBossAny && !NPC.downedGolemBoss)
 			{
 				Vector2 vel1 = new Vector2(0, 0);
 				vel1 *= 0f;
-				Projectile.NewProjectile(target.position.X, target.position.Y, vel1.X, vel1.Y, mod.ProjectileType("ExplosionAvenger"), damage/3, 0, Main.myPlayer);
+				Projectile.NewProjectile(target.GetProjectileSpawnSource(), target.position.X, target.position.Y, vel1.X, vel1.Y, ProjectileType<Projectiles.ExplosionAvenger>(), damage/3, 0, Main.myPlayer);
 			}
 			if (Main.hardMode && NPC.downedGolemBoss)
 			{
 				Vector2 vel1 = new Vector2(0, 0);
 				vel1 *= 0f;
-				Projectile.NewProjectile(target.position.X, target.position.Y, vel1.X, vel1.Y, mod.ProjectileType("ExplosionAvenger"), damage/2, 0, Main.myPlayer);
+				Projectile.NewProjectile(target.GetProjectileSpawnSource(), target.position.X, target.position.Y, vel1.X, vel1.Y, ProjectileType<Projectiles.ExplosionAvenger>(), damage/2, 0, Main.myPlayer);
 			}
 		}
 	}

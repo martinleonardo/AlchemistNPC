@@ -29,25 +29,25 @@ namespace AlchemistNPC.Items.Equippable
 				+ "\nOffensive state increases attack speed by 10-20%"
 				+ "\nDefensive state greatly increases regeneration, defense and damage reduction"
 				+ "\nStats boosts are shown when accessory is equipped");
-				DisplayName.AddTranslation(GameCulture.Russian, "Симбионт");
-            Tooltip.AddTranslation(GameCulture.Russian, "Усиливает регенерацию\nУменьшает откат зелий лечения\nУвеличивает период неуязвимости после получения урона\nИмеет 2 состояния (Боевое и Защитное)\nБоевое состояние увеличивает скорость ближнего боя на 20%\nАктивируется когда здоровье >50%\nЗащитное состояние сильно усиливает регенерацию, повышает защиту и поглощение урона\nАктивируется когда здоровье <50%");
-			DisplayName.AddTranslation(GameCulture.Chinese, "共生体");
-			Tooltip.AddTranslation(GameCulture.Chinese, "减少生命药水冷却时间\n增加受伤无敌帧\n拥有两种模式 (侵略(>50% HP)/守御(<50% HP))\n攻击模式下增加10-20%攻击速度\n防御模式下极大增加生命回复, 防御和伤害减免");
+				DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Симбионт");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Усиливает регенерацию\nУменьшает откат зелий лечения\nУвеличивает период неуязвимости после получения урона\nИмеет 2 состояния (Боевое и Защитное)\nБоевое состояние увеличивает скорость ближнего боя на 20%\nАктивируется когда здоровье >50%\nЗащитное состояние сильно усиливает регенерацию, повышает защиту и поглощение урона\nАктивируется когда здоровье <50%");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "共生体");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "减少生命药水冷却时间\n增加受伤无敌帧\n拥有两种模式 (侵略(>50% HP)/守御(<50% HP))\n攻击模式下增加10-20%攻击速度\n防御模式下极大增加生命回复, 防御和伤害减免");
         }
 	
 		public override void SetDefaults()
 		{
-			item.stack = 1;
-			item.width = 26;
-			item.height = 26;
-			item.value = 1000000;
-			item.rare = 11;
-			item.accessory = true;
+			Item.stack = 1;
+			Item.width = 26;
+			Item.height = 26;
+			Item.value = 1000000;
+			Item.rare = 11;
+			Item.accessory = true;
 		}
 
 		public override int ChoosePrefix (UnifiedRandom rand)
 		{
-			return mod.PrefixType("Xenomorphic");
+			return PrefixType<Prefixes.XenomorphicPrefix>();
 		}
 		
 		public override void UpdateAccessory(Player player, bool hideVisual)
@@ -62,7 +62,7 @@ namespace AlchemistNPC.Items.Equippable
 				d = 2;
 				e = 5;
 				s = 10;
-				player.allDamage += 0.05f;
+				player.GetDamage(DamageClass.Generic) += 0.05f;
 				player.lifeRegen += 2;
 				player.statDefense += 2;
 				player.endurance += 0.05f;
@@ -74,7 +74,7 @@ namespace AlchemistNPC.Items.Equippable
 				d = 4;
 				e = 7;
 				s = 15;
-				player.allDamage += 0.07f;
+				player.GetDamage(DamageClass.Generic) += 0.07f;
 				player.lifeRegen += 4;
 				player.statDefense += 4;
 				player.endurance += 0.07f;
@@ -86,25 +86,25 @@ namespace AlchemistNPC.Items.Equippable
 				d = 6;
 				e = 10;
 				s = 20;
-				player.allDamage += 0.1f;
+				player.GetDamage(DamageClass.Generic) += 0.1f;
 				player.lifeRegen += 6;
 				player.statDefense += 6;
 				player.endurance += 0.1f;
 			}
-			player.meleeCrit += p;
-			player.rangedCrit += p;
-			player.magicCrit += p;
-			player.thrownCrit += p;
+			player.GetCritChance(DamageClass.Melee) += p;
+			player.GetCritChance(DamageClass.Ranged) += p;
+			player.GetCritChance(DamageClass.Magic) += p;
+			player.GetCritChance(DamageClass.Throwing) += p;
 			
 			if (player.statLife > player.statLifeMax2/2)
 			{
-				((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).Symbiote = true;
-				player.AddBuff(mod.BuffType("SymbOff"), 2, true);
+				((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).Symbiote = true;
+				player.AddBuff(ModContent.BuffType<Buffs.SymbOff>(), 2, true);
 				SS = true;
 			}
 			if (player.statLife < player.statLifeMax2/2)
 			{
-				player.AddBuff(mod.BuffType("SymbDef"), 2, true);
+				player.AddBuff(ModContent.BuffType<Buffs.SymbDef>(), 2, true);
 				SS = false;
 				if (!Main.hardMode)
 				{
@@ -135,6 +135,8 @@ namespace AlchemistNPC.Items.Equippable
 				}
 			}
 			player.longInvince = true;
+			// IMPLEMENT WHEN WEAKREFERENCES FIXED
+			/*
 			if (ModLoader.GetMod("ThoriumMod") != null)
 			{
 				ThoriumBoosts(player);
@@ -148,11 +150,12 @@ namespace AlchemistNPC.Items.Equippable
 			{
 				Calamity.Call("AddRogueCrit", player, p);
 			}
+			*/
 		}
 		
 		public override void ModifyTooltips(List<TooltipLine> tooltips)
 		{
-			if (!item.social && show)
+			if (!Item.social && show)
 			{
 				string text1 = "+" + p + "% damage";
 				string text2 = "+" + p + "% critical strike chance";
@@ -160,12 +163,12 @@ namespace AlchemistNPC.Items.Equippable
 				string text4 = "+" + d + " defense";
 				string text5 = "+" + e + "% damage reduction";
 				string text6 = "+" + s + "% attack speed";
-				TooltipLine line = new TooltipLine(mod, "text1", text1);
-				TooltipLine line2 = new TooltipLine(mod, "text2", text2);
-				TooltipLine line3 = new TooltipLine(mod, "text3", text3);
-				TooltipLine line4 = new TooltipLine(mod, "text4", text4);
-				TooltipLine line5 = new TooltipLine(mod, "text5", text5);
-				TooltipLine line6 = new TooltipLine(mod, "text6", text6);
+				TooltipLine line = new TooltipLine(Mod, "text1", text1);
+				TooltipLine line2 = new TooltipLine(Mod, "text2", text2);
+				TooltipLine line3 = new TooltipLine(Mod, "text3", text3);
+				TooltipLine line4 = new TooltipLine(Mod, "text4", text4);
+				TooltipLine line5 = new TooltipLine(Mod, "text5", text5);
+				TooltipLine line6 = new TooltipLine(Mod, "text6", text6);
 				line.overrideColor = Color.LimeGreen;
 				line2.overrideColor = Color.LimeGreen;
 				line3.overrideColor = Color.LimeGreen;
@@ -181,17 +184,20 @@ namespace AlchemistNPC.Items.Equippable
 			}
 		}
 		
+		// IMPLEMENT WHEN WEAKREFERENCES FIXED
+		/*
 		private void RedemptionBoost(Player player)
         {
 			Redemption.Items.DruidDamageClass.DruidDamagePlayer RedemptionPlayer = player.GetModPlayer<Redemption.Items.DruidDamageClass.DruidDamagePlayer>();
-            RedemptionPlayer.druidCrit += p;
+            Redemptionplayer.GetCritChance(DamageClass.Druid) += p;
         }
 		
 		private void ThoriumBoosts(Player player)
         {
             ThoriumMod.ThoriumPlayer ThoriumPlayer = player.GetModPlayer<ThoriumMod.ThoriumPlayer>();
-            ThoriumPlayer.symphonicCrit += p;
-            ThoriumPlayer.radiantCrit += p;
+            Thoriumplayer.GetCritChance(DamageClass.Symphonic) += p;
+            Thoriumplayer.GetCritChance(DamageClass.Radiant) += p;
         }
+		*/
 	}
 }

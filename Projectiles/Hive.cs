@@ -17,9 +17,9 @@ namespace AlchemistNPC.Projectiles
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(261);
-			projectile.aiStyle = 14;
-			aiType = 261;
+			Projectile.CloneDefaults(261);
+			Projectile.aiStyle = 14;
+			AIType = 261;
 		}
 		
 		public override void AI()
@@ -32,22 +32,22 @@ namespace AlchemistNPC.Projectiles
 					float rand = Main.rand.NextFloat() * 6.283f;
 					vel = vel.RotatedBy(rand);
 					vel *= 5f;
-					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, vel.X, vel.Y, mod.ProjectileType("Bees"), projectile.damage, 0, Main.myPlayer);
+					Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, vel.X, vel.Y, ModContent.ProjectileType<Projectiles.Bees>(), Projectile.damage, 0, Main.myPlayer);
 				}
 			}
 		}
 		
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			Main.PlaySound(4, (int)projectile.position.X, (int)projectile.position.Y, 22);
-			projectile.Kill();
-			if (projectile.ai[0] > 7f)
+			Terraria.Audio.SoundEngine.PlaySound(4, (int)Projectile.position.X, (int)Projectile.position.Y, 22);
+			Projectile.Kill();
+			if (Projectile.ai[0] > 7f)
 			{
 				float num296 = 1f;
 				int num297 = 265;
 				for (int num298 = 0; num298 < 50; num298++)
 				{
-					int num299 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, num297, projectile.velocity.X * 0.2f, projectile.velocity.Y * 0.2f, 100, default(Color), 1f);
+					int num299 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, num297, Projectile.velocity.X * 0.2f, Projectile.velocity.Y * 0.2f, 100, default(Color), 1f);
 					if ((num297 == 235 && Main.rand.NextBool(3)))
 					{
 						Main.dust[num299].noGravity = true;
@@ -68,7 +68,7 @@ namespace AlchemistNPC.Projectiles
 					Main.dust[num299].scale *= num296;
 					if (num297 == 75)
 					{
-						Main.dust[num299].velocity += projectile.velocity;
+						Main.dust[num299].velocity += Projectile.velocity;
 						if (!Main.dust[num299].noGravity)
 						{
 							Main.dust[num299].velocity *= 0.5f;
@@ -84,11 +84,11 @@ namespace AlchemistNPC.Projectiles
 				vel *= 5f;
 				if (!Main.hardMode)
 					{
-						Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, vel.X, vel.Y, mod.ProjectileType("Bees"), projectile.damage, 0, Main.myPlayer);
+						Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, vel.X, vel.Y, ModContent.ProjectileType<Projectiles.Bees>(), Projectile.damage, 0, Main.myPlayer);
 					}
 					if (Main.hardMode)
 					{
-						Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, vel.X, vel.Y, mod.ProjectileType("Bees"), projectile.damage, 0, Main.myPlayer);
+						Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, vel.X, vel.Y, ModContent.ProjectileType<Projectiles.Bees>(), Projectile.damage, 0, Main.myPlayer);
 					}
 			}
 			return true;
@@ -96,15 +96,15 @@ namespace AlchemistNPC.Projectiles
 		
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			Main.PlaySound(4, (int)projectile.position.X, (int)projectile.position.Y, 22);
-			projectile.Kill();
-			if (projectile.ai[0] > 7f)
+			Terraria.Audio.SoundEngine.PlaySound(4, (int)Projectile.position.X, (int)Projectile.position.Y, 22);
+			Projectile.Kill();
+			if (Projectile.ai[0] > 7f)
 			{
 				float num296 = 1f;
 				int num297 = 265;
 				for (int num298 = 0; num298 < 50; num298++)
 				{
-					int num299 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, num297, projectile.velocity.X * 0.2f, projectile.velocity.Y * 0.2f, 100, default(Color), 1f);
+					int num299 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, num297, Projectile.velocity.X * 0.2f, Projectile.velocity.Y * 0.2f, 100, default(Color), 1f);
 					if ((num297 == 235 && Main.rand.NextBool(3)))
 					{
 						Main.dust[num299].noGravity = true;
@@ -125,7 +125,7 @@ namespace AlchemistNPC.Projectiles
 					Main.dust[num299].scale *= num296;
 					if (num297 == 75)
 					{
-						Main.dust[num299].velocity += projectile.velocity;
+						Main.dust[num299].velocity += Projectile.velocity;
 						if (!Main.dust[num299].noGravity)
 						{
 							Main.dust[num299].velocity *= 0.5f;
@@ -141,11 +141,11 @@ namespace AlchemistNPC.Projectiles
 					vel *= 5f;
 					if (!Main.hardMode)
 					{
-						Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, vel.X, vel.Y, mod.ProjectileType("Bees"), projectile.damage, 0, Main.myPlayer);
+						Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, vel.X, vel.Y, ModContent.ProjectileType<Projectiles.Bees>(), Projectile.damage, 0, Main.myPlayer);
 					}
 					if (Main.hardMode)
 					{
-						Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, vel.X, vel.Y, mod.ProjectileType("Bees"), projectile.damage, 0, Main.myPlayer);
+						Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, vel.X, vel.Y, ModContent.ProjectileType<Projectiles.Bees>(), Projectile.damage, 0, Main.myPlayer);
 					}
 				}
 		}

@@ -12,16 +12,16 @@ namespace AlchemistNPC.Buffs
 	{
 		public static int counter = 0;
 		
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Laser Battery");
 			Description.SetDefault("Ready to fire");
 			Main.debuff[Type] = false;
-			canBeCleared = true;
-			DisplayName.AddTranslation(GameCulture.Russian, "Лазерная батарея");
-			Description.AddTranslation(GameCulture.Russian, "Готова к стрельбе");
-            DisplayName.AddTranslation(GameCulture.Chinese, "激光电池");
-            Description.AddTranslation(GameCulture.Chinese, "准备开火");
+			CanBeCleared = true;
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Лазерная батарея");
+			Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Готова к стрельбе");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "激光电池");
+            Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "准备开火");
         }
 		
 		public override void Update(Player player, ref int buffIndex)
@@ -42,8 +42,8 @@ namespace AlchemistNPC.Buffs
                         distance = 1.6f / distance;
                         shootToX *= distance * 3;
                         shootToY *= distance * 3;
-						Main.PlaySound(SoundID.Item93.WithVolume(.6f), player.position);
-                        Projectile.NewProjectile(player.Center.X, player.Center.Y+4, shootToX, shootToY, 433, 60, 6, Main.myPlayer, 0f, 0f);
+						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item93.WithVolume(.6f), player.position);
+                        Projectile.NewProjectile(player.GetProjectileSource_Buff(buffIndex), player.Center.X, player.Center.Y+4, shootToX, shootToY, 433, 60, 6, Main.myPlayer, 0f, 0f);
                         counter = 0;
                     }
                 }

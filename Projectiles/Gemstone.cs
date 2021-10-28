@@ -15,40 +15,41 @@ namespace AlchemistNPC.Projectiles
 		
 		public override void SetDefaults()
 		{
-			projectile.width = 12;
-			projectile.height = 16;
-			projectile.friendly = true;
-			projectile.magic = false;
-			projectile.penetrate = 1;
-			projectile.timeLeft = 600;
+			Projectile.width = 12;
+			Projectile.height = 16;
+			Projectile.friendly = true;
+			// Unknown Damage Type
+			//Projectile.magic = false;
+			Projectile.penetrate = 1;
+			Projectile.timeLeft = 600;
 		}
 
 		public override void AI()
 		{
-			projectile.velocity.Y += projectile.ai[0];
-			projectile.rotation += projectile.velocity.X / 20f;
+			Projectile.velocity.Y += Projectile.ai[0];
+			Projectile.rotation += Projectile.velocity.X / 20f;
 		}
 		
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			projectile.penetrate--;
-			if (projectile.penetrate <= 0)
+			Projectile.penetrate--;
+			if (Projectile.penetrate <= 0)
 			{
-				projectile.Kill();
+				Projectile.Kill();
 			}
 			else
 			{
-				projectile.ai[0] += 0.1f;
-				if (projectile.velocity.X != oldVelocity.X)
+				Projectile.ai[0] += 0.1f;
+				if (Projectile.velocity.X != oldVelocity.X)
 				{
-					projectile.velocity.X = -oldVelocity.X;
+					Projectile.velocity.X = -oldVelocity.X;
 				}
-				if (projectile.velocity.Y != oldVelocity.Y)
+				if (Projectile.velocity.Y != oldVelocity.Y)
 				{
-					projectile.velocity.Y = -oldVelocity.Y;
+					Projectile.velocity.Y = -oldVelocity.Y;
 				}
-				projectile.velocity *= 0.5f;
-				Main.PlaySound(SoundID.Item10, projectile.position);
+				Projectile.velocity *= 0.5f;
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
 			}
 			return false;
 		}
@@ -57,15 +58,15 @@ namespace AlchemistNPC.Projectiles
 		{
 			for (int k = 0; k < 5; k++)
 			{
-				Dust.NewDust(projectile.position + projectile.velocity, projectile.width, projectile.height, mod.DustType("AlchFlask"), projectile.oldVelocity.X * 0.5f, projectile.oldVelocity.Y * 0.5f);
+				Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, ModContent.DustType<Dusts.AlchFlask>(), Projectile.oldVelocity.X * 0.5f, Projectile.oldVelocity.Y * 0.5f);
 			}
-			Main.PlaySound(SoundID.Item25, projectile.position);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item25, Projectile.position);
 		}
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			projectile.ai[0] += 0.3f;
-			projectile.velocity *= 0.8f;
+			Projectile.ai[0] += 0.3f;
+			Projectile.velocity *= 0.8f;
 		}
 	}
 }

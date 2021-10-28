@@ -18,15 +18,15 @@ namespace AlchemistNPC.Buffs
 {
 	public class HoloprojectorCrimson : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Holoprojector ''Crimson''");
 			Description.SetDefault("Biome state is set to Crimson now");
 			Main.buffNoTimeDisplay[Type] = true;
-			DisplayName.AddTranslation(GameCulture.Russian, "Голографический Проектор ''Кримзон''");
-			Description.AddTranslation(GameCulture.Russian, "Изменяет текущий биом на Кримзон");
-            DisplayName.AddTranslation(GameCulture.Chinese, "全息投影仪 ''血腥''");
-            Description.AddTranslation(GameCulture.Chinese, "当前地形设置:血腥");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Голографический Проектор ''Кримзон''");
+			Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Изменяет текущий биом на Кримзон");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "全息投影仪 ''血腥''");
+            Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "当前地形设置:血腥");
         }
 		
 		public override void Update(Player player, ref int buffIndex)

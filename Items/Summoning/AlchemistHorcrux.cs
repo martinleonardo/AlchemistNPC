@@ -14,27 +14,27 @@ namespace AlchemistNPC.Items.Summoning
 		{
 			DisplayName.SetDefault("Alchemist Horcrux");
 			Tooltip.SetDefault("The piece of Alchemist's soul is inside it.");
-			DisplayName.AddTranslation(GameCulture.Russian, "Крестраж Алхимика");
-			Tooltip.AddTranslation(GameCulture.Russian, "Часть души Алхимика находится внутри");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Крестраж Алхимика");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Часть души Алхимика находится внутри");
 
-            DisplayName.AddTranslation(GameCulture.Chinese, "炼金师魂器");
-            Tooltip.AddTranslation(GameCulture.Chinese, "里面有炼金师的一片灵魂");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "炼金师魂器");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "里面有炼金师的一片灵魂");
         }
 
 		public override void SetDefaults()
 		{
-			item.width = 46;
-            item.height = 42;
-            item.maxStack = 30;
-            item.rare = 10;
-            item.useStyle = 1;
-            item.useAnimation = 15;
-            item.useTime = 15;
-            item.consumable = true;
-            item.noMelee = true;
-            item.noUseGraphic = true;
-            item.UseSound = SoundID.Item37;
-			item.makeNPC = (short)mod.NPCType("Alchemist");
+			Item.width = 46;
+            Item.height = 42;
+            Item.maxStack = 30;
+            Item.rare = 10;
+            Item.useStyle = 1;
+            Item.useAnimation = 15;
+            Item.useTime = 15;
+            Item.consumable = true;
+            Item.noMelee = true;
+            Item.noUseGraphic = true;
+            Item.UseSound = SoundID.Item37;
+			Item.makeNPC = (short)NPCType<NPCs.Alchemist>();
 		}
 
 		public override void HoldItem(Player player)
@@ -46,7 +46,7 @@ namespace AlchemistNPC.Items.Summoning
 		public override bool CanUseItem(Player player)
 		{
 			Vector2 vector2 = Main.screenPosition + new Vector2(Main.mouseX, Main.mouseY);
-			return (!NPC.AnyNPCs(mod.NPCType("Alchemist")) && !Collision.SolidCollision(vector2, player.width, player.height));
+			return (!NPC.AnyNPCs(NPCType<NPCs.Alchemist>()) && !Collision.SolidCollision(vector2, player.width, player.height));
 		}
 		
 		public override void OnConsumeItem(Player player)

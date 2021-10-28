@@ -17,24 +17,23 @@ namespace AlchemistNPC.Projectiles
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(118);
-			projectile.melee = false;
-			projectile.magic = true;
-			projectile.aiStyle = 28;
-			aiType = 118;
+			Projectile.CloneDefaults(118);
+			Projectile.DamageType = DamageClass.Magic;
+			Projectile.aiStyle = 28;
+			AIType = 118;
 		}
 		
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			if (!target.boss && Main.rand.Next(10) == 0)
 			{
-			target.buffImmune[mod.BuffType("Slowness")] = false;
-			target.AddBuff(mod.BuffType("Slowness"), 120);
+			target.buffImmune[ModContent.BuffType<Buffs.Slowness>()] = false;
+			target.AddBuff(ModContent.BuffType<Buffs.Slowness>(), 120);
 			}
 			if (!target.boss && Main.rand.Next(30) == 0)
 			{
-			target.buffImmune[mod.BuffType("Patience")] = false;
-			target.AddBuff(mod.BuffType("Patience"), 120);
+			target.buffImmune[ModContent.BuffType<Buffs.Patience>()] = false;
+			target.AddBuff(ModContent.BuffType<Buffs.Patience>(), 120);
 			}
 		}
 	}

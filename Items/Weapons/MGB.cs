@@ -12,25 +12,25 @@ namespace AlchemistNPC.Items.Weapons
 		{
 			DisplayName.SetDefault("17mm Round");
 			Tooltip.SetDefault("Requred to shoot from ''Meat Grinder''");
-			DisplayName.AddTranslation(GameCulture.Russian, "17mm патрон");
-            Tooltip.AddTranslation(GameCulture.Russian, "Необходим для стрельбы из ''Мясорубки''");
-			DisplayName.AddTranslation(GameCulture.Chinese, "17mm 子弹");
-			Tooltip.AddTranslation(GameCulture.Chinese, "''绞肉机'' 射击所需");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "17mm патрон");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Необходим для стрельбы из ''Мясорубки''");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "17mm 子弹");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "''绞肉机'' 射击所需");
         }
 
 		public override void SetDefaults()
 		{
-			item.damage = 1;
-			item.ranged = true;
-			item.width = 14;
-			item.height = 22;
-			item.maxStack = 9999;
-			item.consumable = true;
-			item.knockBack = 4;
-			item.value = Item.sellPrice(0, 0, 1, 0);
-			item.rare = 12;
-			item.shoot = 638;
-			item.ammo = item.type;
+			Item.damage = 1;
+			Item.DamageType = DamageClass.Ranged;
+			Item.width = 14;
+			Item.height = 22;
+			Item.maxStack = 9999;
+			Item.consumable = true;
+			Item.knockBack = 4;
+			Item.value = Item.sellPrice(0, 0, 1, 0);
+			Item.rare = 11;
+			Item.shoot = 638;
+			Item.ammo = Item.type;
 		}
 	}
 }

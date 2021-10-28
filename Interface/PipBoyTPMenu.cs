@@ -12,6 +12,8 @@ using System;
 using Terraria.ID;
 using System.Linq;
 using AlchemistNPC.Items;
+using Terraria.Audio;
+using ReLogic.Content;
 
 namespace AlchemistNPC.Interface
 {
@@ -39,7 +41,7 @@ namespace AlchemistNPC.Interface
 			string UnderworldButton;
 			string JungleButton;
 			string TempleButton;
-			if(Language.ActiveCulture == GameCulture.Chinese)
+			if(Language.ActiveCulture == GameCulture.FromCultureName(GameCulture.CultureName.Chinese))
 				{
 					BeachButton = "沙滩 左/右";
 					OceanButton = "海洋 左/右";
@@ -103,8 +105,8 @@ namespace AlchemistNPC.Interface
 			PipBoyTPPanel.Append(text6);
 
 			Mod mod = AlchemistNPC.Instance;
-			Texture2D buttonPlayTexture = ModContent.GetTexture("Terraria/UI/ButtonPlay");
-			Texture2D buttonBackTexture = mod.GetTexture("Interface/ButtonBack");
+			Asset<Texture2D> buttonPlayTexture = ModContent.Request<Texture2D>("Terraria/Images/UI/ButtonPlay");
+			Asset<Texture2D> buttonBackTexture = mod.Assets.Request<Texture2D>("Interface/ButtonBack");
 			UIImageButton playButton = new UIImageButton(buttonBackTexture);
 			playButton.Left.Set(10, 0f);
 			playButton.Top.Set(10, 0f);
@@ -176,7 +178,7 @@ namespace AlchemistNPC.Interface
 			playButton55.OnClick += new MouseEvent(PlayButtonClicked55);
 			PipBoyTPPanel.Append(playButton55);
 			
-			Texture2D buttonDeleteTexture = ModContent.GetTexture("Terraria/UI/ButtonDelete");
+			Asset<Texture2D> buttonDeleteTexture = ModContent.Request<Texture2D>("Terraria/Images/UI/ButtonDelete");
 			UIImageButton closeButton = new UIImageButton(buttonDeleteTexture);
 			closeButton.Left.Set(220, 0f);
 			closeButton.Top.Set(10, 0f);
@@ -255,7 +257,7 @@ namespace AlchemistNPC.Interface
 
 		private void CloseButtonClicked(UIMouseEvent evt, UIElement listeningElement)
 		{
-			Main.PlaySound(SoundID.MenuOpen);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.MenuOpen);
 			visible = false;
 		}
 

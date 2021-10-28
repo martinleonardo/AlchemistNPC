@@ -18,19 +18,19 @@ namespace AlchemistNPC.Items.Equippable
 			DisplayName.SetDefault("Braclet of Time Twist");
 			Tooltip.SetDefault("Gives a chance to get double loot from defeated mobs"
 			+"\nLowers defense/damage reduction by 20/20%");
-			DisplayName.AddTranslation(GameCulture.Russian, "Браслет Искривления Времени");
-            Tooltip.AddTranslation(GameCulture.Russian, "Даёт шанс получить удвоенный лут с убитых мобов\nПонижает защиту/сопротивление урону на 20/20%");
-			DisplayName.AddTranslation(GameCulture.Chinese, "时空扭曲手镯");
-			Tooltip.AddTranslation(GameCulture.Chinese, "从打败的敌人身上有几率双倍掉落\n降低20%伤害减免和20防御");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Браслет Искривления Времени");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Даёт шанс получить удвоенный лут с убитых мобов\nПонижает защиту/сопротивление урону на 20/20%");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "时空扭曲手镯");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "从打败的敌人身上有几率双倍掉落\n降低20%伤害减免和20防御");
 		}
 	
 		public override void SetDefaults()
 		{
-			item.width = 22;
-			item.height = 20;
-			item.value = 1000000;
-			item.rare = 6;
-			item.accessory = true;
+			Item.width = 22;
+			Item.height = 20;
+			Item.value = 1000000;
+			Item.rare = 6;
+			Item.accessory = true;
 		}
 
 		public override void UpdateAccessory(Player player, bool hideVisual)

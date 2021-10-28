@@ -9,13 +9,13 @@ namespace AlchemistNPC.Projectiles
 	{
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(ProjectileID.Bunny);
+			Projectile.CloneDefaults(ProjectileID.Bunny);
 
-			aiType = ProjectileID.Bunny;
-			Main.projFrames[projectile.type] = 8;
-			projectile.width = 40;
-			projectile.height = 50;
-			Main.projPet[projectile.type] = true;
+			AIType = ProjectileID.Bunny;
+			Main.projFrames[Projectile.type] = 8;
+			Projectile.width = 40;
+			Projectile.height = 50;
+			Main.projPet[Projectile.type] = true;
 		}
 
 		public override void SetStaticDefaults()
@@ -26,31 +26,31 @@ namespace AlchemistNPC.Projectiles
 
 		public override bool PreAI()
 		{
-			Player player = Main.player[projectile.owner];
-			player.bunny = false; // Relic from aiType
+			Player player = Main.player[Projectile.owner];
+			player.bunny = false; // Relic from AIType
 			return true;
 		}
 
 		public override void AI()
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			AlchemistNPCPlayer modPlayer = player.GetModPlayer<AlchemistNPCPlayer>();
-			if (player.dead || !player.HasBuff(mod.BuffType("GrimReaper")))
+			if (player.dead || !player.HasBuff(ModContent.BuffType<Buffs.GrimReaper>()))
 			{
 				modPlayer.grimreaper = false;
 			}
 			if (modPlayer.grimreaper)
 			{
-				projectile.timeLeft = 2;
+				Projectile.timeLeft = 2;
 			}
 			
-			if (projectile.frameCounter > 20)
+			if (Projectile.frameCounter > 20)
 			{
-				projectile.frame++;
-				projectile.frameCounter = 0;
+				Projectile.frame++;
+				Projectile.frameCounter = 0;
 			}
-			if (projectile.frame >= 8)
-			{ projectile.frame = 0; }
+			if (Projectile.frame >= 8)
+			{ Projectile.frame = 0; }
 		}
 	}
 }

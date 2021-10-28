@@ -18,14 +18,14 @@ namespace AlchemistNPC.Buffs
 {
 	public class IField : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Immortality Field");
 			Description.SetDefault("If NPC dies under this, he/she will be resurrected");
-			DisplayName.AddTranslation(GameCulture.Russian, "Поле Бессмертия");
-			Description.AddTranslation(GameCulture.Russian, "Если НПС погибнет под действием баффа, он будет мгновенно возрождён");
-			DisplayName.AddTranslation(GameCulture.Chinese, "稳恒场源");
-            Description.AddTranslation(GameCulture.Chinese, "处于这个环境下的npc死亡, 会重生");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Поле Бессмертия");
+			Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Если НПС погибнет под действием баффа, он будет мгновенно возрождён");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "稳恒场源");
+            Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "处于这个环境下的npc死亡, 会重生");
         }
 		
 		public override void Update(NPC npc, ref int buffIndex)

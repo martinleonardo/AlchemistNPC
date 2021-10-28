@@ -14,20 +14,20 @@ namespace AlchemistNPC.Items.Boosters
 		{
 			DisplayName.SetDefault("Eye of Cthulhu booster");
 			Tooltip.SetDefault("Provides creatures, treasures and traps detection");
-			DisplayName.AddTranslation(GameCulture.Russian, "Усилитель Глаза Ктулху");
-			Tooltip.AddTranslation(GameCulture.Russian, "Позволяет видеть сокровища, существ и ловушки");
-			DisplayName.AddTranslation(GameCulture.Chinese, "克苏鲁之眼增益容器");
-			Tooltip.AddTranslation(GameCulture.Chinese, "提供生物，宝藏和陷阱的探测能力");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Усилитель Глаза Ктулху");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Позволяет видеть сокровища, существ и ловушки");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "克苏鲁之眼增益容器");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "提供生物，宝藏和陷阱的探测能力");
         }
 
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.LifeFruit);
-			item.consumable = false;
-			item.value = 100000;
+			Item.CloneDefaults(ItemID.LifeFruit);
+			Item.consumable = false;
+			Item.value = 100000;
 		}
 
-		public override bool UseItem(Player player)
+		public override bool? UseItem(Player player)
         {
 			if (player.GetModPlayer<AlchemistNPCPlayer>().EyeOfCthulhuBooster == 0)
 			{

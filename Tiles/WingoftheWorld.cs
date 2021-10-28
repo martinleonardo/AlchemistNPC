@@ -13,7 +13,7 @@ namespace AlchemistNPC.Tiles
 {
 	public class WingoftheWorld : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileLighted[Type] = true;
 			Main.tileSolidTop[Type] = false;
@@ -29,17 +29,17 @@ namespace AlchemistNPC.Tiles
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Wing of the World");
-			name.AddTranslation(GameCulture.Russian, "Крыло Мира");
-            name.AddTranslation(GameCulture.Chinese, "世界之翼");
+			name.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Крыло Мира");
+            name.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "世界之翼");
             AddMapEntry(new Color(200, 200, 200), name);
-			disableSmartCursor = true;
-			adjTiles = new int[]
+			TileID.Sets.DisableSmartCursor[Type] = true;
+			AdjTiles =new int[]
 			{
 			TileID.Tables,
 			TileID.Chairs,
 			TileID.Torches 
 			};
-			animationFrameHeight = 74;
+			AnimationFrameHeight = 74;
 		}
 
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
@@ -61,7 +61,7 @@ namespace AlchemistNPC.Tiles
 		
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 32, 16, mod.ItemType("WingoftheWorld"));
+			Item.NewItem(i * 16, j * 16, 32, 16, ModContent.ItemType<Items.Placeable.WingoftheWorld>());
 		}
 	}
 }

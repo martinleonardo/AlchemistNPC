@@ -18,26 +18,27 @@ namespace AlchemistNPC.Projectiles
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(ProjectileID.BulletHighVelocity);
-			projectile.ranged = false;
-			projectile.width = 200;
-			projectile.height = 200;
-			projectile.penetrate = 1;
-			projectile.timeLeft = 15;
-			projectile.tileCollide = false;
-			projectile.friendly = false;
-			aiType = ProjectileID.BulletHighVelocity;
+			Projectile.CloneDefaults(ProjectileID.BulletHighVelocity);
+			// Unknown Damage type
+			//Projectile.ranged = false;
+			Projectile.width = 200;
+			Projectile.height = 200;
+			Projectile.penetrate = 1;
+			Projectile.timeLeft = 15;
+			Projectile.tileCollide = false;
+			Projectile.friendly = false;
+			AIType = ProjectileID.BulletHighVelocity;
 		}
 		
 		public override void AI()
 		{
-			Player player = Main.player[projectile.owner];
-			projectile.Center = player.Center;
+			Player player = Main.player[Projectile.owner];
+			Projectile.Center = player.Center;
 			for(int i = 0; i < 1000; ++i)
 			{
-				if(Main.projectile[i].active && i != projectile.whoAmI )
+				if(Main.projectile[i].active && i != Projectile.whoAmI )
 				{
-					if(Main.projectile[i].Hitbox.Intersects(projectile.Hitbox) && Main.projectile[i].active && !Main.projectile[i].friendly && Main.projectile[i].hostile)
+					if(Main.projectile[i].Hitbox.Intersects(Projectile.Hitbox) && Main.projectile[i].active && !Main.projectile[i].friendly && Main.projectile[i].hostile)
 					{
 					DestroyProjectile(Main.projectile[i]);
 					}

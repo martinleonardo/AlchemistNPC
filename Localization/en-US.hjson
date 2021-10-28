@@ -1,0 +1,70 @@
+Mods: {
+	AlchemistNPC: {
+		Common: {
+			AlchemistSpawntoggle: Alchemist Spawn toggle
+			AlchemistSpawntoggleTooltip: True to enable Alchemist NPC spawn, false to disable. True by default
+			BrewerSpawntoggle: Brewer Spawn toggle
+			BrewerSpawntoggleTooltip: True to enable Brewer NPC spawn, false to disable. True by default
+			JewelerSpawntoggle: Jeweler Spawn toggle
+			JewelerSpawntoggleTooltip: True to enable Jeweler NPC spawn, false to disable. True by default
+			YoungBrewerSpawntoggle: Young Brewer Spawn toggle
+			YoungBrewerSpawntoggleTooltip: True to enable Young Brewer NPC spawn, false to disable. True by default
+			TinkererSpawntoggle: Tinkerer Spawn toggle
+			TinkererSpawntoggleTooltip: True to enable Tinkerer NPC spawn, false to disable. True by default
+			ArchitectSpawntoggle: Architect Spawn toggle
+			ArchitectSpawntoggleTooltip: True to enable Architect NPC spawn, false to disable. True by default
+			OperatorSpawntoggle: Operator Spawn toggle
+			OperatorSpawntoggleTooltip: True to enable Operator NPC spawn, false to disable. True by default
+			MusicianSpawntoggle: Musician Spawn toggle
+			MusicianSpawntoggleTooltip: True to enable Musician NPC spawn, false to disable. True by default
+			ExplorerSpawntoggle: Explorer Spawn toggle
+			ExplorerSpawntoggleTooltip: True to enable Explorer NPC spawn, false to disable. True by default
+			TreasureBagsShopstoggle: Treasure Bags Shops toggle
+			TreasureBagsShopstoggleTooltip: True to enable Treasure Bags Shops of Operator NPC. True by default
+			TornNotesdroptoggle: Torn Notes drop toggle
+			TornNotesdroptoggleTooltip: True to enable Torn Notes drop. True by default
+			ReversityCoinsdroptoggle: Reversity Coins drop toggle
+			ReversityCoinsdroptoggleTooltip: True to enable Reversity Coins drop. True by default
+			AlchemistNPCLite: Starting message referring to AlchemistNPC Lite
+			AlchemistNPCLiteTooltip: True to enable starting message. True by default
+			Revengeancemode: Revengeance mode prices scaling
+			RevengeancemodeTooltip: True to make potions prices bigger. True by default
+			CatcheableNPCToggle: Catcheable mod's NPCs toggle
+			CatcheableNPCToggleTooltip: True to make mod's town NPCs catcheable. True by default
+			Potionspricemultiplier: Potions price multiplier
+			PotionspricemultiplierTooltip: Multiplies potions price by X. 1 by default
+			FallenStarsPrice: Fallen Stars Price
+			FallenStarsPriceTooltip: 1000 is 10 silver price by default
+			RecallPrice: Recall Potion Price
+			RecallPriceTooltip: 1000 is 10 silver price by default
+			WormholePrice: Wormhole Potion Price
+			WormholePriceTooltip: 1000 is 10 silver price by default
+			LifeformAnalyzer: Lifeform Analyzer laser pointing
+			LifeformAnalyzerTooltip: Enable or disable laser pointing of Lifeform Analyzer (ticks each second). True by default
+			RainStopped: Rain is stopped.
+			RainStarted: Rain is started.
+			NightTimeSet: Time is set to Night.
+			DayTimeSet: Time is set to Day.
+			SandstormStopped: Sandstorm is stopped.
+			SandstormStarted: Sandstorm is started.
+			AntiBuffmodeactive: Anti Buff mode is active
+			AntiBuffmodeisdisabled: Anti Buff mode is disabled
+			BillCipherChat1: What? Are you my namesake? Well, I don't want to fight you.
+			BillCipherChat2: Here, catch my present! Bye!
+			BillCipherChat3: Don't think that you can hide from me, mortal!
+			BillCipherChat4: WHAT? You again? I was already defeated with your help! What else do you want from me?
+			BillCipherChat5: You dared summon me? This is going to be fun!
+			BillCipherChat6: Hey, catch this!
+			BillCipherChat7: Hey you! Yes, you! I am asking the one who is controlling this ''puppet''!
+			BillCipherChat8: Do you really think that you would be able to defeat me? That's hilarious!
+			BillCipherChat9: Enough playing around, now you are gonna die!
+			BillCipherChat10: Madness is unleashed!
+			BillCipherChat11: You are starting to annoy me, worm!
+			BillCipherChat12: Don't start thinking you're safe behind that screen...
+			BillCipherChat13: I will come to your dreams and will turn them into the horrible nightmare!
+			BillCipherChat14: I will not get defeated again!
+			BillCipherChat15: Prepare to suffer!
+			UgandanKnucklesChat1: I have a question to ask from you...
+		}
+	}
+}

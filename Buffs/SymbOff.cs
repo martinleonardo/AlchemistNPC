@@ -11,16 +11,16 @@ namespace AlchemistNPC.Buffs
 {
 	public class SymbOff : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Symbiote Offense Mode");
 			Description.SetDefault("Increased attack speed");
 			Main.debuff[Type] = false;
-			canBeCleared = true;
-			DisplayName.AddTranslation(GameCulture.Russian, "Атакующий режим симбиота");
-			Description.AddTranslation(GameCulture.Russian, "Скорость атаки увеличена");
-            DisplayName.AddTranslation(GameCulture.Chinese, "共生体攻击模式");
-            Description.AddTranslation(GameCulture.Chinese, "增加攻击速度");
+			CanBeCleared = true;
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Атакующий режим симбиота");
+			Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Скорость атаки увеличена");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "共生体攻击模式");
+            Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "增加攻击速度");
         }
 	}
 }

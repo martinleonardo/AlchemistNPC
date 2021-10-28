@@ -20,10 +20,10 @@ namespace AlchemistNPC.Items.Misc
 			+"\nBuffs without duration display are not disabled"
 			+"\nBosses and minibosses may drop permament boosting items"
 			+"\nTheir effects would work only if mode is on");
-			DisplayName.AddTranslation(GameCulture.Russian, "Анти Бафф");
-            Tooltip.AddTranslation(GameCulture.Russian, "Используйте для переключения Анти Бафф режима\nВы имунны ко всем баффам (не дебаффам)\nБаффы не показывающие длительности разрешены\nИз боссов и минибоссов могут выпадать предметы, дающие эффекты постоянного усиления\nЭти эффекты активны только когда режим включён");
-			DisplayName.AddTranslation(GameCulture.Chinese, "反buff模式");
-			Tooltip.AddTranslation(GameCulture.Chinese, "使用以切换反buff模式"
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Анти Бафф");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Используйте для переключения Анти Бафф режима\nВы имунны ко всем баффам (не дебаффам)\nБаффы не показывающие длительности разрешены\nИз боссов и минибоссов могут выпадать предметы, дающие эффекты постоянного усиления\nЭти эффекты активны только когда режим включён");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "反buff模式");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "使用以切换反buff模式"
 			+"\n在反buff模式中，你将免疫所有增益buff(而不是debuff)"
 			+"\n没有持续时间的buff不会被禁止"
 			+"\nBoss和一些小Boss会掉落永久增益物品"
@@ -32,16 +32,16 @@ namespace AlchemistNPC.Items.Misc
 
 		public override void SetDefaults()
 		{
-			item.width = 32;
-			item.height = 32;
-			item.rare = 5;
-			item.useAnimation = 20;
-            item.useTime = 20;
-            item.useStyle = 4;
-			item.UseSound = SoundID.Item4;
+			Item.width = 32;
+			Item.height = 32;
+			Item.rare = 5;
+			Item.useAnimation = 20;
+            Item.useTime = 20;
+            Item.useStyle = 4;
+			Item.UseSound = SoundID.Item4;
 		}
 		
-		public override bool UseItem(Player player)
+		public override bool? UseItem(Player player)
         {
 			if (!AlchemistNPCWorld.foundAntiBuffMode)
 			{
@@ -66,10 +66,9 @@ namespace AlchemistNPC.Items.Misc
 		
 		public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddTile(TileID.DemonAltar);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            	.AddTile(TileID.DemonAltar)
+            	.Register();
         }
 	}
 }

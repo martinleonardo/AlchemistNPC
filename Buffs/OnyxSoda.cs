@@ -16,16 +16,16 @@ namespace AlchemistNPC.Buffs
 {
 	public class OnyxSoda : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Onyx Soda");
 			Description.SetDefault("Increases endurance by 75%");
 			Main.debuff[Type] = false;
-			canBeCleared = true;
-			DisplayName.AddTranslation(GameCulture.Russian, "Ониксовая Сода");
-			Description.AddTranslation(GameCulture.Russian, "Увеличивает вашу стойкость на 75%");
-            DisplayName.AddTranslation(GameCulture.Chinese, "玛瑙苏打加持");
-            Description.AddTranslation(GameCulture.Chinese, "增加75%耐力");
+			CanBeCleared = true;
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Ониксовая Сода");
+			Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Увеличивает вашу стойкость на 75%");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "玛瑙苏打加持");
+            Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "增加75%耐力");
         }
 		
 		public override void Update(Player player, ref int buffIndex)

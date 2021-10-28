@@ -13,18 +13,18 @@ namespace AlchemistNPC.Items.Notes
 			DisplayName.SetDefault("Informating Note");
 			Tooltip.SetDefault("No Treasure Bags available yet."
 			+"\nBeat Skeletron to unlock the first wave.");
-			DisplayName.AddTranslation(GameCulture.Russian, "Информирующая Записка");
-            Tooltip.AddTranslation(GameCulture.Russian, "Нет доступных Сумок Боссов.\nПобедите Скелетрона, чтобы разблокировать первую волну.");
-			DisplayName.AddTranslation(GameCulture.Chinese, "说明笔记");
-			Tooltip.AddTranslation(GameCulture.Chinese, "没有可用的宝藏袋.\n击败骷髅王以解锁第一波.");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Информирующая Записка");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Нет доступных Сумок Боссов.\nПобедите Скелетрона, чтобы разблокировать первую волну.");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "说明笔记");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "没有可用的宝藏袋.\n击败骷髅王以解锁第一波.");
         }
 
 		public override void SetDefaults()
 		{
-			item.width = 28;
-			item.height = 36;
-			item.maxStack = 1;
-			item.rare = 3;
+			Item.width = 28;
+			Item.height = 36;
+			Item.maxStack = 1;
+			Item.rare = 3;
 		}	
 	}
 }

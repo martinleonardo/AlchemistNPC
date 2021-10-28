@@ -11,14 +11,14 @@ namespace AlchemistNPC.Projectiles.Pets
 	{
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(87);
-			projectile.width = 72;
-			projectile.height = 64;
-			projectile.ignoreWater = true;
-			projectile.aiStyle = 11;
-			aiType = 87;
-			Main.projFrames[projectile.type] = 4;
-			ProjectileID.Sets.LightPet[projectile.type] = true;
+			Projectile.CloneDefaults(87);
+			Projectile.width = 72;
+			Projectile.height = 64;
+			Projectile.ignoreWater = true;
+			Projectile.aiStyle = 11;
+			AIType = 87;
+			Main.projFrames[Projectile.type] = 4;
+			ProjectileID.Sets.LightPet[Projectile.type] = true;
 		}
 
 		public override void SetStaticDefaults()
@@ -29,7 +29,7 @@ namespace AlchemistNPC.Projectiles.Pets
 
 		public override bool PreAI()
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			player.bunny = false;
 			return true;
 		}
@@ -38,19 +38,19 @@ namespace AlchemistNPC.Projectiles.Pets
 		{
 			if (Main.rand.NextBool(3))
 			{
-				Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 61, projectile.velocity.X * 0.1f, projectile.velocity.Y * 0.1f, 0, default(Color), 1f);
+				Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 61, Projectile.velocity.X * 0.1f, Projectile.velocity.Y * 0.1f, 0, default(Color), 1f);
 			}
-			Player player = Main.player[projectile.owner];
-			AlchemistNPCPlayer modPlayer = (AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer");
-			if (player.dead || !player.HasBuff(mod.BuffType("Yui")))
+			Player player = Main.player[Projectile.owner];
+			AlchemistNPCPlayer modPlayer = (AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>();
+			if (player.dead || !player.HasBuff(ModContent.BuffType<Buffs.Yui>()))
 			{
 				modPlayer.Yui = false;
 			}
 			if (modPlayer.Yui)
 			{
-				projectile.timeLeft = 2;
+				Projectile.timeLeft = 2;
 			}
-			Lighting.AddLight(projectile.position, 3.0f, 3.0f, 3.0f);
+			Lighting.AddLight(Projectile.position, 3.0f, 3.0f, 3.0f);
 		}
 	}
 }

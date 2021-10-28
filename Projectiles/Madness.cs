@@ -18,17 +18,17 @@ namespace AlchemistNPC.Projectiles
 
 		public override void SetDefaults()
 		{
-			projectile.width = 128;
-			projectile.height = 128;
-			projectile.penetrate = -1;
-			projectile.timeLeft = 99999;
-			projectile.hostile = true;
-			projectile.tileCollide = false;
+			Projectile.width = 128;
+			Projectile.height = 128;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 99999;
+			Projectile.hostile = true;
+			Projectile.tileCollide = false;
 		}
 		
 		public override bool? CanHitNPC(NPC target)
 		{
-			if (target.townNPC || target.type == mod.NPCType("BillCipher"))
+			if (target.townNPC || target.type == ModContent.NPCType<NPCs.BillCipher>())
 			{
 				return false;
 			}
@@ -40,11 +40,11 @@ namespace AlchemistNPC.Projectiles
 			for (int k = 0; k < 255; k++)
 			{
 				Player player = Main.player[k];
-				if (player.dead || !NPC.AnyNPCs(mod.NPCType("BillCipher")))
+				if (player.dead || !NPC.AnyNPCs(NPCType<NPCs.BillCipher>()))
 				{
-					projectile.Kill();
+					Projectile.Kill();
 				}
-				if (player.Hitbox.Intersects(projectile.Hitbox))
+				if (player.Hitbox.Intersects(Projectile.Hitbox))
 				{
 				player.AddBuff(BuffID.Electrified, 360);
 				player.AddBuff(BuffID.OgreSpit, 360);

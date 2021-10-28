@@ -18,27 +18,27 @@ namespace AlchemistNPC.Tiles
 	{
 		public override int[] AdjTiles(int type)
 		{
-			if (type == mod.TileType("MateriaTransmutator"))
+			if (type == TileType<Tiles.MateriaTransmutator>())
 			{
 				Main.LocalPlayer.adjHoney = true;
 				Main.LocalPlayer.adjLava = true;
 				Main.LocalPlayer.adjWater = true;
 				Main.LocalPlayer.alchemyTable = true;
 			}
-			if (type == mod.TileType("MateriaTransmutatorMK2"))
+			if (type == TileType<Tiles.MateriaTransmutatorMK2>())
 			{
 				Main.LocalPlayer.adjHoney = true;
 				Main.LocalPlayer.adjLava = true;
 				Main.LocalPlayer.adjWater = true;
 				Main.LocalPlayer.alchemyTable = true;
 			}
-			if (type == mod.TileType("SpecCraftPoint"))
+			if (type == TileType<Tiles.SpecCraftPoint>())
 			{
 				Main.LocalPlayer.adjHoney = true;
 				Main.LocalPlayer.adjLava = true;
 				Main.LocalPlayer.adjWater = true;
 			}
-			if (type == mod.TileType("PreHMPenny"))
+			if (type == TileType<Tiles.PreHMPenny>())
 			{
 				Main.LocalPlayer.alchemyTable = true;
 			}

@@ -13,26 +13,26 @@ namespace AlchemistNPC.Items.Summoning
 		{
 			DisplayName.SetDefault("Jeweler Horcrux");
 			Tooltip.SetDefault("The piece of Jeweler's soul is inside it.");
-			DisplayName.AddTranslation(GameCulture.Russian, "Крестраж Ювелира");
-			Tooltip.AddTranslation(GameCulture.Russian, "Часть души Ювелира находится внутри");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Крестраж Ювелира");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Часть души Ювелира находится внутри");
 
-            DisplayName.AddTranslation(GameCulture.Chinese, "珠宝师魂器");
-            Tooltip.AddTranslation(GameCulture.Chinese, "里面有珠宝师的一片灵魂");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "珠宝师魂器");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "里面有珠宝师的一片灵魂");
         }
 
 		public override void SetDefaults()
 		{
-			item.width = 22;
-			item.height = 20;
-			item.maxStack = 30;
-			item.value = 15000;
-			item.rare = 6;
-			item.useAnimation = 30;
-			item.useTime = 30;
-			item.useStyle = 4;
-			item.consumable = true;
-			item.UseSound = SoundID.Item37;
-			item.makeNPC = (short)mod.NPCType("Jeweler");
+			Item.width = 22;
+			Item.height = 20;
+			Item.maxStack = 30;
+			Item.value = 15000;
+			Item.rare = 6;
+			Item.useAnimation = 30;
+			Item.useTime = 30;
+			Item.useStyle = 4;
+			Item.consumable = true;
+			Item.UseSound = SoundID.Item37;
+			Item.makeNPC = (short)NPCType<NPCs.Jeweler>();
 		}
 
 		public override void HoldItem(Player player)
@@ -44,7 +44,7 @@ namespace AlchemistNPC.Items.Summoning
 		public override bool CanUseItem(Player player)
 		{
 			Vector2 vector2 = Main.screenPosition + new Vector2(Main.mouseX, Main.mouseY);
-			return (!NPC.AnyNPCs(mod.NPCType("Jeweler")) && !Collision.SolidCollision(vector2, player.width, player.height));
+			return (!NPC.AnyNPCs(NPCType<NPCs.Jeweler>()) && !Collision.SolidCollision(vector2, player.width, player.height));
 		}
 
 		public override void OnConsumeItem(Player player)

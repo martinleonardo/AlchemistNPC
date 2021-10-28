@@ -14,20 +14,20 @@ namespace AlchemistNPC.Items.Boosters
 		{
 			DisplayName.SetDefault("Skeletron Prime booster");
 			Tooltip.SetDefault("Increases armor penetration and melee speed by 15/15%, gives 200% thorns effect");
-			DisplayName.AddTranslation(GameCulture.Russian, "Усилитель Скелетрона Прайма");
-			Tooltip.AddTranslation(GameCulture.Russian, "Увеличивает пробивание брони и скорость ближнего боя на 15/15%, даёт 200% эффект шипов");
-			DisplayName.AddTranslation(GameCulture.Chinese, "机械骷髅王增益容器");
-			Tooltip.AddTranslation(GameCulture.Chinese, "提升15点护甲穿透和15%的近战速度，给予200%的荆棘药剂效果");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Усилитель Скелетрона Прайма");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Увеличивает пробивание брони и скорость ближнего боя на 15/15%, даёт 200% эффект шипов");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "机械骷髅王增益容器");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "提升15点护甲穿透和15%的近战速度，给予200%的荆棘药剂效果");
         }
 
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.LifeFruit);
-			item.consumable = false;
-			item.value = 100000;
+			Item.CloneDefaults(ItemID.LifeFruit);
+			Item.consumable = false;
+			Item.value = 100000;
 		}
 
-		public override bool UseItem(Player player)
+		public override bool? UseItem(Player player)
         {
 			if (player.GetModPlayer<AlchemistNPCPlayer>().PrimeBooster == 0)
 			{

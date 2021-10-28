@@ -9,37 +9,38 @@ using AlchemistNPC.Items.Weapons;
 
 namespace AlchemistNPC.Projectiles
 {
-	public class PF666 : ModProjectile
-	{
-		public override void SetDefaults()
-		{
-			projectile.friendly = true;
-			projectile.width = 1920;
-			projectile.height = 1080;
-			projectile.penetrate = -1;
-			projectile.timeLeft = 90;
-			projectile.tileCollide = false;
-		}
+    public class PF666 : ModProjectile
+    {
+        public override void SetDefaults()
+        {
+            Projectile.friendly = true;
+            Projectile.width = 1920;
+            Projectile.height = 1080;
+            Projectile.penetrate = -1;
+            Projectile.timeLeft = 90;
+            Projectile.tileCollide = false;
+        }
 
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("PF666");
-		}
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("PF666");
+        }
 
-		public override void AI()
-		{
-			Player player = Main.player[projectile.owner];
-			player.inferno = true;
-			if (projectile.timeLeft == 30)
-			{
-			projectile.friendly = false;
-			}
-			Main.monolithType = 3;
-		}
-		
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-		{
-			target.immune[projectile.owner] = 1;
-		}
-	}
+        public override void AI()
+        {
+            Player player = Main.player[Projectile.owner];
+            player.inferno = true;
+            if (Projectile.timeLeft == 30)
+            {
+                Projectile.friendly = false;
+            }
+            //Main.monolithType = 3;
+            player.ManageSpecialBiomeVisuals("Solar", true, player.Center);
+        }
+
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            target.immune[Projectile.owner] = 1;
+        }
+    }
 }

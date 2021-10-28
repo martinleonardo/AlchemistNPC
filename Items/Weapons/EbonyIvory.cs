@@ -6,6 +6,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using Terraria.Localization;
+using Terraria.DataStructures;
 
 namespace AlchemistNPC.Items.Weapons
 {
@@ -18,10 +19,10 @@ namespace AlchemistNPC.Items.Weapons
 			+ "\nCan very rarely crit for 66666 damage"
 			+ "\nShoot custom demonic bullets, which are exploding on hit"
 			+ "\n66% chance not to consume ammo");
-			DisplayName.AddTranslation(GameCulture.Russian, "Чёрный и Белый");
-            Tooltip.AddTranslation(GameCulture.Russian, "''Парные пистолеты Демона-Охотника''\nМогут нанести очень редкий критический удар, наносящий 66666 урона\n66% шанс не потратить патроны"); 
-			DisplayName.AddTranslation(GameCulture.Chinese, "黑檀木&白象牙");
-			Tooltip.AddTranslation(GameCulture.Chinese, "''一位恶魔猎人的双枪''"
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Чёрный и Белый");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "''Парные пистолеты Демона-Охотника''\nМогут нанести очень редкий критический удар, наносящий 66666 урона\n66% шанс не потратить патроны"); 
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "黑檀木&白象牙");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "''一位恶魔猎人的双枪''"
 			+"\n极小概率暴击造成66666点伤害"
 			+"\n发射定制的恶魔子弹, 撞击时爆炸"
 			+"\n66%概率不消耗弹药");
@@ -29,34 +30,34 @@ namespace AlchemistNPC.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			item.damage = 100;
-			item.ranged = true;
-			item.width = 40;
-			item.height = 20;
-			item.useAnimation = 6;
-			item.useTime = 6;
-			item.useStyle = 5;
-			item.noMelee = true;
-			item.knockBack = 4;
-			item.value = 1000000;
-			item.rare = 3;
-			item.UseSound = SoundID.Item11;
-			item.autoReuse = true;
-			item.shoot = 10;
-			item.shootSpeed = 16f;
-			item.useAmmo = AmmoID.Bullet;
-			item.scale = 0.5f;
+			Item.damage = 100;
+			Item.DamageType = DamageClass.Ranged;
+			Item.width = 40;
+			Item.height = 20;
+			Item.useAnimation = 6;
+			Item.useTime = 6;
+			Item.useStyle = 5;
+			Item.noMelee = true;
+			Item.knockBack = 4;
+			Item.value = 1000000;
+			Item.rare = 3;
+			Item.UseSound = SoundID.Item11;
+			Item.autoReuse = true;
+			Item.shoot = 10;
+			Item.shootSpeed = 16f;
+			Item.useAmmo = AmmoID.Bullet;
+			Item.scale = 0.5f;
 		}
 
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+		public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			type = mod.ProjectileType("DemonicBullet");
-			Projectile.NewProjectile(position.X, position.Y-5, speedX, speedY, type, damage/2, knockBack, player.whoAmI);
-			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage/2, knockBack, player.whoAmI);
+			type = ProjectileType<Projectiles.DemonicBullet>();
+			Projectile.NewProjectile(source, position.X, position.Y-5, velocity.X, velocity.Y, type, damage/2, knockback, player.whoAmI);
+			Projectile.NewProjectile(source, position.X, position.Y, velocity.X, velocity.Y, type, damage/2, knockback, player.whoAmI);
 			return false;
 		}
 		
-		public override bool ConsumeAmmo(Player player)
+		public override bool CanConsumeAmmo(Player player)
 		{
 			return Main.rand.NextFloat() >= .66;
 		}
@@ -68,16 +69,15 @@ namespace AlchemistNPC.Items.Weapons
 		
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "HateVial");
-			recipe.AddIngredient(ItemID.DemonScythe);
-			recipe.AddIngredient(ItemID.UnholyTrident);
-			recipe.AddIngredient(ItemID.InfernoFork);
-			recipe.AddIngredient(ItemID.VenusMagnum, 2);
-			recipe.AddIngredient(null, "AlchemicalBundle");
-			recipe.AddTile(null, "MateriaTransmutator");
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe()
+				.AddIngredient(null, "HateVial")
+				.AddIngredient(ItemID.DemonScythe)
+				.AddIngredient(ItemID.UnholyTrident)
+				.AddIngredient(ItemID.InfernoFork)
+				.AddIngredient(ItemID.VenusMagnum, 2)
+				.AddIngredient(null, "AlchemicalBundle")
+				.AddTile(null, "MateriaTransmutator")
+				.Register();
 		}
 	}
 }

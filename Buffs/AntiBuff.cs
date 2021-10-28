@@ -11,16 +11,16 @@ namespace AlchemistNPC.Buffs
 {
 	public class AntiBuff : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Anti Buff boosts");
 			Description.SetDefault("");
 			Main.buffNoTimeDisplay[Type] = true;
-			canBeCleared = true;
-			DisplayName.AddTranslation(GameCulture.Russian, "Анти Бафф усиления");
-			Description.AddTranslation(GameCulture.Russian, "");
-			DisplayName.AddTranslation(GameCulture.Chinese, "反buff增益");
-			Description.AddTranslation(GameCulture.Chinese, "");
+			CanBeCleared = true;
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Анти Бафф усиления");
+			Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "反buff增益");
+			Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "");
         }
 		
 		public override void ModifyBuffTip (ref string tipline, ref int rare)
@@ -156,7 +156,7 @@ namespace AlchemistNPC.Buffs
 			}
 
 			
-			if(Language.ActiveCulture == GameCulture.Chinese)
+			if(Language.ActiveCulture == GameCulture.FromCultureName(GameCulture.CultureName.Chinese))
 			{
 				tipline = tipch;
 			}
@@ -205,11 +205,13 @@ namespace AlchemistNPC.Buffs
 			}
 			if (modPlayer.SkeletronBooster == 1)
 			{
-				player.allDamage += 0.1f;
-				player.meleeCrit += 10;
-				player.rangedCrit += 10;
-				player.magicCrit += 10;
-				player.thrownCrit += 10;
+				player.GetDamage(DamageClass.Generic) += 0.1f;
+				player.GetCritChance(DamageClass.Melee) += 10;
+				player.GetCritChance(DamageClass.Ranged) += 10;
+				player.GetCritChance(DamageClass.Magic) += 10;
+				player.GetCritChance(DamageClass.Throwing) += 10;
+				// IMPLEMENT WHEN WEAKREFERENCES FIXED
+				/*
 				if (ModLoader.GetMod("ThoriumMod") != null)
 				{
 					ThoriumBoosts(player, 0);
@@ -223,6 +225,7 @@ namespace AlchemistNPC.Buffs
 				{
 					Calamity.Call("AddRogueCrit", player, 10);
 				}
+				*/
 			}
 			if (modPlayer.CustomBooster2 == 1)
 			{
@@ -247,7 +250,7 @@ namespace AlchemistNPC.Buffs
 			}
 			if (modPlayer.DarkMageBooster == 1)
 			{
-				player.magicDamage += 0.25f;
+				player.GetDamage(DamageClass.Magic) += 0.25f;
 				player.statManaMax2 += 50;
 				player.manaRegenBuff = true;
 			}
@@ -291,11 +294,13 @@ namespace AlchemistNPC.Buffs
 				if (player.velocity.X != 0f || player.velocity.Y != 0f)
 				{
 					player.pStone = true;
-					player.allDamage += 0.05f;
-					player.meleeCrit += 5;
-					player.rangedCrit += 5;
-					player.magicCrit += 5;
-					player.thrownCrit += 5;
+					player.GetDamage(DamageClass.Generic) += 0.05f;
+					player.GetCritChance(DamageClass.Melee) += 5;
+					player.GetCritChance(DamageClass.Ranged) += 5;
+					player.GetCritChance(DamageClass.Magic) += 5;
+					player.GetCritChance(DamageClass.Throwing) += 5;
+					// IMPLEMENT WHEN WEAKREFERENCES FIXED
+					/*
 					if (ModLoader.GetMod("ThoriumMod") != null)
 					{
 						ThoriumBoosts(player, 1);
@@ -309,6 +314,7 @@ namespace AlchemistNPC.Buffs
 					{
 						Calamity.Call("AddRogueCrit", player, 5);
 					}
+					*/
 				}
 			}
 			if (modPlayer.GolemBooster == 1)
@@ -323,11 +329,13 @@ namespace AlchemistNPC.Buffs
 					player.statDefense += 4;
 					player.moveSpeed += 0.1f;
 					player.endurance += 0.04f;
-					player.allDamage += 0.04f;
-					player.meleeCrit += 4;
-					player.rangedCrit += 4;
-					player.magicCrit += 4;
-					player.thrownCrit += 4;
+					player.GetDamage(DamageClass.Generic) += 0.04f;
+					player.GetCritChance(DamageClass.Melee) += 4;
+					player.GetCritChance(DamageClass.Ranged) += 4;
+					player.GetCritChance(DamageClass.Magic) += 4;
+					player.GetCritChance(DamageClass.Throwing) += 4;
+					// IMPLEMENT WHEN WEAKREFERENCES FIXED
+					/*
 					if (ModLoader.GetMod("ThoriumMod") != null)
 					{
 						ThoriumBoosts(player, 2);
@@ -341,6 +349,7 @@ namespace AlchemistNPC.Buffs
 					{
 						Calamity.Call("AddRogueCrit", player, 4);
 					}
+					*/
 				}
 			}
 			if (modPlayer.MartianSaucerBooster == 1)
@@ -350,20 +359,22 @@ namespace AlchemistNPC.Buffs
 			}
 		}
 		
+		// IMPLEMENT WHEN WEAKREFERENCES FIXED
+		/*
 		private void RedemptionBoost(Player player, int c)
         {
 			Redemption.Items.DruidDamageClass.DruidDamagePlayer RedemptionPlayer = player.GetModPlayer<Redemption.Items.DruidDamageClass.DruidDamagePlayer>();
 			if (c == 0)
 			{
-				RedemptionPlayer.druidCrit += 10;
+				Redemptionplayer.GetCritChance(DamageClass.Druid) += 10;
 			}
 			if (c == 1)
 			{
-				RedemptionPlayer.druidCrit += 5;
+				Redemptionplayer.GetCritChance(DamageClass.Druid) += 5;
 			}
 			if (c == 2)
 			{
-				RedemptionPlayer.druidCrit += 4;
+				Redemptionplayer.GetCritChance(DamageClass.Druid) += 4;
 			}
         }
 		
@@ -372,19 +383,20 @@ namespace AlchemistNPC.Buffs
             ThoriumMod.ThoriumPlayer ThoriumPlayer = player.GetModPlayer<ThoriumMod.ThoriumPlayer>();
 			if (c == 0)
 			{
-				ThoriumPlayer.symphonicCrit += 10;
-				ThoriumPlayer.radiantCrit += 10;
+				Thoriumplayer.GetCritChance(DamageClass.Symphonic) += 10;
+				Thoriumplayer.GetCritChance(DamageClass.Radiant) += 10;
 			}
 			if (c == 1)
 			{
-				ThoriumPlayer.symphonicCrit += 5;
-				ThoriumPlayer.radiantCrit += 5;
+				Thoriumplayer.GetCritChance(DamageClass.Symphonic) += 5;
+				Thoriumplayer.GetCritChance(DamageClass.Radiant) += 5;
 			}
 			if (c == 1)
 			{
-				ThoriumPlayer.symphonicCrit += 4;
-				ThoriumPlayer.radiantCrit += 4;
+				Thoriumplayer.GetCritChance(DamageClass.Symphonic) += 4;
+				Thoriumplayer.GetCritChance(DamageClass.Radiant) += 4;
 			}
         }
+		*/
 	}
 }

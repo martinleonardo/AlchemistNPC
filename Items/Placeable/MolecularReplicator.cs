@@ -15,39 +15,38 @@ namespace AlchemistNPC.Items.Placeable
         {
             DisplayName.SetDefault("Molecular Replicator");
             Tooltip.SetDefault("Restores life of nearby friendly NPCs while placed");
-            DisplayName.AddTranslation(GameCulture.Russian, "Молекулярный Репликатор");
-            Tooltip.AddTranslation(GameCulture.Russian, "Восстанавливает жизни дружественных НПС когда установлен");
-			DisplayName.AddTranslation(GameCulture.Chinese, "分子复制器");
-			Tooltip.AddTranslation(GameCulture.Chinese, "放置时回复附近友善NPC的生命");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Молекулярный Репликатор");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Восстанавливает жизни дружественных НПС когда установлен");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "分子复制器");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "放置时回复附近友善NPC的生命");
         }
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.maxStack = 1;
-            item.value = 1000000;
-            item.rare = 7;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 10;
-			item.useStyle = 1;
-			item.consumable = true;
-			item.createTile = mod.TileType("MolecularReplicator");
+            Item.width = 32;
+            Item.height = 32;
+            Item.maxStack = 1;
+            Item.value = 1000000;
+            Item.rare = 7;
+			Item.useTurn = true;
+			Item.autoReuse = true;
+			Item.useAnimation = 15;
+			Item.useTime = 10;
+			Item.useStyle = 1;
+			Item.consumable = true;
+			Item.createTile = TileType<Tiles.MolecularReplicator>();
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.MechanicalWheelPiece);
-			recipe.AddIngredient(ItemID.MechanicalWagonPiece);
-            recipe.AddIngredient(ItemID.MechanicalBatteryPiece);
-            recipe.AddIngredient(ItemID.MartianConduitPlating, 50);
-			recipe.AddIngredient(ItemID.Wire, 100);
-            recipe.AddIngredient(ItemID.ShinyStone);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this, 1);
-            recipe.AddRecipe();
+            CreateRecipe()
+            	.AddIngredient(ItemID.MechanicalWheelPiece)
+				.AddIngredient(ItemID.MechanicalWagonPiece)
+            	.AddIngredient(ItemID.MechanicalBatteryPiece)
+            	.AddIngredient(ItemID.MartianConduitPlating, 50)
+				.AddIngredient(ItemID.Wire, 100)
+            	.AddIngredient(ItemID.ShinyStone)
+            	.AddTile(TileID.MythrilAnvil)
+            	.Register();
         }
     }
 }

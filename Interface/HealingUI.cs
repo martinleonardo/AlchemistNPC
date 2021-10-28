@@ -12,6 +12,8 @@ using System;
 using Terraria.ID;
 using System.Linq;
 using AlchemistNPC;
+using Terraria.Audio;
+using ReLogic.Content;
 
 namespace AlchemistNPC.Interface
 {
@@ -34,11 +36,11 @@ namespace AlchemistNPC.Interface
 			HealingUIPanel.OnMouseUp += new UIElement.MouseEvent(DragEnd);
 			
 			Mod mod = AlchemistNPC.Instance;
-			Texture2D Yes = mod.GetTexture("Interface/Yes");
-			Texture2D No = mod.GetTexture("Interface/No");
+			Asset<Texture2D> Yes = mod.Assets.Request<Texture2D>("Interface/Yes");
+			Asset<Texture2D> No = mod.Assets.Request<Texture2D>("Interface/No");
 
 			string UItext;
-			if(Language.ActiveCulture == GameCulture.Chinese)
+			if(Language.ActiveCulture == GameCulture.FromCultureName(GameCulture.CultureName.Chinese))
 			{
 				UItext = "你要付医疗费吗?";
 			}
@@ -116,10 +118,10 @@ namespace AlchemistNPC.Interface
 			{
 				if (Main.player[Main.myPlayer].BuyItem(num5, -1))
 				{
-					Main.PlaySound(SoundID.Item4, -1, -1);
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item4, -1, -1);
 					Main.player[Main.myPlayer].HealEffect(Main.player[Main.myPlayer].statLifeMax2 - Main.player[Main.myPlayer].statLife, true);
 					Main.player[Main.myPlayer].statLife = Main.player[Main.myPlayer].statLifeMax2;
-					if(Language.ActiveCulture == GameCulture.Chinese)
+					if(Language.ActiveCulture == GameCulture.FromCultureName(GameCulture.CultureName.Chinese))
 					{
 						Main.NewText("[c/00FF00:护士]: 好了. 祝您今天愉快!", 0, 0, 0);
 					}
@@ -130,8 +132,8 @@ namespace AlchemistNPC.Interface
 				}
 				else
 				{
-					Main.PlaySound(SoundID.Item16, -1, -1);
-					if(Language.ActiveCulture == GameCulture.Chinese)
+					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item16, -1, -1);
+					if(Language.ActiveCulture == GameCulture.FromCultureName(GameCulture.CultureName.Chinese))
 					{
 						Main.NewText("[c/00FF00:护士]: 你付不起医疗费!", 0, 0, 0);
 					}
@@ -146,7 +148,7 @@ namespace AlchemistNPC.Interface
 
 		private void CloseButtonClicked(UIMouseEvent evt, UIElement listeningElement)
 		{
-			Main.PlaySound(SoundID.MenuOpen);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.MenuOpen);
 			visible = false;
 		}
 

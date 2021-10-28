@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using Terraria.ID;
 using Terraria.Localization;
+using Terraria.Audio;
 
 namespace AlchemistNPC.Buffs
 {
@@ -12,16 +13,16 @@ namespace AlchemistNPC.Buffs
 	{
 		public static int counter = 0;
 		
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Globe 199");
 			Description.SetDefault("Destroys nearby hostile projectiles"+"\nCooldown depends on progression");
 			Main.debuff[Type] = false;
-			canBeCleared = true;
-			DisplayName.AddTranslation(GameCulture.Russian, "Шар 199");
-			Description.AddTranslation(GameCulture.Russian, "Уничтожает любые вражеские снаряды\nВремя перезарядки зависит от прогресса");
-            DisplayName.AddTranslation(GameCulture.Chinese, "球体 199");
-            Description.AddTranslation(GameCulture.Chinese, "摧毁附近的敌方抛射物\n冷却时间由游戏进程而定");
+			CanBeCleared = true;
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Шар 199");
+			Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Уничтожает любые вражеские снаряды\nВремя перезарядки зависит от прогресса");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "球体 199");
+            Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "摧毁附近的敌方抛射物\n冷却时间由游戏进程而定");
         }
 		
 		public override void Update(Player player, ref int buffIndex)
@@ -79,10 +80,10 @@ namespace AlchemistNPC.Buffs
 			{
 				timeValue = 180;
 			}
-			player.AddBuff(mod.BuffType("ProjCounter"), 2);
-			if (player.ownedProjectileCounts[mod.ProjectileType("Globe199")] <= 0)
+			player.AddBuff(ModContent.BuffType<Buffs.ProjCounter>(), 2);
+			if (player.ownedProjectileCounts[ModContent.ProjectileType<Projectiles.Globe199>()] <= 0)
 			{
-				Projectile.NewProjectile(player.position.X-15, player.position.Y-100, 0f, 0f, mod.ProjectileType("Globe199"), 0, 0, player.whoAmI);
+				Projectile.NewProjectile(player.GetProjectileSource_Buff(buffIndex), player.position.X-15, player.position.Y-100, 0f, 0f, ModContent.ProjectileType<Projectiles.Globe199>(), 0, 0, player.whoAmI);
 			}
 			counter++;
 			for (int i = 0; i < 1000; i++)
@@ -97,10 +98,10 @@ namespace AlchemistNPC.Buffs
                 {
                     if (counter > timeValue)
                     {
-						player.AddBuff(mod.BuffType("GuarantCrit"), 2);
-						((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).GC = true;
-						Main.PlaySound(SoundID.Item93.WithVolume(.6f), player.position);
-                        Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, mod.ProjectileType("Counter"), 0, 6, Main.myPlayer, 0f, 0f);
+						player.AddBuff(ModContent.BuffType<Buffs.GuarantCrit>(), 2);
+						((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).GC = true;
+						Terraria.Audio.SoundEngine.PlaySound(SoundID.Item93.WithVolume(.6f), player.position);
+                        Projectile.NewProjectile(player.GetProjectileSource_Buff(buffIndex), player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<Projectiles.Counter>(), 0, 6, Main.myPlayer, 0f, 0f);
                         counter = 0;
                     }
                 }

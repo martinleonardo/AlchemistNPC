@@ -17,37 +17,36 @@ namespace AlchemistNPC.Items.Equippable
 			DisplayName.SetDefault("Soul Of Fear");
 			Tooltip.SetDefault("''I am fear!''"
 				+ "\nWeakening nearby enemies, inflicting several debuffs");
-				DisplayName.AddTranslation(GameCulture.Russian, "Душа Страха");
-            Tooltip.AddTranslation(GameCulture.Russian, "''Я - страх''\nБлижайшие враги ослабляются, получая целый комплек дебаффов");
-			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(6, 6));
-            DisplayName.AddTranslation(GameCulture.Chinese, "惊怖之魂");
-            Tooltip.AddTranslation(GameCulture.Chinese, "''我就是恐惧!''\n虚弱附近敌人, 造成多种Debuff");
+				DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Душа Страха");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "''Я - страх''\nБлижайшие враги ослабляются, получая целый комплек дебаффов");
+			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 6));
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "惊怖之魂");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "''我就是恐惧!''\n虚弱附近敌人, 造成多种Debuff");
         }
 	
 		public override void SetDefaults()
 		{
-			item.stack = 1;
-			item.width = 26;
-			item.height = 26;
-			item.value = 100000;
-			item.rare = 5;
-			item.accessory = true;
+			Item.stack = 1;
+			Item.width = 26;
+			Item.height = 26;
+			Item.value = 100000;
+			Item.rare = 5;
+			Item.accessory = true;
 		}
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, mod.ProjectileType("Fear"), 0, 0, player.whoAmI);
+			Projectile.NewProjectile(player.GetProjectileSource_Item(Item), player.Center.X, player.Center.Y, 0f, 0f, ProjectileType<Projectiles.Fear>(), 0, 0, player.whoAmI);
 		}
 		
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.SoulofFright, 99);
-			recipe.AddIngredient(ItemID.SoulofLight, 15);
-			recipe.AddIngredient(ItemID.SoulofNight, 15);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe()
+				.AddIngredient(ItemID.SoulofFright, 99)
+				.AddIngredient(ItemID.SoulofLight, 15)
+				.AddIngredient(ItemID.SoulofNight, 15)
+				.AddTile(TileID.MythrilAnvil)
+				.Register();
 		}
 	}
 }

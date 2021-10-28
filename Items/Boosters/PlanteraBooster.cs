@@ -14,20 +14,20 @@ namespace AlchemistNPC.Items.Boosters
 		{
 			DisplayName.SetDefault("Plantera booster");
 			Tooltip.SetDefault("Damages and critical strike chances are boosted while you are moving, Philosopher's stone effect");
-			DisplayName.AddTranslation(GameCulture.Russian, "Усилитель Плантеры");
-			Tooltip.AddTranslation(GameCulture.Russian, "Урон и шансы критического удара повышены, когда вы двигаетесь, эффект Философского камня");
-			DisplayName.AddTranslation(GameCulture.Chinese, "世纪之花增益容器");
-			Tooltip.AddTranslation(GameCulture.Chinese, "移动时增加伤害和暴击率，获得炼金石效果(减药水cd)");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Усилитель Плантеры");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Урон и шансы критического удара повышены, когда вы двигаетесь, эффект Философского камня");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "世纪之花增益容器");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "移动时增加伤害和暴击率，获得炼金石效果(减药水cd)");
         }
 
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.LifeFruit);
-			item.consumable = false;
-			item.value = 100000;
+			Item.CloneDefaults(ItemID.LifeFruit);
+			Item.consumable = false;
+			Item.value = 100000;
 		}
 
-		public override bool UseItem(Player player)
+		public override bool? UseItem(Player player)
         {
 			if (player.GetModPlayer<AlchemistNPCPlayer>().PlanteraBooster == 0)
 			{

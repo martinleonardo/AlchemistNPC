@@ -21,10 +21,10 @@ namespace AlchemistNPC.Items.Weapons
 			+"\n25% to take only half of the damage from debuffed enemy"
 			+"\n[c/00FF00:Stats are growing up through post Moon Lord progression]"
 			+"\nBoosted stats will be shown after the first swing");
-			DisplayName.AddTranslation(GameCulture.Russian, "''Свет Сера Сумат''");
-            Tooltip.AddTranslation(GameCulture.Russian, "[c/00FF00:Легендарный Меч] Старого Графа Эхлда\nОслабляет противников при ударе\nОслабленные противники получают на 20% больше урона\n25% шанс получить половину урона от ослабленных противников\n[c/00FF00:Показатели увеличивается по мере пост Мунлордного прохождения]");
-			DisplayName.AddTranslation(GameCulture.Chinese, "''塞拉苏门之光''");
-			Tooltip.AddTranslation(GameCulture.Chinese, "老公爵埃尔德的[c/00FF00:传奇之剑]"
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "''Свет Сера Сумат''");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "[c/00FF00:Легендарный Меч] Старого Графа Эхлда\nОслабляет противников при ударе\nОслабленные противники получают на 20% больше урона\n25% шанс получить половину урона от ослабленных противников\n[c/00FF00:Показатели увеличивается по мере пост Мунлордного прохождения]");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "''塞拉苏门之光''");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "老公爵埃尔德的[c/00FF00:传奇之剑]"
 			+"\n纯近战剑"
 			+"\n造成诅咒之光Debuff"
 			+"\n来自玩家的攻击对敌人多造成20%伤害"
@@ -36,61 +36,64 @@ namespace AlchemistNPC.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.Muramasa);
-			item.damage = 110;
-			item.melee = true;
-			item.width = 40;
-			item.height = 40;
-			item.useTime = 10;
-			item.useAnimation = 10;
-			item.useStyle = 1;
-			item.knockBack = 6;
-			item.value = Item.buyPrice(platinum: 1);
-			item.rare = 11;
-			item.UseSound = SoundID.Item1;
-			item.autoReuse = true;
+			Item.CloneDefaults(ItemID.Muramasa);
+			Item.damage = 110;
+			Item.DamageType = DamageClass.Melee;
+			Item.width = 40;
+			Item.height = 40;
+			Item.useTime = 10;
+			Item.useAnimation = 10;
+			Item.useStyle = 1;
+			Item.knockBack = 6;
+			Item.value = Item.buyPrice(platinum: 1);
+			Item.rare = 11;
+			Item.UseSound = SoundID.Item1;
+			Item.autoReuse = true;
 		}
 
 		public override bool CanUseItem(Player player)
 		{
+			// IMPLEMENT WHEN WEAKREFERENCES FIXED
+			/*
 			Mod Calamity = ModLoader.GetMod("CalamityMod");
 			if(Calamity != null)
 			{
 				if ((bool)Calamity.Call("Downed", "profaned guardians"))
 				{
-					item.damage = 120;
+					Item.damage = 120;
 				}
 			}
 			if (ModLoader.GetMod("ThoriumMod") != null)
 			{
 				if (ThoriumModDownedRagnarok)
 				{
-					item.damage = 150;
+					Item.damage = 150;
 				}
 			}
 			if (Calamity != null)
 			{
 				if ((bool)Calamity.Call("Downed", "providence"))
 				{
-					item.damage = 150;
+					Item.damage = 150;
 				}
 				if ((bool)Calamity.Call("Downed", "polterghast"))
 				{
-					item.damage = 222;
+					Item.damage = 222;
 				}
 				if ((bool)Calamity.Call("Downed", "dog"))
 				{
-					item.damage = 300;
+					Item.damage = 300;
 				}
 				if ((bool)Calamity.Call("Downed", "yharon"))
 				{
-					item.damage = 400;
+					Item.damage = 400;
 				}
 				if ((bool)Calamity.Call("Downed", "supreme calamitas"))
 				{
-					item.damage = 500;
+					Item.damage = 500;
 				}
 			}
+			*/
 			return true;
 		}
 		
@@ -98,17 +101,17 @@ namespace AlchemistNPC.Items.Weapons
 		{
 			if (Main.rand.Next(3) == 0)
 			{
-				Dust.NewDust(new Vector2(hitbox.X, hitbox.Y), hitbox.Width, hitbox.Height, mod.DustType("JustitiaPale"));
+				Dust.NewDust(new Vector2(hitbox.X, hitbox.Y), hitbox.Width, hitbox.Height, DustType<Dusts.JustitiaPale>());
 			}
 		}
 
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)
 		{
-			target.buffImmune[mod.BuffType("CurseOfLight")] = false;
-			target.AddBuff(mod.BuffType("CurseOfLight"), 300);
+			target.buffImmune[ModContent.BuffType<Buffs.CurseOfLight>()] = false;
+			target.AddBuff(ModContent.BuffType<Buffs.CurseOfLight>(), 300);
 			Vector2 vel1 = new Vector2(0, 0);
 			vel1 *= 0f;
-			Projectile.NewProjectile(target.position.X, target.position.Y, vel1.X, vel1.Y, mod.ProjectileType("ExplosionAvenger"), damage, 0, Main.myPlayer);
+			Projectile.NewProjectile(target.GetProjectileSpawnSource(), target.position.X, target.position.Y, vel1.X, vel1.Y, ProjectileType<Projectiles.ExplosionAvenger>(), damage, 0, Main.myPlayer);
 		}
 		
 		public override int ChoosePrefix (UnifiedRandom rand)
@@ -118,17 +121,19 @@ namespace AlchemistNPC.Items.Weapons
 		
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(mod.ItemType("HolyAvenger"));
-			recipe.AddIngredient(mod.ItemType("Pommel"));
-			recipe.AddTile(mod.TileType("MateriaTransmutator"));
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe()
+				.AddIngredient(ModContent.ItemType<Items.Weapons.HolyAvenger>())
+				.AddIngredient(ModContent.ItemType<Items.Misc.Pommel>())
+				.AddTile(TileType<Tiles.MateriaTransmutator>())
+				.Register();
 		}
 		
+		// IMPLEMENT WHEN WEAKREFERENCES FIXED
+		/*
         private bool ThoriumModDownedRagnarok
         {
 			get { return ThoriumMod.ThoriumWorld.downedRealityBreaker; }
         }
+		*/
 	}
 }

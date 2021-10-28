@@ -15,18 +15,18 @@ namespace AlchemistNPC.Items.Equippable
 		{
 			DisplayName.SetDefault("Grappling Hook Gun");
 			Tooltip.SetDefault("Shoots insanely fast hook very far away");
-			DisplayName.AddTranslation(GameCulture.Russian, "Пистолет с крюком-кошкой");
-			Tooltip.AddTranslation(GameCulture.Russian, "Запускает крайне быстрый крюк очень далеко");
-            DisplayName.AddTranslation(GameCulture.Chinese, "抓钩枪");
-            Tooltip.AddTranslation(GameCulture.Chinese, "速度飞快, 射程极远");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Пистолет с крюком-кошкой");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Запускает крайне быстрый крюк очень далеко");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "抓钩枪");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "速度飞快, 射程极远");
 		}
 
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.AmethystHook);
-			item.shootSpeed = 28f;
-			item.rare = 11;
-			item.shoot = mod.ProjectileType("GrapplingHookGunProjectile");
+			Item.CloneDefaults(ItemID.AmethystHook);
+			Item.shootSpeed = 28f;
+			Item.rare = 11;
+			Item.shoot = ProjectileType<GrapplingHookGunProjectile>();
 		}
 	}
 	class GrapplingHookGunProjectile : ModProjectile
@@ -39,8 +39,8 @@ namespace AlchemistNPC.Items.Equippable
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(ProjectileID.GemHookAmethyst);
-			projectile.height = 22;
+			Projectile.CloneDefaults(ProjectileID.GemHookAmethyst);
+			Projectile.height = 22;
 		}
 
 		public override float GrappleRange()
@@ -68,12 +68,12 @@ namespace AlchemistNPC.Items.Equippable
 			speed = 24;
 		}
 
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			counter++;
-			Vector2 playerCenter = Main.player[projectile.owner].MountedCenter;
-			Vector2 center = projectile.Center;
-			Vector2 distToProj = playerCenter - projectile.Center;
+			Vector2 playerCenter = Main.player[Projectile.owner].MountedCenter;
+			Vector2 center = Projectile.Center;
+			Vector2 distToProj = playerCenter - Projectile.Center;
 			float projRotation = distToProj.ToRotation() - 1.57f;
 			float distance = distToProj.Length();
 			while (distance > 20f && !float.IsNaN(distance))

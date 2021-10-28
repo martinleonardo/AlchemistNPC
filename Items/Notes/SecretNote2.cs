@@ -19,10 +19,10 @@ namespace AlchemistNPC.Items.Notes
 			+ "\nShe was beaten by unknown creature and transformed into a Crystal."
 			+ "\nIt was nearby Plantera's habitat.''"
 			+ "\nThere seems to be something important, but you can't read it yet. Not without other parts. Maybe Jeweler can help you.");
-			DisplayName.AddTranslation(GameCulture.Russian, "Тайная записка 2");
-            Tooltip.AddTranslation(GameCulture.Russian, "Несколько раз я видела одно довольно странное создание.\nОна выглядела как Фея, но в то же время...\nБыло что-то странное в её облике.\nОна выглядела... слишком совершенной для обычной Феи.\nК сожелению, это был последний раз, когда я её видела.\nЕё победило неизвестное существо и утащило с собой, превратив в Кристалл.\nЭто произошло неподалёку от мест обитания Плантеры.''\nЗдесь ещё есть что-то важное, но вы не можете это прочесть. Не без других частей.\nВозможно, Ювелир сможет помочь.");
-			DisplayName.AddTranslation(GameCulture.Chinese, "秘密笔记 #2");
-			Tooltip.AddTranslation(GameCulture.Chinese, "''有过几次, 我见到了一个十分古怪的生物."
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Тайная записка 2");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Несколько раз я видела одно довольно странное создание.\nОна выглядела как Фея, но в то же время...\nБыло что-то странное в её облике.\nОна выглядела... слишком совершенной для обычной Феи.\nК сожелению, это был последний раз, когда я её видела.\nЕё победило неизвестное существо и утащило с собой, превратив в Кристалл.\nЭто произошло неподалёку от мест обитания Плантеры.''\nЗдесь ещё есть что-то важное, но вы не можете это прочесть. Не без других частей.\nВозможно, Ювелир сможет помочь.");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "秘密笔记 #2");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "''有过几次, 我见到了一个十分古怪的生物."
 			+"\n她看起来像个仙女, 但与此同时..."
 			+"\n她的外貌上有些古怪之处."
 			+"\n她... 对于一个普通的仙女来说, 过于完美了."
@@ -34,11 +34,11 @@ namespace AlchemistNPC.Items.Notes
 
 		public override void SetDefaults()
 		{
-			item.width = 28;
-			item.height = 36;
-			item.maxStack = 99;
-			item.value = 1000000;
-			item.rare = 5;
+			Item.width = 28;
+			Item.height = 36;
+			Item.maxStack = 99;
+			Item.value = 1000000;
+			Item.rare = 5;
 		}	
 	}
 }

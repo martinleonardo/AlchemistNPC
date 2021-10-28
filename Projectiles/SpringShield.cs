@@ -14,57 +14,58 @@ namespace AlchemistNPC.Projectiles
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Spring Shield");
-			projectile.light = 0.1f;
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 5;
-			ProjectileID.Sets.TrailingMode[projectile.type] = 0;
-			Main.projFrames[projectile.type] = 6;
+			Projectile.light = 0.1f;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+			Main.projFrames[Projectile.type] = 6;
 		}
 
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(ProjectileID.LaserMachinegunLaser);
-			projectile.width = 48;
-			projectile.height = 48;
-			projectile.penetrate = 200;
-			projectile.timeLeft = 99999;
-			projectile.tileCollide = false;
-			projectile.friendly = false;
-			projectile.magic = false;
-			aiType = ProjectileID.LaserMachinegunLaser;
-			projectile.extraUpdates = 1;
-			projectile.scale = 1.5f;
-			projectile.alpha = 50;
+			Projectile.CloneDefaults(ProjectileID.LaserMachinegunLaser);
+			Projectile.width = 48;
+			Projectile.height = 48;
+			Projectile.penetrate = 200;
+			Projectile.timeLeft = 99999;
+			Projectile.tileCollide = false;
+			Projectile.friendly = false;
+			// Unknown Damage Type
+			//Projectile.magic = false;
+			AIType = ProjectileID.LaserMachinegunLaser;
+			Projectile.extraUpdates = 1;
+			Projectile.scale = 1.5f;
+			Projectile.alpha = 50;
 		}
 		public override void AI()
 		{
-			Player player = Main.player[projectile.owner];
-			AlchemistNPCPlayer modPlayer = (AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer");
-			projectile.position.X = player.position.X-15;
-			projectile.position.Y = player.position.Y;
-			projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(0f);
-			if (projectile.spriteDirection == -1)
+			Player player = Main.player[Projectile.owner];
+			AlchemistNPCPlayer modPlayer = (AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>();
+			Projectile.position.X = player.position.X-15;
+			Projectile.position.Y = player.position.Y;
+			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(0f);
+			if (Projectile.spriteDirection == -1)
 			{
-				projectile.rotation -= MathHelper.ToRadians(180f);
+				Projectile.rotation -= MathHelper.ToRadians(180f);
 			}
-			if (projectile.frameCounter < 20)
-				projectile.frame = 0;
-			else if (projectile.frameCounter >= 20 && projectile.frameCounter < 40)
-				projectile.frame = 1;
-			else if (projectile.frameCounter >= 40 && projectile.frameCounter < 60)
-				projectile.frame = 2;
-			else if (projectile.frameCounter >= 60 && projectile.frameCounter < 80)
-				projectile.frame = 3;
-			else if (projectile.frameCounter >= 80 && projectile.frameCounter < 100)
-				projectile.frame = 4;
-			else if (projectile.frameCounter >= 100 && projectile.frameCounter < 120)
-				projectile.frame = 5;
+			if (Projectile.frameCounter < 20)
+				Projectile.frame = 0;
+			else if (Projectile.frameCounter >= 20 && Projectile.frameCounter < 40)
+				Projectile.frame = 1;
+			else if (Projectile.frameCounter >= 40 && Projectile.frameCounter < 60)
+				Projectile.frame = 2;
+			else if (Projectile.frameCounter >= 60 && Projectile.frameCounter < 80)
+				Projectile.frame = 3;
+			else if (Projectile.frameCounter >= 80 && Projectile.frameCounter < 100)
+				Projectile.frame = 4;
+			else if (Projectile.frameCounter >= 100 && Projectile.frameCounter < 120)
+				Projectile.frame = 5;
 			else
-				projectile.frameCounter = 0;
-			projectile.frameCounter++;
+				Projectile.frameCounter = 0;
+			Projectile.frameCounter++;
 			
 			if (player.dead || modPlayer.RevSet == false)
 			{
-				projectile.Kill();
+				Projectile.Kill();
 			}
 		}
 	}

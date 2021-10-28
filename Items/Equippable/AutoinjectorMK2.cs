@@ -20,40 +20,42 @@ namespace AlchemistNPC.Items.Equippable
 				+ "\nGives effects of modded Combinations as well"
 				+ "\nHiding visual disables Thorium and Spirit buffs"
 				+ "\nLowers critical strike chance reduction of Memer's Riposte");
-				DisplayName.AddTranslation(GameCulture.Russian, "Автоинъектор MK2");
-            Tooltip.AddTranslation(GameCulture.Russian, "Усиливает регенерацию \nУменьшает откат зелий лечения \nУвеличивает период неуязвимости после получения урона\nДобавляет 15% ко всем видам урона и 10% ко всем шансам критического удара\nДаёт эффект Комбинации Универсала\nТакже даёт эффекты модовых Комбинаций\nМожно отключить эффекты модовых баффов Ториума и Спирита с помощью изменения видимости\nПонижает уменьшение шанса критического удара Ответа Мемеру");
+				DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Автоинъектор MK2");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Усиливает регенерацию \nУменьшает откат зелий лечения \nУвеличивает период неуязвимости после получения урона\nДобавляет 15% ко всем видам урона и 10% ко всем шансам критического удара\nДаёт эффект Комбинации Универсала\nТакже даёт эффекты модовых Комбинаций\nМожно отключить эффекты модовых баффов Ториума и Спирита с помощью изменения видимости\nПонижает уменьшение шанса критического удара Ответа Мемеру");
 
-            DisplayName.AddTranslation(GameCulture.Chinese, "自动注射器");
-            Tooltip.AddTranslation(GameCulture.Chinese, "提供生命回复, 降低治疗药水的冷却时间, 延长收到伤害后的无敌时间\n增加15%全伤害和10%全伤害的暴击率\n给予万能药剂包buff（包含坦克药剂包、魔法药剂包、射手药剂包以及召唤师药剂包）\n同样给予所有模组药剂包的效果\n调节饰品可见度来关闭瑟银和魂灵的Buff\n减少'Memer的反击'给予的暴击率降低效果");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "自动注射器");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "提供生命回复, 降低治疗药水的冷却时间, 延长收到伤害后的无敌时间\n增加15%全伤害和10%全伤害的暴击率\n给予万能药剂包buff（包含坦克药剂包、魔法药剂包、射手药剂包以及召唤师药剂包）\n同样给予所有模组药剂包的效果\n调节饰品可见度来关闭瑟银和魂灵的Buff\n减少'Memer的反击'给予的暴击率降低效果");
         }
 	
 		public override void SetDefaults()
 		{
-			item.stack = 1;
-			item.width = 26;
-			item.height = 26;
-			item.value = 1000000;
-			item.rare = 11;
-			item.accessory = true;
-			item.defense = 4;
-			item.lifeRegen = 2;
-			item.expert = true;
+			Item.stack = 1;
+			Item.width = 26;
+			Item.height = 26;
+			Item.value = 1000000;
+			Item.rare = 11;
+			Item.accessory = true;
+			Item.defense = 4;
+			Item.lifeRegen = 2;
+			Item.expert = true;
 		}
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			((AlchemistNPCPlayer)player.GetModPlayer(mod, "AlchemistNPCPlayer")).AutoinjectorMK2 = true;
-			player.allDamage += 0.15f;
-			player.meleeCrit += 10;
-            player.rangedCrit += 10;
-            player.magicCrit += 10;
-            player.thrownCrit += 10;
+			((AlchemistNPCPlayer)player.GetModPlayer<AlchemistNPCPlayer>()).AutoinjectorMK2 = true;
+			player.GetDamage(DamageClass.Generic) += 0.15f;
+			player.GetCritChance(DamageClass.Melee) += 10;
+            player.GetCritChance(DamageClass.Ranged) += 10;
+            player.GetCritChance(DamageClass.Magic) += 10;
+            player.GetCritChance(DamageClass.Throwing) += 10;
 			player.pStone = true;
 			player.longInvince = true;
-			player.AddBuff(mod.BuffType("UniversalComb"), 2);
+			player.AddBuff(ModContent.BuffType<Buffs.UniversalComb>(), 2);
+			// IMPLEMENT WHEN WEAKREFERENCES FIXED
+			/*
 			if (ModLoader.GetMod("CalamityMod") != null)
 			{
-				player.AddBuff(mod.BuffType("CalamityComb"), 2);
+				player.AddBuff(ModContent.BuffType<Buffs.CalamityComb>(), 2);
 				Mod Calamity = ModLoader.GetMod("CalamityMod");
 				if(Calamity != null)
 				{
@@ -68,29 +70,33 @@ namespace AlchemistNPC.Items.Equippable
 			{
 				ThoriumBoosts(player);
 			}
+			*/
 			if (!hideVisual)
 			{
 				if (ModLoader.GetMod("SpiritMod") != null)
 				{
-				player.AddBuff(mod.BuffType("SpiritComb"), 2);
+				player.AddBuff(ModContent.BuffType<Buffs.SpiritComb>(), 2);
 				}
 				if (ModLoader.GetMod("ThoriumMod") != null)
 				{
-				player.AddBuff(mod.BuffType("ThoriumComb"), 2);
+				player.AddBuff(ModContent.BuffType<Buffs.ThoriumComb>(), 2);
 				}
 			}
 		}
 		
+		// IMPLEMENT WHEN WEAKREFERENCES FIXED
+		/*
 		private void RedemptionBoost(Player player)
         {
 			Redemption.Items.DruidDamageClass.DruidDamagePlayer RedemptionPlayer = player.GetModPlayer<Redemption.Items.DruidDamageClass.DruidDamagePlayer>();
-            RedemptionPlayer.druidCrit += 10;
+            Redemptionplayer.GetCritChance(DamageClass.Druid) += 10;
         }
 		private void ThoriumBoosts(Player player)
         {
             ThoriumMod.ThoriumPlayer ThoriumPlayer = player.GetModPlayer<ThoriumMod.ThoriumPlayer>();
-            ThoriumPlayer.symphonicCrit += 10;
-            ThoriumPlayer.radiantCrit += 10;
+            Thoriumplayer.GetCritChance(DamageClass.Symphonic) += 10;
+            Thoriumplayer.GetCritChance(DamageClass.Radiant) += 10;
         }
+		*/
 	}
 }

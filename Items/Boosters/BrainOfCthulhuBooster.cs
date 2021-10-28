@@ -14,20 +14,20 @@ namespace AlchemistNPC.Items.Boosters
 		{
 			DisplayName.SetDefault("Brain of Cthulhu booster");
 			Tooltip.SetDefault("Increases max amount of minions by 1, Heartreach effect");
-			DisplayName.AddTranslation(GameCulture.Russian, "Усилитель Мозга Ктулху");
-			Tooltip.AddTranslation(GameCulture.Russian, "Увеличивает максимальной количество прислужников на 1, сердца притягиваются к игроку");
-			DisplayName.AddTranslation(GameCulture.Chinese, "克苏鲁之脑增益容器");
-			Tooltip.AddTranslation(GameCulture.Chinese, "增加1召唤物上限，获得心之彼端效果");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Усилитель Мозга Ктулху");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Увеличивает максимальной количество прислужников на 1, сердца притягиваются к игроку");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "克苏鲁之脑增益容器");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "增加1召唤物上限，获得心之彼端效果");
         }
 
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.LifeFruit);
-			item.consumable = false;
-			item.value = 100000;
+			Item.CloneDefaults(ItemID.LifeFruit);
+			Item.consumable = false;
+			Item.value = 100000;
 		}
 
-		public override bool UseItem(Player player)
+		public override bool? UseItem(Player player)
         {
 			if (player.GetModPlayer<AlchemistNPCPlayer>().BrainOfCthulhuBooster == 0)
 			{

@@ -11,18 +11,18 @@ namespace AlchemistNPC.Buffs
 {
 	public class EvilPresence : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Evil Presence");
 			Description.SetDefault("A mechanical boss is coming for you..");
 			Main.buffNoSave[Type] = true;
 			Main.debuff[Type] = true;
-			canBeCleared = false;
+			CanBeCleared = false;
 			Main.buffNoTimeDisplay[Type] = true;
-			DisplayName.AddTranslation(GameCulture.Russian, "Присутствие Зла");
-			Description.AddTranslation(GameCulture.Russian, "Сейчас появится механический босс");
-            DisplayName.AddTranslation(GameCulture.Chinese, "邪恶降临");
-            Description.AddTranslation(GameCulture.Chinese, "机械Boss即将到来!");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Присутствие Зла");
+			Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Сейчас появится механический босс");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "邪恶降临");
+            Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "机械Boss即将到来!");
         }
 		
 		public override void Update(Player player, ref int buffIndex)

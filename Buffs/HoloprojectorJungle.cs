@@ -18,15 +18,15 @@ namespace AlchemistNPC.Buffs
 {
 	public class HoloprojectorJungle : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Holoprojector ''Jungle''");
 			Description.SetDefault("Biome state is set to Jungle now");
 			Main.buffNoTimeDisplay[Type] = true;
-			DisplayName.AddTranslation(GameCulture.Russian, "Голографический Проектор ''Джунгли''");
-			Description.AddTranslation(GameCulture.Russian, "Изменяет текущий биом на Джунглевый");
-            DisplayName.AddTranslation(GameCulture.Chinese, "全息投影仪 ''丛林''");
-            Description.AddTranslation(GameCulture.Chinese, "当前地形设置:丛林");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Голографический Проектор ''Джунгли''");
+			Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Изменяет текущий биом на Джунглевый");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "全息投影仪 ''丛林''");
+            Description.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "当前地形设置:丛林");
         }
 		
 		public override void Update(Player player, ref int buffIndex)

@@ -14,20 +14,20 @@ namespace AlchemistNPC.Items.Boosters
 		{
 			DisplayName.SetDefault("Martian Saucer booster");
 			Tooltip.SetDefault("Provides immunity to Electrified and Distorted debuffs");
-			DisplayName.AddTranslation(GameCulture.Russian, "Усилитель Летающей Тарелки");
-			Tooltip.AddTranslation(GameCulture.Russian, "Даёт иммунитет к Электризации и Дестабилизации");
-			DisplayName.AddTranslation(GameCulture.Chinese, "火星飞碟增益容器");
-			Tooltip.AddTranslation(GameCulture.Chinese, "免疫电击和重力扭曲");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Усилитель Летающей Тарелки");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Даёт иммунитет к Электризации и Дестабилизации");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "火星飞碟增益容器");
+			Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "免疫电击和重力扭曲");
         }
 
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.LifeFruit);
-			item.consumable = false;
-			item.value = 100000;
+			Item.CloneDefaults(ItemID.LifeFruit);
+			Item.consumable = false;
+			Item.value = 100000;
 		}
 
-		public override bool UseItem(Player player)
+		public override bool? UseItem(Player player)
         {
 			if (player.GetModPlayer<AlchemistNPCPlayer>().MartianSaucerBooster == 0)
 			{

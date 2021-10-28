@@ -13,7 +13,7 @@ namespace AlchemistNPC.Tiles
 {
 	public class Beacon : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileLighted[Type] = true;
 			Main.tileSolidTop[Type] = false;
@@ -27,10 +27,10 @@ namespace AlchemistNPC.Tiles
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Beacon");
-			name.AddTranslation(GameCulture.Russian, "Маяк");
-            name.AddTranslation(GameCulture.Chinese, "信标");
+			name.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Маяк");
+            name.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "信标");
             AddMapEntry(new Color(200, 200, 200), name);
-			disableSmartCursor = true;
+			TileID.Sets.DisableSmartCursor[Type] = true;
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -46,7 +46,7 @@ namespace AlchemistNPC.Tiles
 				for (int y = 0; y < Main.tile.GetLength(1); ++y)
 				{
 					if (Main.tile[x, y] == null) continue;
-					if (Main.tile[x, y].type != mod.TileType("Beacon")) continue;
+					if (Main.tile[x, y].type != TileType<Tiles.Beacon>()) continue;
 					return false;
 				}
 			}
@@ -66,7 +66,7 @@ namespace AlchemistNPC.Tiles
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 16, 32, mod.ItemType("Beacon"));
+			Item.NewItem(i * 16, j * 16, 16, 32, ModContent.ItemType<Items.Placeable.Beacon>());
 		}
 	}
 }

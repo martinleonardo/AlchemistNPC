@@ -21,11 +21,11 @@ namespace AlchemistNPC.Items.Notes
 			+"\n[c/00FF00:Hate Vial] is required for unleashing full potential of FEAR essence."
 			+"\nFor stabilizing components, we need an [c/00FF00:Alchemical Bundle]."
 			+"\nAnd for the last ingredient, we need [c/00FF00:Celestial Stone].''");
-			DisplayName.AddTranslation(GameCulture.Russian, "Запись исследования №6");
-            Tooltip.AddTranslation(GameCulture.Russian, "''Однажды существовало воплощение самого [c/00FF00:Страха]...\nПосле бесчисленных сражений, это существо было наконец побеждено..\nДуша, что осталась после смерти носителя, была отправлена на глубокое обследование.\nВ результате этих исследований была извлечена Эссенция Страха.\nЯ смогла раздобыть несколько пробирок.\nЕсли ты раздобудешь остальные ингредиенты, то я смогу изготовить [c/00FF00:''Акуму''], очень могущественную косу.\nВ качестве основы потребуется [c/00FF00:Коса Смерти].\nДля раскрытия полного потенциала Эссенции Страха потребуется [c/00FF00:Сосуд с Ненавистью].\nДля стабилизации компонентов нам потребуется [c/00FF00:Алхимический Набор].\nА последний ингредиент - [c/00FF00:Небесный Камень].''");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "Запись исследования №6");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "''Однажды существовало воплощение самого [c/00FF00:Страха]...\nПосле бесчисленных сражений, это существо было наконец побеждено..\nДуша, что осталась после смерти носителя, была отправлена на глубокое обследование.\nВ результате этих исследований была извлечена Эссенция Страха.\nЯ смогла раздобыть несколько пробирок.\nЕсли ты раздобудешь остальные ингредиенты, то я смогу изготовить [c/00FF00:''Акуму''], очень могущественную косу.\nВ качестве основы потребуется [c/00FF00:Коса Смерти].\nДля раскрытия полного потенциала Эссенции Страха потребуется [c/00FF00:Сосуд с Ненавистью].\nДля стабилизации компонентов нам потребуется [c/00FF00:Алхимический Набор].\nА последний ингредиент - [c/00FF00:Небесный Камень].''");
 
-            DisplayName.AddTranslation(GameCulture.Chinese, "研究笔记 #6");
-            Tooltip.AddTranslation(GameCulture.Chinese, "'曾经, [c/00FF00:恐惧] 有它真实的化身..."
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "研究笔记 #6");
+            Tooltip.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "'曾经, [c/00FF00:恐惧] 有它真实的化身..."
             + "\n经历了数不清的战斗后, 这些存在最终被打败了."
             + "\n灵魂, 这种就算主人死亡也不曾消散的东西, 我对它进行了深入的观察."
             + "\n在这个过程中, 我提取出了恐惧的本质."
@@ -39,11 +39,11 @@ namespace AlchemistNPC.Items.Notes
 
 		public override void SetDefaults()
 		{
-			item.width = 28;
-			item.height = 36;
-			item.maxStack = 1;
-			item.value = 10000000;
-			item.rare = 10;
+			Item.width = 28;
+			Item.height = 36;
+			Item.maxStack = 1;
+			Item.value = 10000000;
+			Item.rare = 10;
 		}	
 	}
 }

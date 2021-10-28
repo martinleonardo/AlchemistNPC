@@ -14,7 +14,7 @@ namespace AlchemistNPC.Tiles
 {
 	public class SpecCraftPoint : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileSolidTop[Type] = false;
 			Main.tileFrameImportant[Type] = true;
@@ -29,11 +29,11 @@ namespace AlchemistNPC.Tiles
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Special Crafting Point");
-			name.AddTranslation(GameCulture.Russian, "СпецКрафтовый Поинт");
-            name.AddTranslation(GameCulture.Chinese, "特殊手工位点");
+			name.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Russian), "СпецКрафтовый Поинт");
+            name.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "特殊手工位点");
             AddMapEntry(new Color(200, 200, 200), name);
-			disableSmartCursor = true;
-			adjTiles = new int[]
+			TileID.Sets.DisableSmartCursor[Type] = true;
+			AdjTiles =new int[]
 			{
 			TileID.Sinks,
 			TileID.LivingLoom,
@@ -47,8 +47,8 @@ namespace AlchemistNPC.Tiles
 			TileID.SkyMill,
 			TileID.HoneyDispenser
 			};
-			dustType = mod.DustType("JustitiaPale");
-			animationFrameHeight = 56;
+			DustType = DustType<Dusts.JustitiaPale>();
+			AnimationFrameHeight = 56;
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -64,7 +64,7 @@ namespace AlchemistNPC.Tiles
 		
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 32, 16, mod.ItemType("SpecCraftPoint"));
+			Item.NewItem(i * 16, j * 16, 32, 16, ModContent.ItemType<Items.Placeable.SpecCraftPoint>());
 		}
 	}
 }
