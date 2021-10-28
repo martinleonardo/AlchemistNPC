@@ -40,7 +40,7 @@ namespace AlchemistNPC.Items.Equippable
 
 		public override void UseStyle(Player player, Rectangle heldItemFrame)
 		{
-			if (player.whoAmI == Main.myPlayer && player.itemTime == 0)
+			if (player.whoAmI == Main.myPlayer && player.itemTime == Item.useTime)
 			{
 				player.AddBuff(Item.buffType, 3600, true);
 			}

@@ -49,7 +49,7 @@ namespace AlchemistNPC.Items.Weapons
 		
 		public override void UseStyle(Player player, Rectangle rectangle)
 		{
-			if (player.whoAmI == Main.myPlayer && player.itemTime == 0)
+			if (player.whoAmI == Main.myPlayer && player.itemTime == Item.useTime)
 			{
 				player.AddBuff(Item.buffType, 2, true);
 			}
